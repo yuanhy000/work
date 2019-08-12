@@ -1,0 +1,52 @@
+.menu-container {
+    display: flex;
+    flex-direction: row;
+    height: 70px;
+    background-image: linear-gradient(to right, #8EA7C7, #EECAC9);
+    justify-content: space-between;
+    align-items: center;
+}
+
+.menu-title {
+    display: flex;
+    font-size: 22px;
+    color: white;
+    margin-left: 5%;
+    text-decoration: none;
+}
+
+.menu-operation {
+    display: flex;
+    flex-direction: row;
+    /*justify-content: space-between;*/
+    align-items: center;
+    margin-right: 5%;
+    max-width: 400px;
+}
+
+.menu-login {
+    display: flex;
+    flex-direction: row;
+    /*padding-left: 10%;*/
+    text-decoration: none;
+
+}
+
+
+.menu-button {
+    display: flex;
+    background: transparent;
+    justify-content: center;
+    border: 1px #fff solid;
+    color: white;
+    height: 36px;
+    border-radius: 5px;
+    width: 110px;
+    padding: 0 20px;
+    margin-left: 30%;
+}
+
+.menu-button:hover {
+    background: #8EA7C7;
+    transition-duration: 0.3s;
+}
