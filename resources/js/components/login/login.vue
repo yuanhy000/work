@@ -10,7 +10,7 @@
                 </div>
             </div>
 
-            <router-view class="form"></router-view>
+            <router-view class="login-form-container"></router-view>
             <!--            <login-form class="form"></login-form>-->
             <div class="login-type">
                 <div class="login-type-title">登陆方式</div>

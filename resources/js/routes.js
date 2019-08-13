@@ -23,6 +23,11 @@ let routes = [
                 meta: {requiresAuth: true}
             },
         ]
+	},
+	{
+		path: '/register',
+        name: 'register',
+		components: require('./components/login/register.vue'),
 	}
 ];
 
