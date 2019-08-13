@@ -9,7 +9,7 @@
 
 .menu-title {
     display: flex;
-    font-size: 22px;
+    font-size: 1.5rem;
     color: white;
     margin-left: 5%;
     text-decoration: none;
@@ -44,6 +44,7 @@
     width: 110px;
     padding: 0 20px;
     margin-left: 30%;
+    font-size: 1rem;
 }
 
 .menu-button:hover {

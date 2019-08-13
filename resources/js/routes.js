@@ -9,7 +9,20 @@ let routes = [
 	{
 		path: '/login',
         name: 'login',
-		components: require('./components/login/login.vue')
+		components: require('./components/login/login.vue'),
+        children: [
+            {
+                path: '',
+                name: 'email-login',
+                components: require('./components/login/login-email-form')
+            },
+            {
+                path: '/login/phone',
+                name: 'phone-login',
+                components: require('./components/login/login-phone-form'),
+                meta: {requiresAuth: true}
+            },
+        ]
 	}
 ];
 

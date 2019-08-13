@@ -6,7 +6,17 @@
         <meta name="csrf-token" content="{{ csrf_token() }}" />
         <title>Project</title>
         <link rel="stylesheet" href="./css/app.css">
+        <style>
+            @media (min-width: 0) and (max-width: 768px) {
+                html{
+                    font-size: 13px;
+                }
 
+                button{
+                    padding: 2px 10px;
+                }
+            }
+        </style>
     </head>
     <body>
         <div id="app">

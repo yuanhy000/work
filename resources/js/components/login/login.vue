@@ -9,16 +9,18 @@
                     <router-link class="login-title" to="/register">注册</router-link>
                 </div>
             </div>
-            <login-form class="form"></login-form>
+
+            <router-view class="form"></router-view>
+            <!--            <login-form class="form"></login-form>-->
             <div class="login-type">
                 <div class="login-type-title">登陆方式</div>
                 <div class="other-login">
                     <div class="item-login-container">
-                        <a class="item-login">
+                        <router-link :to="{name: 'email-login'}" class="item-login" activeClass="active" exact>
                             <button class="btn login-type-button">
-                                <img class="login-image" src="./../../../image/email.svg" alt="">邮箱密码
+                                <img class="login-image" src="./../../../image/email.svg" alt="">邮箱登陆
                             </button>
-                        </a>
+                        </router-link>
                     </div>
                     <div class="item-login-container">
                         <a class="item-login">
@@ -28,11 +30,11 @@
                         </a>
                     </div>
                     <div class="item-login-container">
-                        <a class="item-login">
+                        <router-link :to="{name: 'phone-login'}" class="item-login" activeClass="active" exact>
                             <button class="btn login-type-button">
                                 <img class="login-image" src="./../../../image/phone.svg" alt="">手机验证码
                             </button>
-                        </a>
+                        </router-link>
                     </div>
                 </div>
             </div>
