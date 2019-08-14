@@ -8,7 +8,7 @@ let routes = [
 	},
 	{
 		path: '/login',
-        name: 'login',
+        // name: 'login',
 		components: require('./components/login/login.vue'),
         children: [
             {

@@ -4,7 +4,8 @@
             <label for="email" class="login-emil-name">手机号</label>
             <input id="email" type="email" class="form-control login-email-input" name="email" required>
         </div>
-        <div class="login-send">
+        <div class="login-emil position-refresh">
+            <label for="phone" class="login-emil-name"></label>
             <button class="btn send-button">发送验证码</button>
         </div>
         <div class="login-emil">

@@ -11,6 +11,15 @@
 |
 */
 
+use Illuminate\Support\Facades\Route;
+
 Route::get('/', function () {
     return view('layouts.master');
 });
+
+
+Route::get('/cache', function () {
+//    dd(\Illuminate\Support\Facades\Cache::get("login.code."."17784457936"));
+
+});
+

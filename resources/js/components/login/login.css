@@ -95,6 +95,7 @@
     border-bottom: 1px #8EA7C7 solid;
     display: flex;
     flex-direction: column;
+    align-items: center;
     /*justify-content: space-between;*/
     /*align-items: s;*/
 }
@@ -114,6 +115,10 @@
     color: white;
     margin: 5% 0;
     width: 100%;
+}
+
+.position-refresh {
+    margin: 0;
 }
 
 .login-send {
@@ -139,7 +144,7 @@
     display: flex;
     width: 50%;
     min-width: 150px;
-    color: #777;
+    color: #8f8e93;
 }
 
 .login-button {
@@ -199,16 +204,17 @@
 }
 
 .send-button {
-    width: 100px;
+    width: 50%;
     background: #8EA7C7;
     color: white;
     /*border: 1px white solid;*/
     position: relative;
-    left: 41%;
+    /*left: 41%;*/
     padding: 3px 10px;
     height: 30px;
     /*display: flex;*/
     font-size: 0.9rem;
+    /*margin: -% 0;*/
 }
 
 .send-button:hover {
@@ -254,3 +260,29 @@
     transition-duration: 0.3s;
     border: 1px #7192c3 solid;
 }
+
+.error-info-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    color: white;
+    margin-top: 1%;
+    margin-bottom: -3%;
+    width: 100%;
+}
+
+.form-text {
+    position: relative;
+    /*left: 20%;*/
+    display: flex;
+    width: 50%;
+    color: #A55756;
+}
+
+.error-input {
+    border: 2px rgba(0, 0, 0, .075) solid;
+    -webkit-box-shadow: inset 0 2px 2px rgba(0, 0, 0, .075), 0 0 8px rgba(129, 2, 14, 0.6);
+    box-shadow: inset 0 2px 2px rgba(0, 0, 0, .075), 0 0 4px rgba(158, 12, 10, 0.6)
+}
+
+
