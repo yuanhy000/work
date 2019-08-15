@@ -24,7 +24,7 @@
                     </div>
                     <div class="item-login-container">
                         <a class="item-login">
-                            <button class="btn login-type-button">
+                            <button class="btn login-type-button" @click="githubLogin">
                                 <img class="login-image" src="./../../../image/github1.svg" alt="">GitHub
                             </button>
                         </a>
@@ -44,8 +44,19 @@
 
 <script>
     export default {
-        name: "login"
+        name: "login",
+        methods: {
+            githubLogin() {
+                axios.get('/api/github/login', {
+                    contentType: 'application/json',
+                    header: 'Access-Control-Allow-Origin'
+                }).then(res => {
+                    console.log(res);
+                })
+            }
+        }
     }
+
 </script>
 
 <style scoped src="./login.css">

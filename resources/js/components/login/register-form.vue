@@ -52,7 +52,9 @@
         </div>
         <div class="register-item">
             <label class="login-emil-name"></label>
-            <button class="btn register-send-button" @click="getCode" type="button">发送验证码</button>
+            <button class="btn register-send-button" :class="{'disabled-button' :!canClick}"
+                    @click="getCode" type="button">{{buttonContent}}
+            </button>
         </div>
         <div class="register-item">
             <label for="code" class="login-emil-name">验证码</label>
@@ -65,7 +67,8 @@
             <span class="form-text">{{errors.first('code')}}</span>
         </div>
         <div class="register-item">
-            <button type="submit" class="btn login-button">
+            <button type="submit" class="btn login-button"
+                    :class="{'disabled-button' : errors.any()}">
                 注册
             </button>
         </div>
@@ -92,7 +95,11 @@
                 password: '',
                 confirmPassword: '',
                 phone: '',
-                code: ''
+                code: '',
+                countDownTime: 10,
+                canClick: true,
+                buttonContent: '发送验证码',
+                canRegister: true
             }
         },
         methods: {
@@ -104,12 +111,30 @@
                     phone: this.phone,
                     code: this.code
                 };
+                console.log(registerInfo);
                 return axios.post('/api/register', registerInfo).then(res => {
                     // this.$router.push({name: 'confirm'})
                     console.log(res)
                 })
+
             },
             getCode() {
+                if (!this.canClick) {
+                    return;
+                }
+                this.canClick = false;
+                this.buttonContent = this.countDownTime + 's 后重新发送';
+                let clock = window.setInterval(() => {
+                    this.countDownTime--;
+                    this.buttonContent = this.countDownTime + 's 后重新发送';
+                    if (this.countDownTime <= 0) {
+                        window.clearInterval(clock);
+                        this.buttonContent = '发送验证码';
+                        this.countDownTime = 10;
+                        this.canClick = true;
+                    }
+                }, 1000);
+
                 let phone = {
                     phone: this.phone
                 };

@@ -187,7 +187,7 @@
     width: 140px;
     background: #8EA7C7;
     color: white;
-    margin: 3px 0;
+    margin: 4% 0;
     font-size: 0.8rem;
     /*display: flex;*/
 }
@@ -285,4 +285,10 @@
     box-shadow: inset 0 2px 2px rgba(0, 0, 0, .075), 0 0 4px rgba(158, 12, 10, 0.6)
 }
 
+.disabled-button {
+    pointer-events: none;
+    cursor: not-allowed;
+    /*background: black;*/
+    background: #a0a0a0;
+}
 

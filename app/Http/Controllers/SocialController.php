@@ -11,9 +11,32 @@ use Overtrue\EasySms\EasySms;
 use AlibabaCloud\Client\AlibabaCloud;
 use AlibabaCloud\Client\Exception\ClientException;
 use AlibabaCloud\Client\Exception\ServerException;
+use Overtrue\LaravelSocialite\Socialite;
 
 class SocialController extends Controller
 {
+    public function githubLogin()
+    {
+        return Socialite::driver('github')->redirect();
+    }
+
+    public function githubCallback()
+    {
+        $user = Socialite::driver('github')->user();
+        dd($user);
+        $account = User::firstOrCreate([
+            'email' => $user->email,
+        ], [
+            'email' => $user->email,
+            'name' => $user->nickname,
+        ]);
+
+        Auth::login($account);
+
+        return redirect('/');
+        // $user->token;
+    }
+
     public function sendRegisterPhoneCode(Request $request)
     {
         $phone = \request()->phone;
@@ -57,7 +80,6 @@ class SocialController extends Controller
                 'code' => $code
             ],
         ]);
-        dd($result);
         if ($result['aliyun']['status'] == 'success') {
             return response()->json([
                 'status' => 'success'
