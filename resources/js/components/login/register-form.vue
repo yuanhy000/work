@@ -82,7 +82,7 @@
     Validator.extend('phone', {
         getMessage: field => field + '格式错误',
         validate: value => {
-            return value.length == 11 && /^((13|14|15|17|18)[0-9]{1}\d{8})$/.test(value)
+            return value.length == 11 && /^((13|14|15|17|18|19)[0-9]{1}\d{8})$/.test(value)
         }
     });
 
@@ -98,8 +98,7 @@
                 code: '',
                 countDownTime: 10,
                 canClick: true,
-                buttonContent: '发送验证码',
-                canRegister: true
+                buttonContent: '发送验证码'
             }
         },
         methods: {

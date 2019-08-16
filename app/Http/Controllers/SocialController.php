@@ -2,41 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Validator;
 use Overtrue\EasySms\EasySms;
-
-use AlibabaCloud\Client\AlibabaCloud;
-use AlibabaCloud\Client\Exception\ClientException;
-use AlibabaCloud\Client\Exception\ServerException;
-use Overtrue\LaravelSocialite\Socialite;
 
 class SocialController extends Controller
 {
-    public function githubLogin()
-    {
-        return Socialite::driver('github')->redirect();
-    }
-
-    public function githubCallback()
-    {
-        $user = Socialite::driver('github')->user();
-        dd($user);
-        $account = User::firstOrCreate([
-            'email' => $user->email,
-        ], [
-            'email' => $user->email,
-            'name' => $user->nickname,
-        ]);
-
-        Auth::login($account);
-
-        return redirect('/');
-        // $user->token;
-    }
-
     public function sendRegisterPhoneCode(Request $request)
     {
         $phone = \request()->phone;
@@ -46,28 +17,13 @@ class SocialController extends Controller
         return $this->sendPhoneCode($phone, $code);
     }
 
-    public function register(Request $request)
+    public function sendLoginPhoneCode(Request $request)
     {
-        $userInfo = $request->all();
-        $result = Validator::make($userInfo, [
-            'userName' => 'required|string|max:255|min:6',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:9',
-            'phone' => 'required|string|size:11|unique:users',
-            'code' => 'in:' . Cache::get('register.code.' . $userInfo['phone'])
-        ])->validate();
+        $phone = \request()->phone;
+        $code = random_int(100000, 999999);
 
-        if (is_object($result)) {
-            return response()->json('error!');
-        }
-
-        $user = User::create([
-            'name' => $userInfo['userName'],
-            'email' => $userInfo['email'],
-            'password' => bcrypt($userInfo['password']),
-            'phone' => $userInfo['phone'],
-        ]);
-        return response()->json('great!');
+        Cache::put('login.code.' . $phone, $code, 600);
+        return $this->sendPhoneCode($phone, $code);
     }
 
     private function sendPhoneCode($phone, $code)

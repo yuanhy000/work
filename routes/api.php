@@ -18,9 +18,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/github/login', 'SocialController@githubLogin');
-Route::get('/github/callback', 'SocialController@githubCallback');
-
 Route::post('/register/phone/code', 'SocialController@sendRegisterPhoneCode');
-Route::post('/register', 'SocialController@register');
+Route::post('/login/phone/code', 'SocialController@sendLoginPhoneCode');
+
+Route::post('/register', 'Auth\RegisterController@register');
+Route::post('/login', 'Auth\LoginController@login');
 

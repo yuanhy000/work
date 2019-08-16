@@ -1,15 +1,15 @@
 import VueRouter from 'vue-router'
 
 let routes = [
-	{
-		path: '/',
+    {
+        path: '/',
         name: 'home',
-		components: require('./components/Home.vue')
-	},
-	{
-		path: '/login',
+        components: require('./components/Home.vue')
+    },
+    {
+        path: '/login',
         // name: 'login',
-		components: require('./components/login/login.vue'),
+        components: require('./components/login/login.vue'),
         children: [
             {
                 path: '',
@@ -23,14 +23,15 @@ let routes = [
                 meta: {requiresAuth: true}
             },
         ]
-	},
-	{
-		path: '/register',
+    },
+    {
+        path: '/register',
         name: 'register',
-		components: require('./components/login/register.vue'),
-	}
+        components: require('./components/login/register.vue'),
+    }
 ];
 
+
 export default new VueRouter({
-	routes
+    routes
 })

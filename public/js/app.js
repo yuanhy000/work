@@ -1748,8 +1748,46 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "login-form"
+  name: "login-form",
+  data: function data() {
+    return {
+      email: '',
+      password: ''
+    };
+  },
+  methods: {
+    login: function login() {
+      var _this = this;
+
+      this.$validator.validateAll().then(function (result) {
+        if (result) {
+          var loginInfo = {
+            email: _this.email,
+            password: _this.password,
+            type: 'email'
+          };
+          console.log(loginInfo);
+          return axios.post('/api/login', loginInfo).then(function (res) {
+            console.log(res);
+          });
+        }
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -1785,8 +1823,73 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "login-form"
+  name: "login-form",
+  data: function data() {
+    return {
+      phone: '',
+      code: '',
+      countDownTime: 10,
+      canClick: true,
+      buttonContent: '发送验证码'
+    };
+  },
+  methods: {
+    login: function login() {
+      var loginInfo = {
+        email: this.email,
+        password: this.password,
+        type: 'email'
+      };
+      console.log(loginInfo);
+      return axios.post('/api/login', loginInfo).then(function (res) {
+        // this.$router.push({name: 'confirm'})
+        console.log(res);
+      });
+    },
+    getCode: function getCode() {
+      var _this = this;
+
+      if (!this.canClick) {
+        return;
+      }
+
+      this.canClick = false;
+      this.buttonContent = this.countDownTime + 's 后重新发送';
+      var clock = window.setInterval(function () {
+        _this.countDownTime--;
+        _this.buttonContent = _this.countDownTime + 's 后重新发送';
+
+        if (_this.countDownTime <= 0) {
+          window.clearInterval(clock);
+          _this.buttonContent = '发送验证码';
+          _this.countDownTime = 10;
+          _this.canClick = true;
+        }
+      }, 1000);
+      var phone = {
+        phone: this.phone
+      };
+      return axios.post('/api/login/phone/code', phone).then(function (res) {
+        console.log(res);
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -1846,16 +1949,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "login",
-  methods: {
-    githubLogin: function githubLogin() {
-      axios.get('/api/github/login', {
-        contentType: 'application/json',
-        header: 'Access-Control-Allow-Origin'
-      }).then(function (res) {
-        console.log(res);
-      });
-    }
-  }
+  methods: {}
 });
 
 /***/ }),
@@ -1954,7 +2048,7 @@ vee_validate__WEBPACK_IMPORTED_MODULE_0__["Validator"].extend('phone', {
     return field + '格式错误';
   },
   validate: function validate(value) {
-    return value.length == 11 && /^((13|14|15|17|18)[0-9]{1}\d{8})$/.test(value);
+    return value.length == 11 && /^((13|14|15|17|18|19)[0-9]{1}\d{8})$/.test(value);
   }
 });
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1969,8 +2063,7 @@ vee_validate__WEBPACK_IMPORTED_MODULE_0__["Validator"].extend('phone', {
       code: '',
       countDownTime: 10,
       canClick: true,
-      buttonContent: '发送验证码',
-      canRegister: true
+      buttonContent: '发送验证码'
     };
   },
   methods: {
@@ -6542,7 +6635,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "@media (min-width: 0) and (max-width: 768px) {\ninput[data-v-286d0baa] {\n        height: 25px;\n}\nhtml[data-v-286d0baa] {\n        font-size: 2px;\n}\nbutton[data-v-286d0baa] {\n        padding: 1px auto !important;\n}\n.login-emil-name[data-v-286d0baa] {\n        width: 22% !important;\n}\n.register-item[data-v-286d0baa] {\n        margin-top: 7% !important;\n}\n.login-button[data-v-286d0baa] {\n        width: 70% !important;\n}\n}\n.login-container[data-v-286d0baa] {\n    position: absolute;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n    width: 100%;\n    top: 70px;\n    bottom: 0;\n    overflow: hidden;\n    /*background-image: linear-gradient(to left, #8EA7C7, #EECAC9);*/\n    background: url(" + escape(__webpack_require__(/*! ./../../../image/image-3.jpg */ "./resources/image/image-3.jpg")) + ");\n    /*filter: brightness(0.4);*/\n}\n.login-content[data-v-286d0baa] {\n    display: flex;\n    flex-direction: column;\n    /*justify-content: center;*/\n    width: 40%;\n    min-width: 300px;\n    /*height: 80%;*/\n    min-height: 75%;\n    background-image: linear-gradient(to top, #EECAC9, #8EA7C7);\n    border-radius: 10px;\n    box-shadow: 10px 10px 15px #444;\n    padding-bottom: 30px;\n}\n.login-top[data-v-286d0baa] {\n    height: 70px;\n    width: 100%;\n    position: relative;\n    top: 0;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    /*align-items: center;*/\n    border-bottom: 1px #EECAC9 solid;\n}\n.login[data-v-286d0baa] {\n    height: auto;\n    margin: 0 5%;\n    display: flex;\n    flex-direction: row;\n    align-items: center;\n    justify-content: center;\n    width: 30%;\n}\n.login-title[data-v-286d0baa] {\n    display: flex;\n    font-size: 1.1rem;\n    /*font-size: 19px;*/\n    color: white;\n    text-decoration: none;\n}\n.title-decoration[data-v-286d0baa] {\n    border-bottom: 3px solid #EECAC9;\n}\n.login-form-container[data-v-286d0baa] {\n    /*height: 50%;*/\n    border-bottom: 1px #8EA7C7 solid;\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    /*justify-content: space-between;*/\n    /*align-items: s;*/\n}\n.login-form[data-v-286d0baa] {\n    display: flex;\n    flex-direction: column;\n    /*align-items: center;*/\n    /*justify-content: space-around;*/\n}\n.login-emil[data-v-286d0baa] {\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    color: white;\n    margin: 5% 0;\n    width: 100%;\n}\n.position-refresh[data-v-286d0baa] {\n    margin: 0;\n}\n.login-send[data-v-286d0baa] {\n    display: flex;\n    flex-direction: row;\n    /*justify-content: center;*/\n    color: white;\n    width: 90%;\n}\n.login-emil-name[data-v-286d0baa] {\n    display: flex;\n    font-size: 1rem;\n    margin: auto 0;\n    position: relative;\n    width: 14%;\n    /*left: 2%;*/\n}\n.login-email-input[data-v-286d0baa] {\n    position: relative;\n    /*left: 2%;*/\n    display: flex;\n    width: 50%;\n    min-width: 150px;\n    color: #8f8e93;\n}\n.login-button[data-v-286d0baa] {\n    background: #8EA7C7;\n    color: #fff;\n    width: 65%;\n    margin: 0 auto;\n}\n.login-button[data-v-286d0baa]:hover {\n    background: #7192c3;\n    transition-duration: 0.3s;\n}\n.login-type[data-v-286d0baa] {\n    /*height: 20%;*/\n    display: flex;\n    flex-direction: column;\n    /*justify-content: end;*/\n    align-items: center;\n    padding-top: 5%;\n}\n.login-type-title[data-v-286d0baa] {\n    display: flex;\n    color: white;\n    font-size: 1.1rem;\n    margin-bottom: 5%;\n}\n.other-login[data-v-286d0baa] {\n    display: flex;\n    flex-direction: row;\n    flex-wrap: wrap;\n    width: 80%;\n    justify-content: space-around;\n}\n.login-type-button[data-v-286d0baa] {\n    width: 140px;\n    background: #8EA7C7;\n    color: white;\n    margin: 4% 0;\n    font-size: 0.8rem;\n    /*display: flex;*/\n}\n.login-type-button[data-v-286d0baa]:hover {\n    background: #7192c3;\n    transition-duration: 0.3s;\n}\n.login-image[data-v-286d0baa] {\n    width: 23px;\n    height: 23px;\n    margin-right: 15px;\n}\n.send-button[data-v-286d0baa] {\n    width: 50%;\n    background: #8EA7C7;\n    color: white;\n    /*border: 1px white solid;*/\n    position: relative;\n    /*left: 41%;*/\n    padding: 3px 10px;\n    height: 30px;\n    /*display: flex;*/\n    font-size: 0.9rem;\n    /*margin: -% 0;*/\n}\n.send-button[data-v-286d0baa]:hover {\n    background: #7192c3;\n    transition-duration: 0.3s;\n    border: 1px #7192c3 solid;\n}\n.register-form-container[data-v-286d0baa] {\n    /*height: 50%;*/\n    /*border-bottom: 1px #8EA7C7 solid;*/\n    display: flex;\n    flex-direction: column;\n    /*justify-content: space-between;*/\n    /*align-items: s;*/\n}\n.register-item[data-v-286d0baa] {\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    color: white;\n    margin-top: 5%;\n    width: 100%;\n}\n.register-send-button[data-v-286d0baa] {\n    width: 50%;\n    background: #8EA7C7;\n    color: white;\n    /*border: 1px white solid;*/\n    position: relative;\n    /*left: -10%;*/\n    padding: 3px 10px;\n    /*height: 30px;*/\n    /*display: flex;*/\n    font-size: 0.9rem;\n    /*margin: -2% 0;*/\n}\n.register-send-button[data-v-286d0baa]:hover {\n    background: #7192c3;\n    transition-duration: 0.3s;\n    border: 1px #7192c3 solid;\n}\n.error-info-container[data-v-286d0baa] {\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    color: white;\n    margin-top: 1%;\n    margin-bottom: -3%;\n    width: 100%;\n}\n.form-text[data-v-286d0baa] {\n    position: relative;\n    /*left: 20%;*/\n    display: flex;\n    width: 50%;\n    color: #A55756;\n}\n.error-input[data-v-286d0baa] {\n    border: 2px rgba(0, 0, 0, .075) solid;\n    box-shadow: inset 0 2px 2px rgba(0, 0, 0, .075), 0 0 4px rgba(158, 12, 10, 0.6)\n}\n.disabled-button[data-v-286d0baa] {\n    pointer-events: none;\n    cursor: not-allowed;\n    /*background: black;*/\n    background: #a0a0a0;\n}\n\n", ""]);
+exports.push([module.i, "@media (min-width: 0) and (max-width: 768px) {\ninput[data-v-286d0baa] {\n        height: 25px;\n}\nhtml[data-v-286d0baa] {\n        font-size: 2px;\n}\nbutton[data-v-286d0baa] {\n        padding: 1px auto !important;\n}\n.login-emil-name[data-v-286d0baa] {\n        width: 22% !important;\n}\n.register-item[data-v-286d0baa] {\n        margin-top: 7% !important;\n}\n.login-button[data-v-286d0baa] {\n        width: 70% !important;\n}\n.login-error-info-container[data-v-286d0baa]{\n        line-height: 20px !important;\n}\n}\n.login-container[data-v-286d0baa] {\n    position: absolute;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n    width: 100%;\n    top: 70px;\n    bottom: 0;\n    overflow: hidden;\n    /*background-image: linear-gradient(to left, #8EA7C7, #EECAC9);*/\n    background: url(" + escape(__webpack_require__(/*! ./../../../image/image-3.jpg */ "./resources/image/image-3.jpg")) + ");\n    /*filter: brightness(0.4);*/\n}\n.login-content[data-v-286d0baa] {\n    display: flex;\n    flex-direction: column;\n    /*justify-content: center;*/\n    width: 40%;\n    min-width: 300px;\n    /*height: 80%;*/\n    min-height: 75%;\n    background-image: linear-gradient(to top, #EECAC9, #8EA7C7);\n    border-radius: 10px;\n    box-shadow: 10px 10px 15px #444;\n    padding-bottom: 30px;\n}\n.login-top[data-v-286d0baa] {\n    height: 70px;\n    width: 100%;\n    position: relative;\n    top: 0;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    /*align-items: center;*/\n    border-bottom: 1px #EECAC9 solid;\n}\n.login[data-v-286d0baa] {\n    height: auto;\n    margin: 0 5%;\n    display: flex;\n    flex-direction: row;\n    align-items: center;\n    justify-content: center;\n    width: 30%;\n}\n.login-title[data-v-286d0baa] {\n    display: flex;\n    font-size: 1.1rem;\n    /*font-size: 19px;*/\n    color: white;\n    text-decoration: none;\n}\n.title-decoration[data-v-286d0baa] {\n    border-bottom: 3px solid #EECAC9;\n}\n.login-form-container[data-v-286d0baa] {\n    /*height: 50%;*/\n    border-bottom: 1px #8EA7C7 solid;\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    padding-bottom: 5%;\n    /*justify-content: space-between;*/\n    /*align-items: s;*/\n}\n.login-form[data-v-286d0baa] {\n    display: flex;\n    flex-direction: column;\n    /*align-items: center;*/\n    /*justify-content: space-around;*/\n}\n.login-emil[data-v-286d0baa] {\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    color: white;\n    margin-top: 10%;\n    width: 100%;\n}\n.position-refresh[data-v-286d0baa] {\n    margin-top: 5%;\n    margin-bottom: -5%;\n}\n.login-send[data-v-286d0baa] {\n    display: flex;\n    flex-direction: row;\n    /*justify-content: center;*/\n    color: white;\n    width: 90%;\n}\n.login-emil-name[data-v-286d0baa] {\n    display: flex;\n    font-size: 1rem;\n    margin: auto 0;\n    position: relative;\n    width: 14%;\n    /*left: 2%;*/\n}\n.login-email-input[data-v-286d0baa] {\n    position: relative;\n    /*left: 2%;*/\n    display: flex;\n    width: 50%;\n    min-width: 150px;\n    color: #8f8e93;\n}\n.login-button[data-v-286d0baa] {\n    background: #8EA7C7;\n    color: #fff;\n    width: 65%;\n    margin: 0 auto;\n}\n.login-button[data-v-286d0baa]:hover {\n    background: #7192c3;\n    transition-duration: 0.3s;\n}\n.login-type[data-v-286d0baa] {\n    /*height: 20%;*/\n    display: flex;\n    flex-direction: column;\n    /*justify-content: end;*/\n    align-items: center;\n    padding-top: 5%;\n}\n.login-type-title[data-v-286d0baa] {\n    display: flex;\n    color: white;\n    font-size: 1.1rem;\n    margin-bottom: 5%;\n}\n.other-login[data-v-286d0baa] {\n    display: flex;\n    flex-direction: row;\n    flex-wrap: wrap;\n    width: 80%;\n    justify-content: space-around;\n}\n.login-type-button[data-v-286d0baa] {\n    width: 140px;\n    background: #8EA7C7;\n    color: white;\n    margin: 4% 0;\n    font-size: 0.8rem;\n    /*display: flex;*/\n}\n.login-type-button[data-v-286d0baa]:hover {\n    background: #7192c3;\n    transition-duration: 0.3s;\n}\n.login-image[data-v-286d0baa] {\n    width: 23px;\n    height: 23px;\n    margin-right: 15px;\n}\n.send-button[data-v-286d0baa] {\n    width: 50%;\n    background: #8EA7C7;\n    color: white;\n    /*border: 1px white solid;*/\n    position: relative;\n    /*left: 41%;*/\n    padding: 3px 10px;\n    height: 30px;\n    /*display: flex;*/\n    font-size: 0.9rem;\n    /*margin: -% 0;*/\n}\n.send-button[data-v-286d0baa]:hover {\n    background: #7192c3;\n    transition-duration: 0.3s;\n    border: 1px #7192c3 solid;\n}\n.register-form-container[data-v-286d0baa] {\n    /*height: 50%;*/\n    /*border-bottom: 1px #8EA7C7 solid;*/\n    display: flex;\n    flex-direction: column;\n    /*justify-content: space-between;*/\n    /*align-items: s;*/\n}\n.register-item[data-v-286d0baa] {\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    color: white;\n    margin-top: 5%;\n    width: 100%;\n}\n.register-send-button[data-v-286d0baa] {\n    width: 50%;\n    background: #8EA7C7;\n    color: white;\n    /*border: 1px white solid;*/\n    position: relative;\n    /*left: -10%;*/\n    padding: 3px 10px;\n    /*height: 30px;*/\n    /*display: flex;*/\n    font-size: 0.9rem;\n    /*margin: -2% 0;*/\n}\n.register-send-button[data-v-286d0baa]:hover {\n    background: #7192c3;\n    transition-duration: 0.3s;\n    border: 1px #7192c3 solid;\n}\n.error-info-container[data-v-286d0baa] {\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    color: white;\n    margin-top: 1%;\n    margin-bottom: -3%;\n    width: 100%;\n}\n.form-text[data-v-286d0baa] {\n    position: relative;\n    /*left: 20%;*/\n    display: flex;\n    width: 50%;\n    color: #A55756;\n}\n.error-input[data-v-286d0baa] {\n    border: 2px rgba(0, 0, 0, .075) solid;\n    box-shadow: inset 0 2px 2px rgba(0, 0, 0, .075), 0 0 4px rgba(158, 12, 10, 0.6)\n}\n.disabled-button[data-v-286d0baa] {\n    pointer-events: none;\n    cursor: not-allowed;\n    /*background: black;*/\n    background: #a0a0a0;\n}\n.login-error-info-container[data-v-286d0baa] {\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    color: white;\n    height: 40px;\n    line-height: 40px;\n    margin-bottom: -40px;\n    width: 100%;\n}\n\n", ""]);
 
 // exports
 
@@ -6562,7 +6655,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "@media (min-width: 0) and (max-width: 768px) {\ninput[data-v-4adbf3d0] {\n        height: 25px;\n}\nhtml[data-v-4adbf3d0] {\n        font-size: 2px;\n}\nbutton[data-v-4adbf3d0] {\n        padding: 1px auto !important;\n}\n.login-emil-name[data-v-4adbf3d0] {\n        width: 22% !important;\n}\n.register-item[data-v-4adbf3d0] {\n        margin-top: 7% !important;\n}\n.login-button[data-v-4adbf3d0] {\n        width: 70% !important;\n}\n}\n.login-container[data-v-4adbf3d0] {\n    position: absolute;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n    width: 100%;\n    top: 70px;\n    bottom: 0;\n    overflow: hidden;\n    /*background-image: linear-gradient(to left, #8EA7C7, #EECAC9);*/\n    background: url(" + escape(__webpack_require__(/*! ./../../../image/image-3.jpg */ "./resources/image/image-3.jpg")) + ");\n    /*filter: brightness(0.4);*/\n}\n.login-content[data-v-4adbf3d0] {\n    display: flex;\n    flex-direction: column;\n    /*justify-content: center;*/\n    width: 40%;\n    min-width: 300px;\n    /*height: 80%;*/\n    min-height: 75%;\n    background-image: linear-gradient(to top, #EECAC9, #8EA7C7);\n    border-radius: 10px;\n    box-shadow: 10px 10px 15px #444;\n    padding-bottom: 30px;\n}\n.login-top[data-v-4adbf3d0] {\n    height: 70px;\n    width: 100%;\n    position: relative;\n    top: 0;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    /*align-items: center;*/\n    border-bottom: 1px #EECAC9 solid;\n}\n.login[data-v-4adbf3d0] {\n    height: auto;\n    margin: 0 5%;\n    display: flex;\n    flex-direction: row;\n    align-items: center;\n    justify-content: center;\n    width: 30%;\n}\n.login-title[data-v-4adbf3d0] {\n    display: flex;\n    font-size: 1.1rem;\n    /*font-size: 19px;*/\n    color: white;\n    text-decoration: none;\n}\n.title-decoration[data-v-4adbf3d0] {\n    border-bottom: 3px solid #EECAC9;\n}\n.login-form-container[data-v-4adbf3d0] {\n    /*height: 50%;*/\n    border-bottom: 1px #8EA7C7 solid;\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    /*justify-content: space-between;*/\n    /*align-items: s;*/\n}\n.login-form[data-v-4adbf3d0] {\n    display: flex;\n    flex-direction: column;\n    /*align-items: center;*/\n    /*justify-content: space-around;*/\n}\n.login-emil[data-v-4adbf3d0] {\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    color: white;\n    margin: 5% 0;\n    width: 100%;\n}\n.position-refresh[data-v-4adbf3d0] {\n    margin: 0;\n}\n.login-send[data-v-4adbf3d0] {\n    display: flex;\n    flex-direction: row;\n    /*justify-content: center;*/\n    color: white;\n    width: 90%;\n}\n.login-emil-name[data-v-4adbf3d0] {\n    display: flex;\n    font-size: 1rem;\n    margin: auto 0;\n    position: relative;\n    width: 14%;\n    /*left: 2%;*/\n}\n.login-email-input[data-v-4adbf3d0] {\n    position: relative;\n    /*left: 2%;*/\n    display: flex;\n    width: 50%;\n    min-width: 150px;\n    color: #8f8e93;\n}\n.login-button[data-v-4adbf3d0] {\n    background: #8EA7C7;\n    color: #fff;\n    width: 65%;\n    margin: 0 auto;\n}\n.login-button[data-v-4adbf3d0]:hover {\n    background: #7192c3;\n    transition-duration: 0.3s;\n}\n.login-type[data-v-4adbf3d0] {\n    /*height: 20%;*/\n    display: flex;\n    flex-direction: column;\n    /*justify-content: end;*/\n    align-items: center;\n    padding-top: 5%;\n}\n.login-type-title[data-v-4adbf3d0] {\n    display: flex;\n    color: white;\n    font-size: 1.1rem;\n    margin-bottom: 5%;\n}\n.other-login[data-v-4adbf3d0] {\n    display: flex;\n    flex-direction: row;\n    flex-wrap: wrap;\n    width: 80%;\n    justify-content: space-around;\n}\n.login-type-button[data-v-4adbf3d0] {\n    width: 140px;\n    background: #8EA7C7;\n    color: white;\n    margin: 4% 0;\n    font-size: 0.8rem;\n    /*display: flex;*/\n}\n.login-type-button[data-v-4adbf3d0]:hover {\n    background: #7192c3;\n    transition-duration: 0.3s;\n}\n.login-image[data-v-4adbf3d0] {\n    width: 23px;\n    height: 23px;\n    margin-right: 15px;\n}\n.send-button[data-v-4adbf3d0] {\n    width: 50%;\n    background: #8EA7C7;\n    color: white;\n    /*border: 1px white solid;*/\n    position: relative;\n    /*left: 41%;*/\n    padding: 3px 10px;\n    height: 30px;\n    /*display: flex;*/\n    font-size: 0.9rem;\n    /*margin: -% 0;*/\n}\n.send-button[data-v-4adbf3d0]:hover {\n    background: #7192c3;\n    transition-duration: 0.3s;\n    border: 1px #7192c3 solid;\n}\n.register-form-container[data-v-4adbf3d0] {\n    /*height: 50%;*/\n    /*border-bottom: 1px #8EA7C7 solid;*/\n    display: flex;\n    flex-direction: column;\n    /*justify-content: space-between;*/\n    /*align-items: s;*/\n}\n.register-item[data-v-4adbf3d0] {\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    color: white;\n    margin-top: 5%;\n    width: 100%;\n}\n.register-send-button[data-v-4adbf3d0] {\n    width: 50%;\n    background: #8EA7C7;\n    color: white;\n    /*border: 1px white solid;*/\n    position: relative;\n    /*left: -10%;*/\n    padding: 3px 10px;\n    /*height: 30px;*/\n    /*display: flex;*/\n    font-size: 0.9rem;\n    /*margin: -2% 0;*/\n}\n.register-send-button[data-v-4adbf3d0]:hover {\n    background: #7192c3;\n    transition-duration: 0.3s;\n    border: 1px #7192c3 solid;\n}\n.error-info-container[data-v-4adbf3d0] {\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    color: white;\n    margin-top: 1%;\n    margin-bottom: -3%;\n    width: 100%;\n}\n.form-text[data-v-4adbf3d0] {\n    position: relative;\n    /*left: 20%;*/\n    display: flex;\n    width: 50%;\n    color: #A55756;\n}\n.error-input[data-v-4adbf3d0] {\n    border: 2px rgba(0, 0, 0, .075) solid;\n    box-shadow: inset 0 2px 2px rgba(0, 0, 0, .075), 0 0 4px rgba(158, 12, 10, 0.6)\n}\n.disabled-button[data-v-4adbf3d0] {\n    pointer-events: none;\n    cursor: not-allowed;\n    /*background: black;*/\n    background: #a0a0a0;\n}\n\n", ""]);
+exports.push([module.i, "@media (min-width: 0) and (max-width: 768px) {\ninput[data-v-4adbf3d0] {\n        height: 25px;\n}\nhtml[data-v-4adbf3d0] {\n        font-size: 2px;\n}\nbutton[data-v-4adbf3d0] {\n        padding: 1px auto !important;\n}\n.login-emil-name[data-v-4adbf3d0] {\n        width: 22% !important;\n}\n.register-item[data-v-4adbf3d0] {\n        margin-top: 7% !important;\n}\n.login-button[data-v-4adbf3d0] {\n        width: 70% !important;\n}\n.login-error-info-container[data-v-4adbf3d0]{\n        line-height: 20px !important;\n}\n}\n.login-container[data-v-4adbf3d0] {\n    position: absolute;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n    width: 100%;\n    top: 70px;\n    bottom: 0;\n    overflow: hidden;\n    /*background-image: linear-gradient(to left, #8EA7C7, #EECAC9);*/\n    background: url(" + escape(__webpack_require__(/*! ./../../../image/image-3.jpg */ "./resources/image/image-3.jpg")) + ");\n    /*filter: brightness(0.4);*/\n}\n.login-content[data-v-4adbf3d0] {\n    display: flex;\n    flex-direction: column;\n    /*justify-content: center;*/\n    width: 40%;\n    min-width: 300px;\n    /*height: 80%;*/\n    min-height: 75%;\n    background-image: linear-gradient(to top, #EECAC9, #8EA7C7);\n    border-radius: 10px;\n    box-shadow: 10px 10px 15px #444;\n    padding-bottom: 30px;\n}\n.login-top[data-v-4adbf3d0] {\n    height: 70px;\n    width: 100%;\n    position: relative;\n    top: 0;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    /*align-items: center;*/\n    border-bottom: 1px #EECAC9 solid;\n}\n.login[data-v-4adbf3d0] {\n    height: auto;\n    margin: 0 5%;\n    display: flex;\n    flex-direction: row;\n    align-items: center;\n    justify-content: center;\n    width: 30%;\n}\n.login-title[data-v-4adbf3d0] {\n    display: flex;\n    font-size: 1.1rem;\n    /*font-size: 19px;*/\n    color: white;\n    text-decoration: none;\n}\n.title-decoration[data-v-4adbf3d0] {\n    border-bottom: 3px solid #EECAC9;\n}\n.login-form-container[data-v-4adbf3d0] {\n    /*height: 50%;*/\n    border-bottom: 1px #8EA7C7 solid;\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    padding-bottom: 5%;\n    /*justify-content: space-between;*/\n    /*align-items: s;*/\n}\n.login-form[data-v-4adbf3d0] {\n    display: flex;\n    flex-direction: column;\n    /*align-items: center;*/\n    /*justify-content: space-around;*/\n}\n.login-emil[data-v-4adbf3d0] {\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    color: white;\n    margin-top: 10%;\n    width: 100%;\n}\n.position-refresh[data-v-4adbf3d0] {\n    margin-top: 5%;\n    margin-bottom: -5%;\n}\n.login-send[data-v-4adbf3d0] {\n    display: flex;\n    flex-direction: row;\n    /*justify-content: center;*/\n    color: white;\n    width: 90%;\n}\n.login-emil-name[data-v-4adbf3d0] {\n    display: flex;\n    font-size: 1rem;\n    margin: auto 0;\n    position: relative;\n    width: 14%;\n    /*left: 2%;*/\n}\n.login-email-input[data-v-4adbf3d0] {\n    position: relative;\n    /*left: 2%;*/\n    display: flex;\n    width: 50%;\n    min-width: 150px;\n    color: #8f8e93;\n}\n.login-button[data-v-4adbf3d0] {\n    background: #8EA7C7;\n    color: #fff;\n    width: 65%;\n    margin: 0 auto;\n}\n.login-button[data-v-4adbf3d0]:hover {\n    background: #7192c3;\n    transition-duration: 0.3s;\n}\n.login-type[data-v-4adbf3d0] {\n    /*height: 20%;*/\n    display: flex;\n    flex-direction: column;\n    /*justify-content: end;*/\n    align-items: center;\n    padding-top: 5%;\n}\n.login-type-title[data-v-4adbf3d0] {\n    display: flex;\n    color: white;\n    font-size: 1.1rem;\n    margin-bottom: 5%;\n}\n.other-login[data-v-4adbf3d0] {\n    display: flex;\n    flex-direction: row;\n    flex-wrap: wrap;\n    width: 80%;\n    justify-content: space-around;\n}\n.login-type-button[data-v-4adbf3d0] {\n    width: 140px;\n    background: #8EA7C7;\n    color: white;\n    margin: 4% 0;\n    font-size: 0.8rem;\n    /*display: flex;*/\n}\n.login-type-button[data-v-4adbf3d0]:hover {\n    background: #7192c3;\n    transition-duration: 0.3s;\n}\n.login-image[data-v-4adbf3d0] {\n    width: 23px;\n    height: 23px;\n    margin-right: 15px;\n}\n.send-button[data-v-4adbf3d0] {\n    width: 50%;\n    background: #8EA7C7;\n    color: white;\n    /*border: 1px white solid;*/\n    position: relative;\n    /*left: 41%;*/\n    padding: 3px 10px;\n    height: 30px;\n    /*display: flex;*/\n    font-size: 0.9rem;\n    /*margin: -% 0;*/\n}\n.send-button[data-v-4adbf3d0]:hover {\n    background: #7192c3;\n    transition-duration: 0.3s;\n    border: 1px #7192c3 solid;\n}\n.register-form-container[data-v-4adbf3d0] {\n    /*height: 50%;*/\n    /*border-bottom: 1px #8EA7C7 solid;*/\n    display: flex;\n    flex-direction: column;\n    /*justify-content: space-between;*/\n    /*align-items: s;*/\n}\n.register-item[data-v-4adbf3d0] {\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    color: white;\n    margin-top: 5%;\n    width: 100%;\n}\n.register-send-button[data-v-4adbf3d0] {\n    width: 50%;\n    background: #8EA7C7;\n    color: white;\n    /*border: 1px white solid;*/\n    position: relative;\n    /*left: -10%;*/\n    padding: 3px 10px;\n    /*height: 30px;*/\n    /*display: flex;*/\n    font-size: 0.9rem;\n    /*margin: -2% 0;*/\n}\n.register-send-button[data-v-4adbf3d0]:hover {\n    background: #7192c3;\n    transition-duration: 0.3s;\n    border: 1px #7192c3 solid;\n}\n.error-info-container[data-v-4adbf3d0] {\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    color: white;\n    margin-top: 1%;\n    margin-bottom: -3%;\n    width: 100%;\n}\n.form-text[data-v-4adbf3d0] {\n    position: relative;\n    /*left: 20%;*/\n    display: flex;\n    width: 50%;\n    color: #A55756;\n}\n.error-input[data-v-4adbf3d0] {\n    border: 2px rgba(0, 0, 0, .075) solid;\n    box-shadow: inset 0 2px 2px rgba(0, 0, 0, .075), 0 0 4px rgba(158, 12, 10, 0.6)\n}\n.disabled-button[data-v-4adbf3d0] {\n    pointer-events: none;\n    cursor: not-allowed;\n    /*background: black;*/\n    background: #a0a0a0;\n}\n.login-error-info-container[data-v-4adbf3d0] {\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    color: white;\n    height: 40px;\n    line-height: 40px;\n    margin-bottom: -40px;\n    width: 100%;\n}\n\n", ""]);
 
 // exports
 
@@ -6582,7 +6675,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "@media (min-width: 0) and (max-width: 768px) {\ninput[data-v-5f2710e6] {\n        height: 25px;\n}\nhtml[data-v-5f2710e6] {\n        font-size: 2px;\n}\nbutton[data-v-5f2710e6] {\n        padding: 1px auto !important;\n}\n.login-emil-name[data-v-5f2710e6] {\n        width: 22% !important;\n}\n.register-item[data-v-5f2710e6] {\n        margin-top: 7% !important;\n}\n.login-button[data-v-5f2710e6] {\n        width: 70% !important;\n}\n}\n.login-container[data-v-5f2710e6] {\n    position: absolute;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n    width: 100%;\n    top: 70px;\n    bottom: 0;\n    overflow: hidden;\n    /*background-image: linear-gradient(to left, #8EA7C7, #EECAC9);*/\n    background: url(" + escape(__webpack_require__(/*! ./../../../image/image-3.jpg */ "./resources/image/image-3.jpg")) + ");\n    /*filter: brightness(0.4);*/\n}\n.login-content[data-v-5f2710e6] {\n    display: flex;\n    flex-direction: column;\n    /*justify-content: center;*/\n    width: 40%;\n    min-width: 300px;\n    /*height: 80%;*/\n    min-height: 75%;\n    background-image: linear-gradient(to top, #EECAC9, #8EA7C7);\n    border-radius: 10px;\n    box-shadow: 10px 10px 15px #444;\n    padding-bottom: 30px;\n}\n.login-top[data-v-5f2710e6] {\n    height: 70px;\n    width: 100%;\n    position: relative;\n    top: 0;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    /*align-items: center;*/\n    border-bottom: 1px #EECAC9 solid;\n}\n.login[data-v-5f2710e6] {\n    height: auto;\n    margin: 0 5%;\n    display: flex;\n    flex-direction: row;\n    align-items: center;\n    justify-content: center;\n    width: 30%;\n}\n.login-title[data-v-5f2710e6] {\n    display: flex;\n    font-size: 1.1rem;\n    /*font-size: 19px;*/\n    color: white;\n    text-decoration: none;\n}\n.title-decoration[data-v-5f2710e6] {\n    border-bottom: 3px solid #EECAC9;\n}\n.login-form-container[data-v-5f2710e6] {\n    /*height: 50%;*/\n    border-bottom: 1px #8EA7C7 solid;\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    /*justify-content: space-between;*/\n    /*align-items: s;*/\n}\n.login-form[data-v-5f2710e6] {\n    display: flex;\n    flex-direction: column;\n    /*align-items: center;*/\n    /*justify-content: space-around;*/\n}\n.login-emil[data-v-5f2710e6] {\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    color: white;\n    margin: 5% 0;\n    width: 100%;\n}\n.position-refresh[data-v-5f2710e6] {\n    margin: 0;\n}\n.login-send[data-v-5f2710e6] {\n    display: flex;\n    flex-direction: row;\n    /*justify-content: center;*/\n    color: white;\n    width: 90%;\n}\n.login-emil-name[data-v-5f2710e6] {\n    display: flex;\n    font-size: 1rem;\n    margin: auto 0;\n    position: relative;\n    width: 14%;\n    /*left: 2%;*/\n}\n.login-email-input[data-v-5f2710e6] {\n    position: relative;\n    /*left: 2%;*/\n    display: flex;\n    width: 50%;\n    min-width: 150px;\n    color: #8f8e93;\n}\n.login-button[data-v-5f2710e6] {\n    background: #8EA7C7;\n    color: #fff;\n    width: 65%;\n    margin: 0 auto;\n}\n.login-button[data-v-5f2710e6]:hover {\n    background: #7192c3;\n    transition-duration: 0.3s;\n}\n.login-type[data-v-5f2710e6] {\n    /*height: 20%;*/\n    display: flex;\n    flex-direction: column;\n    /*justify-content: end;*/\n    align-items: center;\n    padding-top: 5%;\n}\n.login-type-title[data-v-5f2710e6] {\n    display: flex;\n    color: white;\n    font-size: 1.1rem;\n    margin-bottom: 5%;\n}\n.other-login[data-v-5f2710e6] {\n    display: flex;\n    flex-direction: row;\n    flex-wrap: wrap;\n    width: 80%;\n    justify-content: space-around;\n}\n.login-type-button[data-v-5f2710e6] {\n    width: 140px;\n    background: #8EA7C7;\n    color: white;\n    margin: 4% 0;\n    font-size: 0.8rem;\n    /*display: flex;*/\n}\n.login-type-button[data-v-5f2710e6]:hover {\n    background: #7192c3;\n    transition-duration: 0.3s;\n}\n.login-image[data-v-5f2710e6] {\n    width: 23px;\n    height: 23px;\n    margin-right: 15px;\n}\n.send-button[data-v-5f2710e6] {\n    width: 50%;\n    background: #8EA7C7;\n    color: white;\n    /*border: 1px white solid;*/\n    position: relative;\n    /*left: 41%;*/\n    padding: 3px 10px;\n    height: 30px;\n    /*display: flex;*/\n    font-size: 0.9rem;\n    /*margin: -% 0;*/\n}\n.send-button[data-v-5f2710e6]:hover {\n    background: #7192c3;\n    transition-duration: 0.3s;\n    border: 1px #7192c3 solid;\n}\n.register-form-container[data-v-5f2710e6] {\n    /*height: 50%;*/\n    /*border-bottom: 1px #8EA7C7 solid;*/\n    display: flex;\n    flex-direction: column;\n    /*justify-content: space-between;*/\n    /*align-items: s;*/\n}\n.register-item[data-v-5f2710e6] {\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    color: white;\n    margin-top: 5%;\n    width: 100%;\n}\n.register-send-button[data-v-5f2710e6] {\n    width: 50%;\n    background: #8EA7C7;\n    color: white;\n    /*border: 1px white solid;*/\n    position: relative;\n    /*left: -10%;*/\n    padding: 3px 10px;\n    /*height: 30px;*/\n    /*display: flex;*/\n    font-size: 0.9rem;\n    /*margin: -2% 0;*/\n}\n.register-send-button[data-v-5f2710e6]:hover {\n    background: #7192c3;\n    transition-duration: 0.3s;\n    border: 1px #7192c3 solid;\n}\n.error-info-container[data-v-5f2710e6] {\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    color: white;\n    margin-top: 1%;\n    margin-bottom: -3%;\n    width: 100%;\n}\n.form-text[data-v-5f2710e6] {\n    position: relative;\n    /*left: 20%;*/\n    display: flex;\n    width: 50%;\n    color: #A55756;\n}\n.error-input[data-v-5f2710e6] {\n    border: 2px rgba(0, 0, 0, .075) solid;\n    box-shadow: inset 0 2px 2px rgba(0, 0, 0, .075), 0 0 4px rgba(158, 12, 10, 0.6)\n}\n.disabled-button[data-v-5f2710e6] {\n    pointer-events: none;\n    cursor: not-allowed;\n    /*background: black;*/\n    background: #a0a0a0;\n}\n\n", ""]);
+exports.push([module.i, "@media (min-width: 0) and (max-width: 768px) {\ninput[data-v-5f2710e6] {\n        height: 25px;\n}\nhtml[data-v-5f2710e6] {\n        font-size: 2px;\n}\nbutton[data-v-5f2710e6] {\n        padding: 1px auto !important;\n}\n.login-emil-name[data-v-5f2710e6] {\n        width: 22% !important;\n}\n.register-item[data-v-5f2710e6] {\n        margin-top: 7% !important;\n}\n.login-button[data-v-5f2710e6] {\n        width: 70% !important;\n}\n.login-error-info-container[data-v-5f2710e6]{\n        line-height: 20px !important;\n}\n}\n.login-container[data-v-5f2710e6] {\n    position: absolute;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n    width: 100%;\n    top: 70px;\n    bottom: 0;\n    overflow: hidden;\n    /*background-image: linear-gradient(to left, #8EA7C7, #EECAC9);*/\n    background: url(" + escape(__webpack_require__(/*! ./../../../image/image-3.jpg */ "./resources/image/image-3.jpg")) + ");\n    /*filter: brightness(0.4);*/\n}\n.login-content[data-v-5f2710e6] {\n    display: flex;\n    flex-direction: column;\n    /*justify-content: center;*/\n    width: 40%;\n    min-width: 300px;\n    /*height: 80%;*/\n    min-height: 75%;\n    background-image: linear-gradient(to top, #EECAC9, #8EA7C7);\n    border-radius: 10px;\n    box-shadow: 10px 10px 15px #444;\n    padding-bottom: 30px;\n}\n.login-top[data-v-5f2710e6] {\n    height: 70px;\n    width: 100%;\n    position: relative;\n    top: 0;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    /*align-items: center;*/\n    border-bottom: 1px #EECAC9 solid;\n}\n.login[data-v-5f2710e6] {\n    height: auto;\n    margin: 0 5%;\n    display: flex;\n    flex-direction: row;\n    align-items: center;\n    justify-content: center;\n    width: 30%;\n}\n.login-title[data-v-5f2710e6] {\n    display: flex;\n    font-size: 1.1rem;\n    /*font-size: 19px;*/\n    color: white;\n    text-decoration: none;\n}\n.title-decoration[data-v-5f2710e6] {\n    border-bottom: 3px solid #EECAC9;\n}\n.login-form-container[data-v-5f2710e6] {\n    /*height: 50%;*/\n    border-bottom: 1px #8EA7C7 solid;\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    padding-bottom: 5%;\n    /*justify-content: space-between;*/\n    /*align-items: s;*/\n}\n.login-form[data-v-5f2710e6] {\n    display: flex;\n    flex-direction: column;\n    /*align-items: center;*/\n    /*justify-content: space-around;*/\n}\n.login-emil[data-v-5f2710e6] {\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    color: white;\n    margin-top: 10%;\n    width: 100%;\n}\n.position-refresh[data-v-5f2710e6] {\n    margin-top: 5%;\n    margin-bottom: -5%;\n}\n.login-send[data-v-5f2710e6] {\n    display: flex;\n    flex-direction: row;\n    /*justify-content: center;*/\n    color: white;\n    width: 90%;\n}\n.login-emil-name[data-v-5f2710e6] {\n    display: flex;\n    font-size: 1rem;\n    margin: auto 0;\n    position: relative;\n    width: 14%;\n    /*left: 2%;*/\n}\n.login-email-input[data-v-5f2710e6] {\n    position: relative;\n    /*left: 2%;*/\n    display: flex;\n    width: 50%;\n    min-width: 150px;\n    color: #8f8e93;\n}\n.login-button[data-v-5f2710e6] {\n    background: #8EA7C7;\n    color: #fff;\n    width: 65%;\n    margin: 0 auto;\n}\n.login-button[data-v-5f2710e6]:hover {\n    background: #7192c3;\n    transition-duration: 0.3s;\n}\n.login-type[data-v-5f2710e6] {\n    /*height: 20%;*/\n    display: flex;\n    flex-direction: column;\n    /*justify-content: end;*/\n    align-items: center;\n    padding-top: 5%;\n}\n.login-type-title[data-v-5f2710e6] {\n    display: flex;\n    color: white;\n    font-size: 1.1rem;\n    margin-bottom: 5%;\n}\n.other-login[data-v-5f2710e6] {\n    display: flex;\n    flex-direction: row;\n    flex-wrap: wrap;\n    width: 80%;\n    justify-content: space-around;\n}\n.login-type-button[data-v-5f2710e6] {\n    width: 140px;\n    background: #8EA7C7;\n    color: white;\n    margin: 4% 0;\n    font-size: 0.8rem;\n    /*display: flex;*/\n}\n.login-type-button[data-v-5f2710e6]:hover {\n    background: #7192c3;\n    transition-duration: 0.3s;\n}\n.login-image[data-v-5f2710e6] {\n    width: 23px;\n    height: 23px;\n    margin-right: 15px;\n}\n.send-button[data-v-5f2710e6] {\n    width: 50%;\n    background: #8EA7C7;\n    color: white;\n    /*border: 1px white solid;*/\n    position: relative;\n    /*left: 41%;*/\n    padding: 3px 10px;\n    height: 30px;\n    /*display: flex;*/\n    font-size: 0.9rem;\n    /*margin: -% 0;*/\n}\n.send-button[data-v-5f2710e6]:hover {\n    background: #7192c3;\n    transition-duration: 0.3s;\n    border: 1px #7192c3 solid;\n}\n.register-form-container[data-v-5f2710e6] {\n    /*height: 50%;*/\n    /*border-bottom: 1px #8EA7C7 solid;*/\n    display: flex;\n    flex-direction: column;\n    /*justify-content: space-between;*/\n    /*align-items: s;*/\n}\n.register-item[data-v-5f2710e6] {\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    color: white;\n    margin-top: 5%;\n    width: 100%;\n}\n.register-send-button[data-v-5f2710e6] {\n    width: 50%;\n    background: #8EA7C7;\n    color: white;\n    /*border: 1px white solid;*/\n    position: relative;\n    /*left: -10%;*/\n    padding: 3px 10px;\n    /*height: 30px;*/\n    /*display: flex;*/\n    font-size: 0.9rem;\n    /*margin: -2% 0;*/\n}\n.register-send-button[data-v-5f2710e6]:hover {\n    background: #7192c3;\n    transition-duration: 0.3s;\n    border: 1px #7192c3 solid;\n}\n.error-info-container[data-v-5f2710e6] {\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    color: white;\n    margin-top: 1%;\n    margin-bottom: -3%;\n    width: 100%;\n}\n.form-text[data-v-5f2710e6] {\n    position: relative;\n    /*left: 20%;*/\n    display: flex;\n    width: 50%;\n    color: #A55756;\n}\n.error-input[data-v-5f2710e6] {\n    border: 2px rgba(0, 0, 0, .075) solid;\n    box-shadow: inset 0 2px 2px rgba(0, 0, 0, .075), 0 0 4px rgba(158, 12, 10, 0.6)\n}\n.disabled-button[data-v-5f2710e6] {\n    pointer-events: none;\n    cursor: not-allowed;\n    /*background: black;*/\n    background: #a0a0a0;\n}\n.login-error-info-container[data-v-5f2710e6] {\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    color: white;\n    height: 40px;\n    line-height: 40px;\n    margin-bottom: -40px;\n    width: 100%;\n}\n\n", ""]);
 
 // exports
 
@@ -6602,7 +6695,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "@media (min-width: 0) and (max-width: 768px) {\ninput[data-v-a361add8] {\n        height: 25px;\n}\nhtml[data-v-a361add8] {\n        font-size: 2px;\n}\nbutton[data-v-a361add8] {\n        padding: 1px auto !important;\n}\n.login-emil-name[data-v-a361add8] {\n        width: 22% !important;\n}\n.register-item[data-v-a361add8] {\n        margin-top: 7% !important;\n}\n.login-button[data-v-a361add8] {\n        width: 70% !important;\n}\n}\n.login-container[data-v-a361add8] {\n    position: absolute;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n    width: 100%;\n    top: 70px;\n    bottom: 0;\n    overflow: hidden;\n    /*background-image: linear-gradient(to left, #8EA7C7, #EECAC9);*/\n    background: url(" + escape(__webpack_require__(/*! ./../../../image/image-3.jpg */ "./resources/image/image-3.jpg")) + ");\n    /*filter: brightness(0.4);*/\n}\n.login-content[data-v-a361add8] {\n    display: flex;\n    flex-direction: column;\n    /*justify-content: center;*/\n    width: 40%;\n    min-width: 300px;\n    /*height: 80%;*/\n    min-height: 75%;\n    background-image: linear-gradient(to top, #EECAC9, #8EA7C7);\n    border-radius: 10px;\n    box-shadow: 10px 10px 15px #444;\n    padding-bottom: 30px;\n}\n.login-top[data-v-a361add8] {\n    height: 70px;\n    width: 100%;\n    position: relative;\n    top: 0;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    /*align-items: center;*/\n    border-bottom: 1px #EECAC9 solid;\n}\n.login[data-v-a361add8] {\n    height: auto;\n    margin: 0 5%;\n    display: flex;\n    flex-direction: row;\n    align-items: center;\n    justify-content: center;\n    width: 30%;\n}\n.login-title[data-v-a361add8] {\n    display: flex;\n    font-size: 1.1rem;\n    /*font-size: 19px;*/\n    color: white;\n    text-decoration: none;\n}\n.title-decoration[data-v-a361add8] {\n    border-bottom: 3px solid #EECAC9;\n}\n.login-form-container[data-v-a361add8] {\n    /*height: 50%;*/\n    border-bottom: 1px #8EA7C7 solid;\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    /*justify-content: space-between;*/\n    /*align-items: s;*/\n}\n.login-form[data-v-a361add8] {\n    display: flex;\n    flex-direction: column;\n    /*align-items: center;*/\n    /*justify-content: space-around;*/\n}\n.login-emil[data-v-a361add8] {\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    color: white;\n    margin: 5% 0;\n    width: 100%;\n}\n.position-refresh[data-v-a361add8] {\n    margin: 0;\n}\n.login-send[data-v-a361add8] {\n    display: flex;\n    flex-direction: row;\n    /*justify-content: center;*/\n    color: white;\n    width: 90%;\n}\n.login-emil-name[data-v-a361add8] {\n    display: flex;\n    font-size: 1rem;\n    margin: auto 0;\n    position: relative;\n    width: 14%;\n    /*left: 2%;*/\n}\n.login-email-input[data-v-a361add8] {\n    position: relative;\n    /*left: 2%;*/\n    display: flex;\n    width: 50%;\n    min-width: 150px;\n    color: #8f8e93;\n}\n.login-button[data-v-a361add8] {\n    background: #8EA7C7;\n    color: #fff;\n    width: 65%;\n    margin: 0 auto;\n}\n.login-button[data-v-a361add8]:hover {\n    background: #7192c3;\n    transition-duration: 0.3s;\n}\n.login-type[data-v-a361add8] {\n    /*height: 20%;*/\n    display: flex;\n    flex-direction: column;\n    /*justify-content: end;*/\n    align-items: center;\n    padding-top: 5%;\n}\n.login-type-title[data-v-a361add8] {\n    display: flex;\n    color: white;\n    font-size: 1.1rem;\n    margin-bottom: 5%;\n}\n.other-login[data-v-a361add8] {\n    display: flex;\n    flex-direction: row;\n    flex-wrap: wrap;\n    width: 80%;\n    justify-content: space-around;\n}\n.login-type-button[data-v-a361add8] {\n    width: 140px;\n    background: #8EA7C7;\n    color: white;\n    margin: 4% 0;\n    font-size: 0.8rem;\n    /*display: flex;*/\n}\n.login-type-button[data-v-a361add8]:hover {\n    background: #7192c3;\n    transition-duration: 0.3s;\n}\n.login-image[data-v-a361add8] {\n    width: 23px;\n    height: 23px;\n    margin-right: 15px;\n}\n.send-button[data-v-a361add8] {\n    width: 50%;\n    background: #8EA7C7;\n    color: white;\n    /*border: 1px white solid;*/\n    position: relative;\n    /*left: 41%;*/\n    padding: 3px 10px;\n    height: 30px;\n    /*display: flex;*/\n    font-size: 0.9rem;\n    /*margin: -% 0;*/\n}\n.send-button[data-v-a361add8]:hover {\n    background: #7192c3;\n    transition-duration: 0.3s;\n    border: 1px #7192c3 solid;\n}\n.register-form-container[data-v-a361add8] {\n    /*height: 50%;*/\n    /*border-bottom: 1px #8EA7C7 solid;*/\n    display: flex;\n    flex-direction: column;\n    /*justify-content: space-between;*/\n    /*align-items: s;*/\n}\n.register-item[data-v-a361add8] {\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    color: white;\n    margin-top: 5%;\n    width: 100%;\n}\n.register-send-button[data-v-a361add8] {\n    width: 50%;\n    background: #8EA7C7;\n    color: white;\n    /*border: 1px white solid;*/\n    position: relative;\n    /*left: -10%;*/\n    padding: 3px 10px;\n    /*height: 30px;*/\n    /*display: flex;*/\n    font-size: 0.9rem;\n    /*margin: -2% 0;*/\n}\n.register-send-button[data-v-a361add8]:hover {\n    background: #7192c3;\n    transition-duration: 0.3s;\n    border: 1px #7192c3 solid;\n}\n.error-info-container[data-v-a361add8] {\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    color: white;\n    margin-top: 1%;\n    margin-bottom: -3%;\n    width: 100%;\n}\n.form-text[data-v-a361add8] {\n    position: relative;\n    /*left: 20%;*/\n    display: flex;\n    width: 50%;\n    color: #A55756;\n}\n.error-input[data-v-a361add8] {\n    border: 2px rgba(0, 0, 0, .075) solid;\n    box-shadow: inset 0 2px 2px rgba(0, 0, 0, .075), 0 0 4px rgba(158, 12, 10, 0.6)\n}\n.disabled-button[data-v-a361add8] {\n    pointer-events: none;\n    cursor: not-allowed;\n    /*background: black;*/\n    background: #a0a0a0;\n}\n\n", ""]);
+exports.push([module.i, "@media (min-width: 0) and (max-width: 768px) {\ninput[data-v-a361add8] {\n        height: 25px;\n}\nhtml[data-v-a361add8] {\n        font-size: 2px;\n}\nbutton[data-v-a361add8] {\n        padding: 1px auto !important;\n}\n.login-emil-name[data-v-a361add8] {\n        width: 22% !important;\n}\n.register-item[data-v-a361add8] {\n        margin-top: 7% !important;\n}\n.login-button[data-v-a361add8] {\n        width: 70% !important;\n}\n.login-error-info-container[data-v-a361add8]{\n        line-height: 20px !important;\n}\n}\n.login-container[data-v-a361add8] {\n    position: absolute;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n    width: 100%;\n    top: 70px;\n    bottom: 0;\n    overflow: hidden;\n    /*background-image: linear-gradient(to left, #8EA7C7, #EECAC9);*/\n    background: url(" + escape(__webpack_require__(/*! ./../../../image/image-3.jpg */ "./resources/image/image-3.jpg")) + ");\n    /*filter: brightness(0.4);*/\n}\n.login-content[data-v-a361add8] {\n    display: flex;\n    flex-direction: column;\n    /*justify-content: center;*/\n    width: 40%;\n    min-width: 300px;\n    /*height: 80%;*/\n    min-height: 75%;\n    background-image: linear-gradient(to top, #EECAC9, #8EA7C7);\n    border-radius: 10px;\n    box-shadow: 10px 10px 15px #444;\n    padding-bottom: 30px;\n}\n.login-top[data-v-a361add8] {\n    height: 70px;\n    width: 100%;\n    position: relative;\n    top: 0;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    /*align-items: center;*/\n    border-bottom: 1px #EECAC9 solid;\n}\n.login[data-v-a361add8] {\n    height: auto;\n    margin: 0 5%;\n    display: flex;\n    flex-direction: row;\n    align-items: center;\n    justify-content: center;\n    width: 30%;\n}\n.login-title[data-v-a361add8] {\n    display: flex;\n    font-size: 1.1rem;\n    /*font-size: 19px;*/\n    color: white;\n    text-decoration: none;\n}\n.title-decoration[data-v-a361add8] {\n    border-bottom: 3px solid #EECAC9;\n}\n.login-form-container[data-v-a361add8] {\n    /*height: 50%;*/\n    border-bottom: 1px #8EA7C7 solid;\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    padding-bottom: 5%;\n    /*justify-content: space-between;*/\n    /*align-items: s;*/\n}\n.login-form[data-v-a361add8] {\n    display: flex;\n    flex-direction: column;\n    /*align-items: center;*/\n    /*justify-content: space-around;*/\n}\n.login-emil[data-v-a361add8] {\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    color: white;\n    margin-top: 10%;\n    width: 100%;\n}\n.position-refresh[data-v-a361add8] {\n    margin-top: 5%;\n    margin-bottom: -5%;\n}\n.login-send[data-v-a361add8] {\n    display: flex;\n    flex-direction: row;\n    /*justify-content: center;*/\n    color: white;\n    width: 90%;\n}\n.login-emil-name[data-v-a361add8] {\n    display: flex;\n    font-size: 1rem;\n    margin: auto 0;\n    position: relative;\n    width: 14%;\n    /*left: 2%;*/\n}\n.login-email-input[data-v-a361add8] {\n    position: relative;\n    /*left: 2%;*/\n    display: flex;\n    width: 50%;\n    min-width: 150px;\n    color: #8f8e93;\n}\n.login-button[data-v-a361add8] {\n    background: #8EA7C7;\n    color: #fff;\n    width: 65%;\n    margin: 0 auto;\n}\n.login-button[data-v-a361add8]:hover {\n    background: #7192c3;\n    transition-duration: 0.3s;\n}\n.login-type[data-v-a361add8] {\n    /*height: 20%;*/\n    display: flex;\n    flex-direction: column;\n    /*justify-content: end;*/\n    align-items: center;\n    padding-top: 5%;\n}\n.login-type-title[data-v-a361add8] {\n    display: flex;\n    color: white;\n    font-size: 1.1rem;\n    margin-bottom: 5%;\n}\n.other-login[data-v-a361add8] {\n    display: flex;\n    flex-direction: row;\n    flex-wrap: wrap;\n    width: 80%;\n    justify-content: space-around;\n}\n.login-type-button[data-v-a361add8] {\n    width: 140px;\n    background: #8EA7C7;\n    color: white;\n    margin: 4% 0;\n    font-size: 0.8rem;\n    /*display: flex;*/\n}\n.login-type-button[data-v-a361add8]:hover {\n    background: #7192c3;\n    transition-duration: 0.3s;\n}\n.login-image[data-v-a361add8] {\n    width: 23px;\n    height: 23px;\n    margin-right: 15px;\n}\n.send-button[data-v-a361add8] {\n    width: 50%;\n    background: #8EA7C7;\n    color: white;\n    /*border: 1px white solid;*/\n    position: relative;\n    /*left: 41%;*/\n    padding: 3px 10px;\n    height: 30px;\n    /*display: flex;*/\n    font-size: 0.9rem;\n    /*margin: -% 0;*/\n}\n.send-button[data-v-a361add8]:hover {\n    background: #7192c3;\n    transition-duration: 0.3s;\n    border: 1px #7192c3 solid;\n}\n.register-form-container[data-v-a361add8] {\n    /*height: 50%;*/\n    /*border-bottom: 1px #8EA7C7 solid;*/\n    display: flex;\n    flex-direction: column;\n    /*justify-content: space-between;*/\n    /*align-items: s;*/\n}\n.register-item[data-v-a361add8] {\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    color: white;\n    margin-top: 5%;\n    width: 100%;\n}\n.register-send-button[data-v-a361add8] {\n    width: 50%;\n    background: #8EA7C7;\n    color: white;\n    /*border: 1px white solid;*/\n    position: relative;\n    /*left: -10%;*/\n    padding: 3px 10px;\n    /*height: 30px;*/\n    /*display: flex;*/\n    font-size: 0.9rem;\n    /*margin: -2% 0;*/\n}\n.register-send-button[data-v-a361add8]:hover {\n    background: #7192c3;\n    transition-duration: 0.3s;\n    border: 1px #7192c3 solid;\n}\n.error-info-container[data-v-a361add8] {\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    color: white;\n    margin-top: 1%;\n    margin-bottom: -3%;\n    width: 100%;\n}\n.form-text[data-v-a361add8] {\n    position: relative;\n    /*left: 20%;*/\n    display: flex;\n    width: 50%;\n    color: #A55756;\n}\n.error-input[data-v-a361add8] {\n    border: 2px rgba(0, 0, 0, .075) solid;\n    box-shadow: inset 0 2px 2px rgba(0, 0, 0, .075), 0 0 4px rgba(158, 12, 10, 0.6)\n}\n.disabled-button[data-v-a361add8] {\n    pointer-events: none;\n    cursor: not-allowed;\n    /*background: black;*/\n    background: #a0a0a0;\n}\n.login-error-info-container[data-v-a361add8] {\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    color: white;\n    height: 40px;\n    line-height: 40px;\n    margin-bottom: -40px;\n    width: 100%;\n}\n\n", ""]);
 
 // exports
 
@@ -6622,7 +6715,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "@media (min-width: 0) and (max-width: 768px) {\ninput[data-v-ecc2ca70] {\n        height: 25px;\n}\nhtml[data-v-ecc2ca70] {\n        font-size: 2px;\n}\nbutton[data-v-ecc2ca70] {\n        padding: 1px auto !important;\n}\n.login-emil-name[data-v-ecc2ca70] {\n        width: 22% !important;\n}\n.register-item[data-v-ecc2ca70] {\n        margin-top: 7% !important;\n}\n.login-button[data-v-ecc2ca70] {\n        width: 70% !important;\n}\n}\n.login-container[data-v-ecc2ca70] {\n    position: absolute;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n    width: 100%;\n    top: 70px;\n    bottom: 0;\n    overflow: hidden;\n    /*background-image: linear-gradient(to left, #8EA7C7, #EECAC9);*/\n    background: url(" + escape(__webpack_require__(/*! ./../../../image/image-3.jpg */ "./resources/image/image-3.jpg")) + ");\n    /*filter: brightness(0.4);*/\n}\n.login-content[data-v-ecc2ca70] {\n    display: flex;\n    flex-direction: column;\n    /*justify-content: center;*/\n    width: 40%;\n    min-width: 300px;\n    /*height: 80%;*/\n    min-height: 75%;\n    background-image: linear-gradient(to top, #EECAC9, #8EA7C7);\n    border-radius: 10px;\n    box-shadow: 10px 10px 15px #444;\n    padding-bottom: 30px;\n}\n.login-top[data-v-ecc2ca70] {\n    height: 70px;\n    width: 100%;\n    position: relative;\n    top: 0;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    /*align-items: center;*/\n    border-bottom: 1px #EECAC9 solid;\n}\n.login[data-v-ecc2ca70] {\n    height: auto;\n    margin: 0 5%;\n    display: flex;\n    flex-direction: row;\n    align-items: center;\n    justify-content: center;\n    width: 30%;\n}\n.login-title[data-v-ecc2ca70] {\n    display: flex;\n    font-size: 1.1rem;\n    /*font-size: 19px;*/\n    color: white;\n    text-decoration: none;\n}\n.title-decoration[data-v-ecc2ca70] {\n    border-bottom: 3px solid #EECAC9;\n}\n.login-form-container[data-v-ecc2ca70] {\n    /*height: 50%;*/\n    border-bottom: 1px #8EA7C7 solid;\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    /*justify-content: space-between;*/\n    /*align-items: s;*/\n}\n.login-form[data-v-ecc2ca70] {\n    display: flex;\n    flex-direction: column;\n    /*align-items: center;*/\n    /*justify-content: space-around;*/\n}\n.login-emil[data-v-ecc2ca70] {\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    color: white;\n    margin: 5% 0;\n    width: 100%;\n}\n.position-refresh[data-v-ecc2ca70] {\n    margin: 0;\n}\n.login-send[data-v-ecc2ca70] {\n    display: flex;\n    flex-direction: row;\n    /*justify-content: center;*/\n    color: white;\n    width: 90%;\n}\n.login-emil-name[data-v-ecc2ca70] {\n    display: flex;\n    font-size: 1rem;\n    margin: auto 0;\n    position: relative;\n    width: 14%;\n    /*left: 2%;*/\n}\n.login-email-input[data-v-ecc2ca70] {\n    position: relative;\n    /*left: 2%;*/\n    display: flex;\n    width: 50%;\n    min-width: 150px;\n    color: #8f8e93;\n}\n.login-button[data-v-ecc2ca70] {\n    background: #8EA7C7;\n    color: #fff;\n    width: 65%;\n    margin: 0 auto;\n}\n.login-button[data-v-ecc2ca70]:hover {\n    background: #7192c3;\n    transition-duration: 0.3s;\n}\n.login-type[data-v-ecc2ca70] {\n    /*height: 20%;*/\n    display: flex;\n    flex-direction: column;\n    /*justify-content: end;*/\n    align-items: center;\n    padding-top: 5%;\n}\n.login-type-title[data-v-ecc2ca70] {\n    display: flex;\n    color: white;\n    font-size: 1.1rem;\n    margin-bottom: 5%;\n}\n.other-login[data-v-ecc2ca70] {\n    display: flex;\n    flex-direction: row;\n    flex-wrap: wrap;\n    width: 80%;\n    justify-content: space-around;\n}\n.login-type-button[data-v-ecc2ca70] {\n    width: 140px;\n    background: #8EA7C7;\n    color: white;\n    margin: 4% 0;\n    font-size: 0.8rem;\n    /*display: flex;*/\n}\n.login-type-button[data-v-ecc2ca70]:hover {\n    background: #7192c3;\n    transition-duration: 0.3s;\n}\n.login-image[data-v-ecc2ca70] {\n    width: 23px;\n    height: 23px;\n    margin-right: 15px;\n}\n.send-button[data-v-ecc2ca70] {\n    width: 50%;\n    background: #8EA7C7;\n    color: white;\n    /*border: 1px white solid;*/\n    position: relative;\n    /*left: 41%;*/\n    padding: 3px 10px;\n    height: 30px;\n    /*display: flex;*/\n    font-size: 0.9rem;\n    /*margin: -% 0;*/\n}\n.send-button[data-v-ecc2ca70]:hover {\n    background: #7192c3;\n    transition-duration: 0.3s;\n    border: 1px #7192c3 solid;\n}\n.register-form-container[data-v-ecc2ca70] {\n    /*height: 50%;*/\n    /*border-bottom: 1px #8EA7C7 solid;*/\n    display: flex;\n    flex-direction: column;\n    /*justify-content: space-between;*/\n    /*align-items: s;*/\n}\n.register-item[data-v-ecc2ca70] {\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    color: white;\n    margin-top: 5%;\n    width: 100%;\n}\n.register-send-button[data-v-ecc2ca70] {\n    width: 50%;\n    background: #8EA7C7;\n    color: white;\n    /*border: 1px white solid;*/\n    position: relative;\n    /*left: -10%;*/\n    padding: 3px 10px;\n    /*height: 30px;*/\n    /*display: flex;*/\n    font-size: 0.9rem;\n    /*margin: -2% 0;*/\n}\n.register-send-button[data-v-ecc2ca70]:hover {\n    background: #7192c3;\n    transition-duration: 0.3s;\n    border: 1px #7192c3 solid;\n}\n.error-info-container[data-v-ecc2ca70] {\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    color: white;\n    margin-top: 1%;\n    margin-bottom: -3%;\n    width: 100%;\n}\n.form-text[data-v-ecc2ca70] {\n    position: relative;\n    /*left: 20%;*/\n    display: flex;\n    width: 50%;\n    color: #A55756;\n}\n.error-input[data-v-ecc2ca70] {\n    border: 2px rgba(0, 0, 0, .075) solid;\n    box-shadow: inset 0 2px 2px rgba(0, 0, 0, .075), 0 0 4px rgba(158, 12, 10, 0.6)\n}\n.disabled-button[data-v-ecc2ca70] {\n    pointer-events: none;\n    cursor: not-allowed;\n    /*background: black;*/\n    background: #a0a0a0;\n}\n\n", ""]);
+exports.push([module.i, "@media (min-width: 0) and (max-width: 768px) {\ninput[data-v-ecc2ca70] {\n        height: 25px;\n}\nhtml[data-v-ecc2ca70] {\n        font-size: 2px;\n}\nbutton[data-v-ecc2ca70] {\n        padding: 1px auto !important;\n}\n.login-emil-name[data-v-ecc2ca70] {\n        width: 22% !important;\n}\n.register-item[data-v-ecc2ca70] {\n        margin-top: 7% !important;\n}\n.login-button[data-v-ecc2ca70] {\n        width: 70% !important;\n}\n.login-error-info-container[data-v-ecc2ca70]{\n        line-height: 20px !important;\n}\n}\n.login-container[data-v-ecc2ca70] {\n    position: absolute;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    align-items: center;\n    width: 100%;\n    top: 70px;\n    bottom: 0;\n    overflow: hidden;\n    /*background-image: linear-gradient(to left, #8EA7C7, #EECAC9);*/\n    background: url(" + escape(__webpack_require__(/*! ./../../../image/image-3.jpg */ "./resources/image/image-3.jpg")) + ");\n    /*filter: brightness(0.4);*/\n}\n.login-content[data-v-ecc2ca70] {\n    display: flex;\n    flex-direction: column;\n    /*justify-content: center;*/\n    width: 40%;\n    min-width: 300px;\n    /*height: 80%;*/\n    min-height: 75%;\n    background-image: linear-gradient(to top, #EECAC9, #8EA7C7);\n    border-radius: 10px;\n    box-shadow: 10px 10px 15px #444;\n    padding-bottom: 30px;\n}\n.login-top[data-v-ecc2ca70] {\n    height: 70px;\n    width: 100%;\n    position: relative;\n    top: 0;\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    /*align-items: center;*/\n    border-bottom: 1px #EECAC9 solid;\n}\n.login[data-v-ecc2ca70] {\n    height: auto;\n    margin: 0 5%;\n    display: flex;\n    flex-direction: row;\n    align-items: center;\n    justify-content: center;\n    width: 30%;\n}\n.login-title[data-v-ecc2ca70] {\n    display: flex;\n    font-size: 1.1rem;\n    /*font-size: 19px;*/\n    color: white;\n    text-decoration: none;\n}\n.title-decoration[data-v-ecc2ca70] {\n    border-bottom: 3px solid #EECAC9;\n}\n.login-form-container[data-v-ecc2ca70] {\n    /*height: 50%;*/\n    border-bottom: 1px #8EA7C7 solid;\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    padding-bottom: 5%;\n    /*justify-content: space-between;*/\n    /*align-items: s;*/\n}\n.login-form[data-v-ecc2ca70] {\n    display: flex;\n    flex-direction: column;\n    /*align-items: center;*/\n    /*justify-content: space-around;*/\n}\n.login-emil[data-v-ecc2ca70] {\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    color: white;\n    margin-top: 10%;\n    width: 100%;\n}\n.position-refresh[data-v-ecc2ca70] {\n    margin-top: 5%;\n    margin-bottom: -5%;\n}\n.login-send[data-v-ecc2ca70] {\n    display: flex;\n    flex-direction: row;\n    /*justify-content: center;*/\n    color: white;\n    width: 90%;\n}\n.login-emil-name[data-v-ecc2ca70] {\n    display: flex;\n    font-size: 1rem;\n    margin: auto 0;\n    position: relative;\n    width: 14%;\n    /*left: 2%;*/\n}\n.login-email-input[data-v-ecc2ca70] {\n    position: relative;\n    /*left: 2%;*/\n    display: flex;\n    width: 50%;\n    min-width: 150px;\n    color: #8f8e93;\n}\n.login-button[data-v-ecc2ca70] {\n    background: #8EA7C7;\n    color: #fff;\n    width: 65%;\n    margin: 0 auto;\n}\n.login-button[data-v-ecc2ca70]:hover {\n    background: #7192c3;\n    transition-duration: 0.3s;\n}\n.login-type[data-v-ecc2ca70] {\n    /*height: 20%;*/\n    display: flex;\n    flex-direction: column;\n    /*justify-content: end;*/\n    align-items: center;\n    padding-top: 5%;\n}\n.login-type-title[data-v-ecc2ca70] {\n    display: flex;\n    color: white;\n    font-size: 1.1rem;\n    margin-bottom: 5%;\n}\n.other-login[data-v-ecc2ca70] {\n    display: flex;\n    flex-direction: row;\n    flex-wrap: wrap;\n    width: 80%;\n    justify-content: space-around;\n}\n.login-type-button[data-v-ecc2ca70] {\n    width: 140px;\n    background: #8EA7C7;\n    color: white;\n    margin: 4% 0;\n    font-size: 0.8rem;\n    /*display: flex;*/\n}\n.login-type-button[data-v-ecc2ca70]:hover {\n    background: #7192c3;\n    transition-duration: 0.3s;\n}\n.login-image[data-v-ecc2ca70] {\n    width: 23px;\n    height: 23px;\n    margin-right: 15px;\n}\n.send-button[data-v-ecc2ca70] {\n    width: 50%;\n    background: #8EA7C7;\n    color: white;\n    /*border: 1px white solid;*/\n    position: relative;\n    /*left: 41%;*/\n    padding: 3px 10px;\n    height: 30px;\n    /*display: flex;*/\n    font-size: 0.9rem;\n    /*margin: -% 0;*/\n}\n.send-button[data-v-ecc2ca70]:hover {\n    background: #7192c3;\n    transition-duration: 0.3s;\n    border: 1px #7192c3 solid;\n}\n.register-form-container[data-v-ecc2ca70] {\n    /*height: 50%;*/\n    /*border-bottom: 1px #8EA7C7 solid;*/\n    display: flex;\n    flex-direction: column;\n    /*justify-content: space-between;*/\n    /*align-items: s;*/\n}\n.register-item[data-v-ecc2ca70] {\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    color: white;\n    margin-top: 5%;\n    width: 100%;\n}\n.register-send-button[data-v-ecc2ca70] {\n    width: 50%;\n    background: #8EA7C7;\n    color: white;\n    /*border: 1px white solid;*/\n    position: relative;\n    /*left: -10%;*/\n    padding: 3px 10px;\n    /*height: 30px;*/\n    /*display: flex;*/\n    font-size: 0.9rem;\n    /*margin: -2% 0;*/\n}\n.register-send-button[data-v-ecc2ca70]:hover {\n    background: #7192c3;\n    transition-duration: 0.3s;\n    border: 1px #7192c3 solid;\n}\n.error-info-container[data-v-ecc2ca70] {\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    color: white;\n    margin-top: 1%;\n    margin-bottom: -3%;\n    width: 100%;\n}\n.form-text[data-v-ecc2ca70] {\n    position: relative;\n    /*left: 20%;*/\n    display: flex;\n    width: 50%;\n    color: #A55756;\n}\n.error-input[data-v-ecc2ca70] {\n    border: 2px rgba(0, 0, 0, .075) solid;\n    box-shadow: inset 0 2px 2px rgba(0, 0, 0, .075), 0 0 4px rgba(158, 12, 10, 0.6)\n}\n.disabled-button[data-v-ecc2ca70] {\n    pointer-events: none;\n    cursor: not-allowed;\n    /*background: black;*/\n    background: #a0a0a0;\n}\n.login-error-info-container[data-v-ecc2ca70] {\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    color: white;\n    height: 40px;\n    line-height: 40px;\n    margin-bottom: -40px;\n    width: 100%;\n}\n\n", ""]);
 
 // exports
 
@@ -49470,60 +49563,151 @@ var render = function() {
         }
       }
     },
-    [_vm._m(0), _vm._v(" "), _vm._m(1), _vm._v(" "), _vm._m(2)]
-  )
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "login-emil" }, [
-      _c("label", { staticClass: "login-emil-name", attrs: { for: "email" } }, [
-        _vm._v("邮箱")
+    [
+      _c("div", { staticClass: "login-emil" }, [
+        _c(
+          "label",
+          { staticClass: "login-emil-name", attrs: { for: "email" } },
+          [_vm._v("邮箱")]
+        ),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.email,
+              expression: "email"
+            },
+            {
+              name: "validate",
+              rawName: "v-validate",
+              value: "required|email",
+              expression: "'required|email'"
+            }
+          ],
+          staticClass: "form-control login-email-input",
+          class: { "error-input": _vm.errors.has("email") },
+          attrs: {
+            "data-vv-as": "邮箱",
+            id: "email",
+            name: "email",
+            required: ""
+          },
+          domProps: { value: _vm.email },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.email = $event.target.value
+            }
+          }
+        })
       ]),
       _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control login-email-input",
-        attrs: { id: "email", type: "email", name: "email", required: "" }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "login-emil" }, [
       _c(
-        "label",
-        { staticClass: "login-emil-name", attrs: { for: "password" } },
-        [_vm._v("密码")]
+        "div",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.errors.has("email"),
+              expression: "errors.has('email')"
+            }
+          ],
+          staticClass: "login-error-info-container"
+        },
+        [
+          _c("label", { staticClass: "login-emil-name" }),
+          _vm._v(" "),
+          _c("span", { staticClass: "form-text" }, [
+            _vm._v(_vm._s(_vm.errors.first("email")))
+          ])
+        ]
       ),
       _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control login-email-input",
-        attrs: {
-          id: "password",
-          type: "password",
-          name: "password",
-          required: ""
-        }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "login-emil" }, [
+      _c("div", { staticClass: "login-emil" }, [
+        _c(
+          "label",
+          { staticClass: "login-emil-name", attrs: { for: "password" } },
+          [_vm._v("密码")]
+        ),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.password,
+              expression: "password"
+            },
+            {
+              name: "validate",
+              rawName: "v-validate",
+              value: "required|min:9",
+              expression: "'required|min:9'"
+            }
+          ],
+          staticClass: "form-control login-email-input",
+          class: { "error-input": _vm.errors.has("password") },
+          attrs: {
+            "data-vv-as": "密码",
+            id: "password",
+            type: "password",
+            name: "password",
+            required: ""
+          },
+          domProps: { value: _vm.password },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.password = $event.target.value
+            }
+          }
+        })
+      ]),
+      _vm._v(" "),
       _c(
-        "button",
-        { staticClass: "btn login-button", attrs: { type: "submit" } },
-        [_vm._v("\n            登录\n        ")]
-      )
-    ])
-  }
-]
+        "div",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.errors.has("password"),
+              expression: "errors.has('password')"
+            }
+          ],
+          staticClass: "login-error-info-container"
+        },
+        [
+          _c("label", { staticClass: "login-emil-name" }),
+          _vm._v(" "),
+          _c("span", { staticClass: "form-text" }, [
+            _vm._v(_vm._s(_vm.errors.first("password")))
+          ])
+        ]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "login-emil" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn login-button",
+            class: { "disabled-button": _vm.errors.any() },
+            attrs: { type: "submit" }
+          },
+          [_vm._v("\n            登录\n        ")]
+        )
+      ])
+    ]
+  )
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -49557,77 +49741,164 @@ var render = function() {
       }
     },
     [
-      _vm._m(0),
+      _c("div", { staticClass: "login-emil" }, [
+        _c(
+          "label",
+          { staticClass: "login-emil-name", attrs: { for: "phone" } },
+          [_vm._v("手机号")]
+        ),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.phone,
+              expression: "phone"
+            },
+            {
+              name: "validate",
+              rawName: "v-validate",
+              value: "required|phone",
+              expression: "'required|phone'"
+            }
+          ],
+          staticClass: "form-control login-email-input",
+          class: { "error-input": _vm.errors.has("phone") },
+          attrs: {
+            "data-vv-as": "手机号码",
+            id: "email",
+            name: "phone",
+            required: ""
+          },
+          domProps: { value: _vm.phone },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.phone = $event.target.value
+            }
+          }
+        })
+      ]),
       _vm._v(" "),
-      _vm._m(1),
+      _c(
+        "div",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.errors.has("phone"),
+              expression: "errors.has('phone')"
+            }
+          ],
+          staticClass: "error-info-container"
+        },
+        [
+          _c("label", { staticClass: "login-emil-name" }),
+          _vm._v(" "),
+          _c("span", { staticClass: "form-text" }, [
+            _vm._v(_vm._s(_vm.errors.first("phone")))
+          ])
+        ]
+      ),
       _vm._v(" "),
-      _vm._m(2),
+      _c("div", { staticClass: "login-emil position-refresh" }, [
+        _c("label", { staticClass: "login-emil-name" }),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn send-button",
+            class: { "disabled-button": !_vm.canClick },
+            attrs: { type: "button" },
+            on: { click: _vm.getCode }
+          },
+          [_vm._v(_vm._s(_vm.buttonContent) + "\n        ")]
+        )
+      ]),
       _vm._v(" "),
-      _vm._m(3)
+      _c("div", { staticClass: "login-emil" }, [
+        _c(
+          "label",
+          { staticClass: "login-emil-name", attrs: { for: "code" } },
+          [_vm._v("验证码")]
+        ),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.code,
+              expression: "code"
+            },
+            {
+              name: "validate",
+              rawName: "v-validate",
+              value: "required|length:6",
+              expression: "'required|length:6'"
+            }
+          ],
+          staticClass: "form-control login-email-input",
+          class: { "error-input": _vm.errors.has("code") },
+          attrs: {
+            "data-vv-as": "验证码",
+            id: "code",
+            name: "code",
+            required: ""
+          },
+          domProps: { value: _vm.code },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.code = $event.target.value
+            }
+          }
+        })
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.errors.has("code"),
+              expression: "errors.has('code')"
+            }
+          ],
+          staticClass: "error-info-container"
+        },
+        [
+          _c("label", { staticClass: "login-emil-name" }),
+          _vm._v(" "),
+          _c("span", { staticClass: "form-text" }, [
+            _vm._v(_vm._s(_vm.errors.first("code")))
+          ])
+        ]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "login-emil" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn login-button",
+            class: { "disabled-button": _vm.errors.any() },
+            attrs: { type: "submit" }
+          },
+          [_vm._v("\n            登录\n        ")]
+        )
+      ])
     ]
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "login-emil" }, [
-      _c("label", { staticClass: "login-emil-name", attrs: { for: "email" } }, [
-        _vm._v("手机号")
-      ]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control login-email-input",
-        attrs: { id: "email", type: "email", name: "email", required: "" }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "login-emil position-refresh" }, [
-      _c("label", { staticClass: "login-emil-name", attrs: { for: "phone" } }),
-      _vm._v(" "),
-      _c("button", { staticClass: "btn send-button" }, [_vm._v("发送验证码")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "login-emil" }, [
-      _c(
-        "label",
-        { staticClass: "login-emil-name", attrs: { for: "password" } },
-        [_vm._v("验证码")]
-      ),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control login-email-input",
-        attrs: {
-          id: "password",
-          type: "password",
-          name: "password",
-          required: ""
-        }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "login-emil" }, [
-      _c(
-        "button",
-        { staticClass: "btn login-button", attrs: { type: "submit" } },
-        [_vm._v("\n            登录\n        ")]
-      )
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -49719,27 +49990,7 @@ var render = function() {
               1
             ),
             _vm._v(" "),
-            _c("div", { staticClass: "item-login-container" }, [
-              _c("a", { staticClass: "item-login" }, [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn login-type-button",
-                    on: { click: _vm.githubLogin }
-                  },
-                  [
-                    _c("img", {
-                      staticClass: "login-image",
-                      attrs: {
-                        src: __webpack_require__(/*! ./../../../image/github1.svg */ "./resources/image/github1.svg"),
-                        alt: ""
-                      }
-                    }),
-                    _vm._v("GitHub\n                        ")
-                  ]
-                )
-              ])
-            ]),
+            _vm._m(0),
             _vm._v(" "),
             _c(
               "div",
@@ -49778,7 +50029,24 @@ var render = function() {
     )
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "item-login-container" }, [
+      _c("a", { staticClass: "item-login", attrs: { href: "/github/login" } }, [
+        _c("button", { staticClass: "btn login-type-button" }, [
+          _c("img", {
+            staticClass: "login-image",
+            attrs: { src: __webpack_require__(/*! ./../../../image/github1.svg */ "./resources/image/github1.svg"), alt: "" }
+          }),
+          _vm._v("GitHub\n                        ")
+        ])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 

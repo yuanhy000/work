@@ -18,8 +18,11 @@ Route::get('/', function () {
 });
 
 
+Route::get('/github/login', 'Auth\LoginController@githubLogin');
+Route::get('/github/callback', 'Auth\LoginController@githubCallback');
+
 Route::get('/cache', function () {
 //    dd(\Illuminate\Support\Facades\Cache::get("login.code."."17784457936"));
-
+    dd(\Illuminate\Support\Facades\Auth::id());
 });
 
