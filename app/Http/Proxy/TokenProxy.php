@@ -6,7 +6,7 @@ namespace App\Http\Proxy;
 
 use App\User;
 use GuzzleHttp\Client;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Cache;
 
 class TokenProxy
 {
@@ -15,6 +15,15 @@ class TokenProxy
     public function __construct(Client $http)
     {
         $this->http = $http;
+    }
+
+    public function getRegisterToken($email, $password)
+    {
+        return $this->proxy('password', [
+            'username' => $email,
+            'password' => $password,
+            'scope' => '*'
+        ]);
     }
 
     public function emailLogin($email, $password)
@@ -26,11 +35,31 @@ class TokenProxy
                 'scope' => '*'
             ]);
         }
+
+        return response()->json([
+            'status' => false,
+            'message' => 'Credentials not match'
+        ], 404);
     }
 
     public function phoneCodeLogin($phone, $code)
     {
-        return 0;
+        if (User::where('phone', $phone)->first()) {
+            if (Cache::get('login.code.' . $phone) == $code) {
+                return $this->proxy('client_credentials', [
+                    'scope' => '*'
+                ]);
+            }
+            return response()->json([
+                'status' => false,
+                'message' => 'code not match'
+            ], 404);
+        }
+        return response()->json([
+            'status' => false,
+            'message' => 'phone not exist'
+        ], 404);
+
     }
 
     public function proxy($grantType, array $data)
@@ -47,13 +76,17 @@ class TokenProxy
 
         $token = json_decode((string)$response->getBody(), true);
 
-        return response()->json([
-            'token' => $token['access_token'],
-            'auth_id' => md5($token['refresh_token']),
-            'expires_in' => $token['expires_in']
-        ])->cookie('refreshToken', $token['refresh_token'], 14400, null, null, false, true);
-
-
-        return 0;
+        switch ($grantType) {
+            case 'password':
+                return response()->json($token)
+                    ->cookie('refreshToken', $token['refresh_token'], 14400, null, null, false, true);
+            case 'client_credentials':
+                return response()->json($token);
+            default:
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Internal Server Error!'
+                ], 500);
+        }
     }
 }

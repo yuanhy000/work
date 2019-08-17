@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Http\Proxy\TokenProxy;
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -15,10 +16,12 @@ class RegisterController extends Controller
 {
     use RegistersUsers;
 
+    protected $proxy;
     protected $redirectTo = '/home';
 
-    public function __construct()
+    public function __construct(TokenProxy $proxy)
     {
+        $this->proxy = $proxy;
         $this->middleware('guest');
     }
 
@@ -34,7 +37,7 @@ class RegisterController extends Controller
         $user = $this->create($request->all());
         Auth::guard()->login($user);
 
-        return response()->json('great!');
+        return $this->proxy->getRegisterToken($userInfo['email'], $userInfo['password']);
     }
 
     protected function validator(array $userInfo)

@@ -30,6 +30,9 @@
 </template>
 
 <script>
+
+    import jwtToken from './../../helpers/jwt';
+
     export default {
         name: "login-form",
         data() {
@@ -47,9 +50,10 @@
                             password: this.password,
                             type: 'email'
                         };
-                        console.log(loginInfo);
-                        return axios.post('/api/login', loginInfo).then(res => {
-                            console.log(res)
+                        this.$store.dispatch('loginRequest', loginInfo).then(res => {
+                            this.$router.push({name: 'home'});
+                        }).catch(error => {
+                            console.log(error);
                         })
                     }
                 });

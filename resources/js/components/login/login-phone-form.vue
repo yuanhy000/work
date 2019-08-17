@@ -3,7 +3,7 @@
         <div class="login-emil">
             <label for="phone" class="login-emil-name">手机号</label>
             <input v-model="phone" v-validate="'required|phone'" data-vv-as="手机号码"
-                   id="email" :class="{'error-input' : errors.has('phone') }"
+                   id="phone" :class="{'error-input' : errors.has('phone') }"
                    class="form-control login-email-input" name="phone" required>
         </div>
         <div class="error-info-container" v-show="errors.has('phone')">
@@ -49,16 +49,20 @@
         },
         methods: {
             login() {
-                let loginInfo = {
-                    email: this.email,
-                    password: this.password,
-                    type: 'email'
-                };
-                console.log(loginInfo);
-                return axios.post('/api/login', loginInfo).then(res => {
-                    // this.$router.push({name: 'confirm'})
-                    console.log(res)
-                })
+                this.$validator.validateAll().then(result => {
+                    if (result) {
+                        let loginInfo = {
+                            phone: this.phone,
+                            code: this.code,
+                            type: 'phone'
+                        };
+                        this.$store.dispatch('loginRequest', loginInfo).then(res => {
+                            this.$router.push({name: home});
+                        }).catch(error => {
+                            console.log(error);
+                        });
+                    }
+                });
             },
             getCode() {
                 if (!this.canClick) {

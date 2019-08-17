@@ -5,7 +5,7 @@ use Overtrue\EasySms\Strategies\OrderStrategy;
 return [
 
     // HTTP 请求的超时时间（秒）
-    'timeout' => 10.0,
+    'timeout' => 20.0,
 
     // 默认发送配置
     'default' => [

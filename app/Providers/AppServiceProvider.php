@@ -25,5 +25,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Passport::routes();
+
+        Passport::tokensExpireIn(now()->addSeconds(7200));
     }
 }
