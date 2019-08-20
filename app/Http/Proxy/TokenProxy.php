@@ -6,7 +6,7 @@ namespace App\Http\Proxy;
 
 use App\User;
 use GuzzleHttp\Client;
-use Illuminate\Support\Facades\Cache;
+use Illuminate\Http\JsonResponse;
 
 class TokenProxy
 {
@@ -38,27 +38,21 @@ class TokenProxy
 
         return response()->json([
             'status' => false,
-            'message' => 'Credentials not match'
+            'message' => '邮箱密码不匹配，请重试'
         ], 404);
     }
 
     public function phoneCodeLogin($phone, $code)
     {
-        if (User::where('phone', $phone)->first()) {
-            if (Cache::get('login.code.' . $phone) == $code) {
-                return $this->proxy('client_credentials', [
-                    'scope' => '*'
-                ]);
-            }
-            return response()->json([
-                'status' => false,
-                'message' => 'code not match'
-            ], 404);
+        $user = User::checkUserByPhone($phone, $code);
+        if ($user instanceof JsonResponse) {
+            return $user;
         }
-        return response()->json([
-            'status' => false,
-            'message' => 'phone not exist'
-        ], 404);
+        return $this->proxy('password', [
+            'username' => $user->email,
+            'password' => $user->password,
+            'scope' => '*'
+        ]);
 
     }
 
@@ -76,17 +70,7 @@ class TokenProxy
 
         $token = json_decode((string)$response->getBody(), true);
 
-        switch ($grantType) {
-            case 'password':
-                return response()->json($token)
-                    ->cookie('refreshToken', $token['refresh_token'], 14400, null, null, false, true);
-            case 'client_credentials':
-                return response()->json($token);
-            default:
-                return response()->json([
-                    'status' => false,
-                    'message' => 'Internal Server Error!'
-                ], 500);
-        }
+        return response()->json($token)
+            ->cookie('refreshToken', $token['refresh_token'], 14400, null, null, false, true);
     }
 }

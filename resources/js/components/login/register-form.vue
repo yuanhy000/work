@@ -1,5 +1,6 @@
 <template>
     <form class="login-form" @submit.prevent="register">
+        <loading v-show="loading" style="z-index:999;"></loading>
         <div class="register-item">
             <label for="userName" class="login-emil-name">用户名</label>
             <input v-model="userName" v-validate="'required|min:6'" data-vv-as="用户名"
@@ -76,8 +77,10 @@
 </template>
 
 <script>
-    // import {ErrorBag} from 'vee-validate';
+
+    import loading from './../loading/loading';
     import {Validator} from 'vee-validate';
+    import {ErrorBag} from 'vee-validate';
 
     Validator.extend('phone', {
         getMessage: field => field + '格式错误',
@@ -88,6 +91,9 @@
 
     export default {
         name: "login-form",
+        components: {
+            loading: loading
+        },
         data() {
             return {
                 userName: '',
@@ -98,11 +104,14 @@
                 code: '',
                 countDownTime: 10,
                 canClick: true,
-                buttonContent: '发送验证码'
+                buttonContent: '发送验证码',
+                loading: false,
+                errorBag: new ErrorBag(),
             }
         },
         methods: {
             register() {
+                this.loading = true;
                 let registerInfo = {
                     userName: this.userName,
                     email: this.email,
@@ -111,9 +120,28 @@
                     code: this.code
                 };
                 console.log(registerInfo);
-                return axios.post('/api/register', registerInfo).then(res => {
-                    // this.$router.push({name: 'confirm'})
-                    console.log(res)
+                this.$store.dispatch('registerRequest', registerInfo).then(res => {
+                    this.loading = false;
+                    this.$router.push({name: 'home'});
+                }).catch(error => {
+                    this.loading = false;
+                    console.log(error.response);
+                    if (error.response.data.errors.hasOwnProperty('code')) {
+                        this.errorBag.add({
+                            field: 'code',
+                            msg: '验证码不匹配',
+                        });
+                    } else if (error.response.data.errors.hasOwnProperty('email')) {
+                        this.errorBag.add({
+                            field: 'email',
+                            msg: '邮箱已被注册',
+                        });
+                    } else if (error.response.data.errors.hasOwnProperty('phone')) {
+                        this.errorBag.add({
+                            field: 'phone',
+                            msg: '手机号码已被注册',
+                        });
+                    }
                 })
 
             },

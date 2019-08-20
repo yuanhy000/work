@@ -22,7 +22,7 @@ class SocialController extends Controller
         $phone = \request()->phone;
         $code = random_int(100000, 999999);
 
-        Cache::put('login.code.' . $phone, $code, 600);
+        Cache::put('login.code.' . $phone, $code, 36000);
         return $this->sendPhoneCode($phone, $code);
     }
 

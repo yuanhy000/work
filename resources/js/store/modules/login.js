@@ -2,9 +2,15 @@ import jwtToken from './../../helpers/jwt'
 
 export default {
     actions: {
+        registerRequest({dispatch}, registerInfo) {
+            return axios.post('/api/register', registerInfo).then(res => {
+                dispatch('loginSuccess', res.data);
+            })
+        },
+
         loginRequest({dispatch}, loginInfo) {
             return axios.post('/api/login', loginInfo).then(res => {
-                dispatch('loginSuccess', res.data)
+                dispatch('loginSuccess', res.data);
             })
         },
 

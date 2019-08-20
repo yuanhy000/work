@@ -31,6 +31,7 @@ Vue.component('login', require('./components/login/login.vue').default);
 Vue.component('register', require('./components/login/register.vue').default);
 Vue.component('login-form', require('./components/login/login-email-form.vue').default);
 Vue.component('register-form', require('./components/login/register-form.vue').default);
+Vue.component('loading', require('./components/loading/loading.vue').default);
 
 new Vue({
     el: '#app',

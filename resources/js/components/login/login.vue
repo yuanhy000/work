@@ -1,5 +1,6 @@
 <template>
     <div class="login-container">
+        <loading v-show="loading" style="z-index:999;"></loading>
         <div class="login-content">
             <div class="login-top">
                 <div class="login title-decoration">
@@ -23,8 +24,8 @@
                         </router-link>
                     </div>
                     <div class="item-login-container">
-                        <a class="item-login" href="/github/login">
-                            <button class="btn login-type-button"  >
+                        <a class="item-login" href="/github/login" @click="setLoading">
+                            <button class="btn login-type-button">
                                 <img class="login-image" src="./../../../image/github1.svg" alt="">GitHub
                             </button>
                         </a>
@@ -43,10 +44,23 @@
 </template>
 
 <script>
+
+    import loading from './../loading/loading';
+
     export default {
         name: "login",
+        components: {
+            loading: loading
+        },
+        data() {
+            return {
+                loading: false
+            }
+        },
         methods: {
-
+            setLoading() {
+                this.loading = true;
+            }
         }
     }
 
