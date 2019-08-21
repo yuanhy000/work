@@ -56,7 +56,7 @@
         },
         watch: {
             'password': function () {
-                this.errorBag.clear();
+                this.errorBag.remove('password');
             },
         },
         methods: {

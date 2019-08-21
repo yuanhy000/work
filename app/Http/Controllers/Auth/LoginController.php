@@ -38,9 +38,9 @@ class LoginController extends Controller
             'name' => $user->nickname,
             'avatar' => $user->avatar,
         ]);
-        Auth::guard()->login($account);
-
-        return redirect('/');
+//        Auth::guard()->login($account);
+        return $this->proxy->githubLogin($account->email);
+//        return redirect('/');
     }
 
     public function login()
@@ -51,5 +51,15 @@ class LoginController extends Controller
             case  'phone':
                 return $this->proxy->phoneCodeLogin(request('phone'), request('code'));
         }
+    }
+
+    public function logout()
+    {
+        return $this->proxy->logout();
+    }
+
+    public function refresh()
+    {
+        return $this->proxy->refresh();
     }
 }

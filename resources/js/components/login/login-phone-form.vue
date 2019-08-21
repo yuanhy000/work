@@ -61,10 +61,10 @@
         },
         watch: {
             'phone': function () {
-                this.errorBag.clear();
+                this.errorBag.remove('phone');
             },
             'code': function () {
-                this.errorBag.clear();
+                this.errorBag.remove('code');
             },
         },
         methods: {

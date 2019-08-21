@@ -13,4 +13,8 @@ export default {
         window.localStorage.removeItem('jwt_token');
     },
 
+    setAuthID(authId) {
+        Cookie.set('auth_id', authId, {expires: 10});
+    }
+
 }

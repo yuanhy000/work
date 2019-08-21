@@ -14,12 +14,13 @@
         <div class="register-item">
             <label for="email" class="login-emil-name">邮箱</label>
             <input v-model="email" v-validate="'required|email'" data-vv-as="邮箱"
-                   id="email" :class="{'error-input' : errors.has('email') }"
+                   id="email" :class="{'error-input' : errors.has('email') ||errorBag.has('email')}"
                    class="form-control login-email-input" name="email" required>
         </div>
-        <div class="error-info-container" v-show="errors.has('email')">
+        <div class="error-info-container" v-show="errors.has('email')||errorBag.has('email')">
             <label class="login-emil-name"></label>
-            <span class="form-text">{{errors.first('email')}}</span>
+            <span class="form-text" v-show="errors.has('email')">{{errors.first('email')}}</span>
+            <span class="form-text" v-if="mismatchError('email')">{{errorBag.first('email')}}</span>
         </div>
         <div class="register-item">
             <label for="password" class="login-emil-name">密码</label>
@@ -44,12 +45,13 @@
         <div class="register-item">
             <label for="phone" class="login-emil-name">手机号</label>
             <input v-model="phone" v-validate="'required|phone'" data-vv-as="手机号码"
-                   id="phone" :class="{'error-input' : errors.has('phone') }"
+                   id="phone" :class="{'error-input' : errors.has('phone') ||errorBag.has('phone')}"
                    class="form-control login-email-input" name="phone" required>
         </div>
-        <div class="error-info-container" v-show="errors.has('phone')">
+        <div class="error-info-container" v-show="errors.has('phone')||errorBag.has('phone')">
             <label class="login-emil-name"></label>
-            <span class="form-text">{{errors.first('phone')}}</span>
+            <span class="form-text" v-show="errors.has('phone')">{{errors.first('phone')}}</span>
+            <span class="form-text" v-if="mismatchError('phone')">{{errorBag.first('phone')}}</span>
         </div>
         <div class="register-item">
             <label class="login-emil-name"></label>
@@ -60,12 +62,13 @@
         <div class="register-item">
             <label for="code" class="login-emil-name">验证码</label>
             <input v-model="code" v-validate="'required|length:6'" data-vv-as="验证码"
-                   id="code" :class="{'error-input' : errors.has('code') }"
+                   id="code" :class="{'error-input' : errors.has('code')||errorBag.has('code') }"
                    class="form-control login-email-input" name="code" required>
         </div>
-        <div class="error-info-container" v-show="errors.has('code')">
+        <div class="error-info-container" v-show="errors.has('code')||errorBag.has('code')">
             <label class="login-emil-name"></label>
-            <span class="form-text">{{errors.first('code')}}</span>
+            <span class="form-text" v-show="errors.has('code')">{{errors.first('code')}}</span>
+            <span class="form-text" v-if="mismatchError('code')">{{errorBag.first('code')}}</span>
         </div>
         <div class="register-item">
             <button type="submit" class="btn login-button"
@@ -109,7 +112,21 @@
                 errorBag: new ErrorBag(),
             }
         },
+        watch: {
+            'phone': function () {
+                this.errorBag.remove('phone');
+            },
+            'code': function () {
+                this.errorBag.remove('code');
+            },
+            'email': function () {
+                this.errorBag.remove('email');
+            },
+        },
         methods: {
+            mismatchError(filed) {
+                return this.errorBag.has(filed) && !this.errors.has(filed);
+            },
             register() {
                 this.loading = true;
                 let registerInfo = {
@@ -131,12 +148,14 @@
                             field: 'code',
                             msg: '验证码不匹配',
                         });
-                    } else if (error.response.data.errors.hasOwnProperty('email')) {
+                    }
+                    if (error.response.data.errors.hasOwnProperty('email')) {
                         this.errorBag.add({
                             field: 'email',
                             msg: '邮箱已被注册',
                         });
-                    } else if (error.response.data.errors.hasOwnProperty('phone')) {
+                    }
+                    if (error.response.data.errors.hasOwnProperty('phone')) {
                         this.errorBag.add({
                             field: 'phone',
                             msg: '手机号码已被注册',

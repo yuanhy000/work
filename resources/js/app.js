@@ -25,7 +25,7 @@ axios.interceptors.request.use(function (config) {
 });
 
 
-Vue.component('Home', require('./components/Home.vue').default);
+Vue.component('app', require('./components/App.vue').default);
 Vue.component('top-menu', require('./components/top-menu/top-menu.vue').default);
 Vue.component('login', require('./components/login/login.vue').default);
 Vue.component('register', require('./components/login/register.vue').default);

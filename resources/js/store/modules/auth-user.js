@@ -14,7 +14,7 @@ export default {
             state.phone = payload.user.phone;
         },
 
-        INIT_AUTH_USER(payload) {
+        INIT_AUTH_USER(state) {
             state.authentication = false;
             state.username = null;
             state.email = null;

@@ -23,5 +23,8 @@ Route::post('/login/phone/code', 'SocialController@sendLoginPhoneCode');
 
 Route::post('/register', 'Auth\RegisterController@register');
 Route::post('/login', 'Auth\LoginController@login');
+Route::post('/logout', 'Auth\LoginController@logout');
+Route::post('/token/refresh','Auth\LoginController@refresh');
+
 
 

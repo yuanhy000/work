@@ -4,7 +4,7 @@ let routes = [
     {
         path: '/',
         name: 'home',
-        components: require('./components/Home.vue')
+        components: require('./components/home/home.vue')
     },
     {
         path: '/login',

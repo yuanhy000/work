@@ -7,6 +7,9 @@ namespace App\Http\Proxy;
 use App\User;
 use GuzzleHttp\Client;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\DB;
 
 class TokenProxy
 {
@@ -22,6 +25,17 @@ class TokenProxy
         return $this->proxy('password', [
             'username' => $email,
             'password' => $password,
+            'scope' => '*'
+        ]);
+    }
+
+    public function githubLogin($email)
+    {
+        $user = User::where('email','=',$email)->first();
+
+        return $this->proxy('password', [
+            'username' => $email,
+            'password' => $user->password,
             'scope' => '*'
         ]);
     }
@@ -56,6 +70,14 @@ class TokenProxy
 
     }
 
+    public function refresh()
+    {
+        $refreshToken = request()->cookie('refreshToken');
+        return $this->proxy('refresh_token', [
+            'refresh_token' => $refreshToken
+        ]);
+    }
+
     public function proxy($grantType, array $data)
     {
         $data = array_merge($data, [
@@ -70,7 +92,32 @@ class TokenProxy
 
         $token = json_decode((string)$response->getBody(), true);
 
-        return response()->json($token)
-            ->cookie('refreshToken', $token['refresh_token'], 14400, null, null, false, true);
+        return response()->json([
+            'access_token' => $token['access_token'],
+            'auth_id' => md5($token['refresh_token']),
+            'expires_in' => $token['expires_in'],
+        ])->cookie('refreshToken', $token['refresh_token'], 14400, null, null, false, true);
+    }
+
+    public function logout()
+    {
+        $user = auth()->guard('api')->user();
+        if (is_null($user)) {
+            Cookie::queue(Cookie::forget('refreshToken'));
+            return response()->json([
+                'message' => 'logout!'
+            ], 204);
+        }
+
+        $accessToken = $user->token();
+        DB::table('oauth_refresh_tokens')->where('access_token_id', $accessToken->id)
+            ->update([
+                'revoked' => 1
+            ]);
+        Cookie::queue(Cookie::forget('refreshToken'));
+        $accessToken->revoke();
+        return response()->json([
+            'message' => 'logout!'
+        ], 202);
     }
 }

@@ -20,8 +20,7 @@
     </head>
     <body>
         <div id="app">
-            <top-menu></top-menu>
-            <router-view></router-view>
+            <app></app>
         </div>
         <script src="./js/app.js"></script>
     </body>
