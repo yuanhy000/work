@@ -19,7 +19,7 @@
             TopMenu,
             Notification
         },
-        beforeCreate() {
+        mounted() {
             if (jwt.getToken()) {
                 this.$store.dispatch('setAuthUser');
             } else if (Cookie.get('auth_id')) {

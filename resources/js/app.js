@@ -32,6 +32,7 @@ Vue.component('register', require('./components/login/register.vue').default);
 Vue.component('login-form', require('./components/login/login-email-form.vue').default);
 Vue.component('register-form', require('./components/login/register-form.vue').default);
 Vue.component('loading', require('./components/loading/loading.vue').default);
+Vue.component('github-callback', require('./components/auth-callback/auth-callback.vue').default);
 
 new Vue({
     el: '#app',

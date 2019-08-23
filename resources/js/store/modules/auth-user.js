@@ -24,14 +24,14 @@ export default {
 
     actions: {
         setAuthUser({commit, dispatch}) {
-            return axios.get('/api/user').then(res => {
-                commit({
-                    type: 'SET_AUTH_USER',
-                    user: res.data
+                return axios.get('/api/user').then(res => {
+                    commit({
+                        type: 'SET_AUTH_USER',
+                        user: res.data
+                    })
+                }).catch(error => {
+                    dispatch('refreshToken');
                 })
-            }).catch(error => {
-                dispatch('refreshToken');
-            })
         },
 
         initAuthUser({commit}) {

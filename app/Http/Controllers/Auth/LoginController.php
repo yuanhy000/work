@@ -39,8 +39,12 @@ class LoginController extends Controller
             'avatar' => $user->avatar,
         ]);
 //        Auth::guard()->login($account);
-        return $this->proxy->githubLogin($account->email);
-//        return redirect('/');
+        $result = $this->proxy->githubLogin($account->email);
+        $access_token = $result['access_token'];
+        $auth_id = $result['auth_id'];
+        $redirect_url = '/#/auth-callback?' . 'access_token=' . $access_token . '&auth_id=' . $auth_id;
+        return redirect($redirect_url)
+            ->cookie('refreshToken', $result['refresh_token'], 14400, null, null, false, true);
     }
 
     public function login()

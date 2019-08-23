@@ -3,6 +3,15 @@
         Options -MultiViews -Indexes
     </IfModule>
 
+    <IfModule mod_rewrite.c>
+      RewriteEngine On
+      RewriteBase /
+      RewriteRule ^index\.html$ - [L]
+      RewriteCond %{REQUEST_FILENAME} !-f
+      RewriteCond %{REQUEST_FILENAME} !-d
+      RewriteRule . /index.html [L]
+    </IfModule>
+
     RewriteEngine On
 
     # Handle Authorization Header
@@ -18,4 +27,9 @@
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
+
+    location / {
+      try_files $uri $uri/ /index.html;
+    }
+
 </IfModule>

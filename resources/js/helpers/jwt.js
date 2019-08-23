@@ -3,6 +3,7 @@ import Cookie from 'js-cookie'
 export default {
     setToken(token) {
         window.localStorage.setItem('jwt_token', token);
+        console.log('set token');
     },
 
     getToken() {

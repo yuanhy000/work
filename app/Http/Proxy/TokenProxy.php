@@ -10,6 +10,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class TokenProxy
 {
@@ -31,13 +32,13 @@ class TokenProxy
 
     public function githubLogin($email)
     {
-        $user = User::where('email','=',$email)->first();
+        $user = User::where('email', '=', $email)->first();
 
         return $this->proxy('password', [
             'username' => $email,
             'password' => $user->password,
             'scope' => '*'
-        ]);
+        ], 'social');
     }
 
     public function emailLogin($email, $password)
@@ -78,20 +79,26 @@ class TokenProxy
         ]);
     }
 
-    public function proxy($grantType, array $data)
+    public function proxy($grantType, array $data, $loginType = 'normal')
     {
         $data = array_merge($data, [
             'client_id' => env('client_id'),
             'client_secret' => env('client_secret'),
             'grant_type' => $grantType,
         ]);
-
         $response = $this->http->post('http://work.test/oauth/token', [
             'form_params' => $data,
         ]);
 
         $token = json_decode((string)$response->getBody(), true);
 
+        if ($loginType == 'social') {
+            return [
+                'access_token' => $token['access_token'],
+                'auth_id' => md5($token['refresh_token']),
+                'refresh_token' => $token['refresh_token'],
+            ];
+        }
         return response()->json([
             'access_token' => $token['access_token'],
             'auth_id' => md5($token['refresh_token']),
