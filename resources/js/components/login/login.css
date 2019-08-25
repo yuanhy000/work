@@ -287,8 +287,9 @@
 
 .error-input {
     border: 2px rgba(0, 0, 0, .075) solid;
-    -webkit-box-shadow: inset 0 2px 2px rgba(0, 0, 0, .075), 0 0 8px rgba(129, 2, 14, 0.6);
-    box-shadow: inset 0 2px 2px rgba(0, 0, 0, .075), 0 0 4px rgba(158, 12, 10, 0.6)
+    -webkit-box-shadow: inset 0 2px 2px rgba(0, 0, 0, .075), 0 0 4px #D95B5C;
+    box-shadow: inset 0 2px 2px rgba(0, 0, 0, .075), 0 0 4px #D95B5C;
+    background-color: #FFEFF0;
 }
 
 .disabled-button {

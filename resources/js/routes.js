@@ -7,7 +7,7 @@ const routes = [
         path: '/',
         name: 'home',
         components: require('./components/home/home.vue'),
-        // meta: {requiresAuth: true}
+        meta: {requiresAuth: true}
     },
     {
         path: '/login',
@@ -37,6 +37,30 @@ const routes = [
         path: '/auth-callback',
         name: 'auth-callback',
         components: require('./components/auth-callback/auth-callback.vue'),
+    },
+    {
+        path: '/friend-list',
+        components: require('./components/friend-list/friend-list.vue'),
+        children: [
+            {
+                path: '',
+                name: 'friend-list',
+                // components: require('./components/login/login-email-form')
+            },
+            {
+                path: '/addition',
+                // name: 'addition',
+                components: require('./components/addition/addition'),
+                children: [
+                    {
+                        path: '/search-user',
+                        name: 'search-user',
+                        components: require('./components/addition/search-user')
+                    },
+                ]
+            },
+        ],
+        meta: {requiresAuth: true}
     },
 ];
 
