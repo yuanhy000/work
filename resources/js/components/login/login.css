@@ -24,9 +24,19 @@
         width: 70% !important;
     }
 
-    .login-error-info-container{
+    .login-error-info-container {
         line-height: 20px !important;
     }
+}
+
+.btn:focus,
+.btn:active:focus,
+.btn.active:focus,
+.btn.focus,
+.btn:active.focus,
+.btn.active.focus {
+    outline: none;
+    box-shadow: none;
 }
 
 .login-container {

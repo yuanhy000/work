@@ -26,5 +26,7 @@ Route::post('/login', 'Auth\LoginController@login');
 Route::post('/logout', 'Auth\LoginController@logout');
 Route::post('/token/refresh','Auth\LoginController@refresh');
 
+Route::post('/search/user','SearchController@user');
+
 
 

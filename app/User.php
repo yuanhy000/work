@@ -8,10 +8,11 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Passport\HasApiTokens;
+use Laravel\Scout\Searchable;
 
 class User extends Authenticatable
 {
-    use Notifiable, HasApiTokens;
+    use Notifiable, HasApiTokens, Searchable;
 
     protected $fillable = [
         'name', 'email', 'password', 'phone', 'openid',
@@ -24,6 +25,11 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function searchableAs()
+    {
+        return 'users';
+    }
 
     public function validateForPassportPasswordGrant($password)
     {
