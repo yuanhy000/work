@@ -58,6 +58,7 @@ class RegisterController extends Controller
             'email' => $userInfo['email'],
             'password' => Hash::make($userInfo['password']),
             'phone' => $userInfo['phone'],
+            'number' => User::generateUserID()
         ]);
     }
 }

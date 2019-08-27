@@ -58,4 +58,18 @@ class User extends Authenticatable
             'message' => '验证码不匹配，请重试'
         ], 404);
     }
+
+    public static function generateUserID()
+    {
+        static $seed = array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
+        $str = $seed[intval(date('Y')) - 2018];
+        for ($i = 0; $i < 8; $i++) {
+            $rand = rand(0, count($seed) - 1);
+            $temp = $seed[$rand];
+            $str .= $temp;
+            unset($seed[$rand]);
+            $seed = array_values($seed);
+        }
+        return $str;
+    }
 }

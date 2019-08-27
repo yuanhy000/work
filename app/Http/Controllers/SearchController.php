@@ -12,7 +12,7 @@ class SearchController extends Controller
     public function user(Request $request)
     {
         $searchContent = $request->get('content');
-        $users = User::search($searchContent)->paginate(20);
+        $users = User::search($searchContent)->paginate(16);
 
         return new UserCollection($users);
     }

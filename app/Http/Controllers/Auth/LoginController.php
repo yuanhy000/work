@@ -37,6 +37,7 @@ class LoginController extends Controller
             'email' => $user->email,
             'name' => $user->nickname,
             'avatar' => $user->avatar,
+            'number' => User::generateUserID()
         ]);
 //        Auth::guard()->login($account);
         $result = $this->proxy->githubLogin($account->email);
