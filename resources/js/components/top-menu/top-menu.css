@@ -12,6 +12,7 @@
     display: flex;
     flex-direction: row;
     height: 70px;
+    /*background-image: linear-gradient(to right, #343A4E, #90597E);*/
     background-image: linear-gradient(to right, #8EA7C7, #EECAC9);
     justify-content: space-between;
     align-items: center;
