@@ -49,7 +49,7 @@ const routes = [
             },
             {
                 path: '/addition',
-                // name: 'addition',
+                name: 'addition',
                 components: require('./components/addition/addition'),
                 children: [
                     {
@@ -58,6 +58,12 @@ const routes = [
                         components: require('./components/addition/search-user')
                     },
                 ]
+            },
+            {
+                path: '/friend-info',
+                name: 'friend-info',
+                components: require('./components/friend-info/friend-info'),
+                meta: {requiresAuth: true}
             },
         ],
         meta: {requiresAuth: true}

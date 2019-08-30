@@ -11,7 +11,6 @@
             jwt.setToken(this.$route.query.access_token);
             jwt.setAuthID(this.$route.query.auth_id);
             this.$router.push({name: 'home'});
-
         }
     }
 

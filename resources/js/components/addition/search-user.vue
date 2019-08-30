@@ -1,7 +1,7 @@
 <template>
     <div class="search-user-container">
         <loading v-show="loading" style="z-index:999;"></loading>
-        <notification class="notification"></notification>
+        <notification class="notification" v-show="notification"></notification>
         <div class="search-container">
             <input type="text" class="search-input" v-model="inputContent"
                    placeholder="昵称 / 邮箱 / 手机号码" @keyup.enter="searchUser">
@@ -18,9 +18,9 @@
                      v-if="show_content">
                     <img src="./../../../image/search-default2.png" alt="" class="search-default-img"
                          v-show="!searchResult">
-                    <div v-for="(user,index) in this.users.slice((this.page_index - 1) * 16,this.page_index * 16)"
+                    <div v-for="user in this.users.slice((this.page_index - 1) * 16,this.page_index * 16)"
                          class="search-item" v-show="searchResult" v-bind:key="user.id"
-                         @click="navigateUser(index)">
+                         @click="navigateUser(user.user_id)">
                         <img :src="user.user_avatar" alt="" class="item-avatar">
                         <div class="item-info">
                             <div class="item-name-container">
@@ -62,7 +62,8 @@
                 load_page: 1,
                 last_page: null,
                 links: {},
-                show_content: true
+                show_content: true,
+                notification: false
             }
         },
         methods: {
@@ -127,6 +128,7 @@
                 this.searchData = data;
                 this.show_content = false;
                 this.loading = true;
+                this.notification = false;
                 this.$store.dispatch('searchSuccess');
                 return data;
             },
@@ -137,6 +139,7 @@
             },
             searchFailed() {
                 this.$store.dispatch('showNotification', {level: 'danger', msg: '网络不稳定，请稍后再试'});
+                this.notification = true;
                 this.searchResult = false;
                 this.show_content = true;
                 this.loading = false;
@@ -147,8 +150,13 @@
                 this.users.push.apply(this.users, res.data.data.users);
                 this.setSearchInfo(res)
             },
-            navigateUser(userIndex) {
-                console.log(userIndex)
+            navigateUser(userId) {
+                let user = this.users.find(
+                    (item) => {
+                        return item.user_id === userId
+                    }
+                );
+                this.$router.push({name: 'friend-info', params: {userId: userId}});
             }
         }
     }
