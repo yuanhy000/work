@@ -24,6 +24,15 @@ class CreateUsersTable extends Migration
             $table->integer('sex')->default(1);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
+            $table->string('signature')->nullable();
+            $table->date('birth')->default('2000-01-01')->nullable();
+            $table->unsignedBigInteger('zodiac_id')->default('1')->index()->nullable();
+            $table->unsignedBigInteger('constellation_id')->default('1')->index()->nullable();
+            $table->string('blood_type')->default('A')->nullable();
+            $table->string('address')->nullable();
+            $table->string('hometown')->nullable();
+            $table->boolean('status')->default(false)->nullable();
+            $table->string('school')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

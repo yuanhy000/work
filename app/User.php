@@ -31,6 +31,16 @@ class User extends Authenticatable
         return 'users';
     }
 
+    public function zodiac()
+    {
+        return $this->hasOne(Chinese_zodiac::class, 'zodiac_id', 'id');
+    }
+
+    public function constellation()
+    {
+        return $this->hasOne(Constellation::class, 'constellation_id', 'id');
+    }
+
     public function validateForPassportPasswordGrant($password)
     {
         if (!Hash::needsRehash($password)) {
