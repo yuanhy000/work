@@ -1,17 +1,29 @@
 export default {
     state: {
         authentication: false,
-        username: null,
-        email: null,
-        phone: null
+        user_name: null,
+        user_number: null,
+        user_email: null,
+        user_phone: null,
+        user_avatar: null,
+        user_sex: null,
+        user_signature: null,
+        user_birth: null,
+        user_blood_type: null,
+        user_address: null,
+        user_hometown: null,
+        user_school: null,
+        user_constellation: null,
+        user_zodiac: null,
     },
 
     mutations: {
+
         SET_AUTH_USER(state, payload) {
+            for (let item in state) {
+                state[item] = payload.user.data[item];
+            }
             state.authentication = true;
-            state.username = payload.user.name;
-            state.email = payload.user.email;
-            state.phone = payload.user.phone;
         },
 
         INIT_AUTH_USER(state) {
@@ -24,14 +36,14 @@ export default {
 
     actions: {
         setAuthUser({commit, dispatch}) {
-                return axios.get('/api/user').then(res => {
-                    commit({
-                        type: 'SET_AUTH_USER',
-                        user: res.data
-                    })
-                }).catch(error => {
-                    dispatch('refreshToken');
+            return axios.get('/api/user').then(res => {
+                commit({
+                    type: 'SET_AUTH_USER',
+                    user: res.data
                 })
+            }).catch(error => {
+                dispatch('refreshToken');
+            })
         },
 
         initAuthUser({commit}) {

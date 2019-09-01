@@ -22,7 +22,15 @@ class UserResource extends JsonResource
             'user_phone' => $this->phone,
             'user_avatar' => $this->avatar,
             'user_sex' => $this->sex,
-            'user_created' => $this->created_at
+            'user_created' => $this->created_at,
+            'user_signature' => $this->signature,
+            'user_birth' => $this->birth,
+            'user_blood_type' => $this->blood_type,
+            'user_address' => $this->address,
+            'user_hometown' => $this->hometown,
+            'user_school' => $this->school,
+            'user_constellation' => new ConstellationResource($this->constellation),
+            'user_zodiac' => new ZodiacResource($this->zodiac)
         ];
     }
 }

@@ -33,12 +33,12 @@ class User extends Authenticatable
 
     public function zodiac()
     {
-        return $this->hasOne(Chinese_zodiac::class, 'zodiac_id', 'id');
+        return $this->hasOne(Chinese_zodiac::class, 'id', 'zodiac_id');
     }
 
     public function constellation()
     {
-        return $this->hasOne(Constellation::class, 'constellation_id', 'id');
+        return $this->hasOne(Constellation::class, 'id', 'constellation_id');
     }
 
     public function validateForPassportPasswordGrant($password)

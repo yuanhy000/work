@@ -1,41 +1,68 @@
 <template>
-    <nav class="menu-container">
-        <router-link class="menu-title" to="/">Project</router-link>
-        <div class="menu-operation">
-            <router-link class="menu-login" to="/login" v-if="!user.authentication">
-                <button class="btn menu-button">登陆</button>
-            </router-link>
-            <router-link class="menu-login" to="/register" v-if="!user.authentication">
-                <button class="btn menu-button">注册</button>
-            </router-link>
-            <router-link class="menu-login" to="" v-if="user.authentication">
-                <button class="btn menu-button">管理</button>
-            </router-link>
-            <div class="menu-login" v-if="user.authentication">
-                <button class="btn menu-button" @click="logout">退出</button>
+    <div>
+        <nav class="menu-container">
+            <router-link class="menu-title" to="/">Project</router-link>
+            <div class="menu-operation">
+                <router-link class="menu-login" to="/login" v-if="!user.authentication">
+                    <button class="btn menu-button">登陆</button>
+                </router-link>
+                <router-link class="menu-login" to="/register" v-if="!user.authentication">
+                    <button class="btn menu-button">注册</button>
+                </router-link>
+                <!--            <router-link class="menu-login" to="" v-if="user.authentication">-->
+                <!--                <button class="btn menu-button">管理</button>-->
+                <!--            </router-link>-->
+                <div class="menu-manage" v-if="user.authentication" @click="showList" ref="menuUser">
+                    <img :src="user.user_avatar" alt="" class="menu-avatar">
+                    <div class="menu-name">{{user.user_name}}</div>
+                    <img src="./../../../image/more.svg" alt="" class="menu-icon">
+                </div>
+                <!--            <div class="menu-login" v-if="user.authentication">-->
+                <!--                <button class="btn menu-button" @click="logout">退出</button>-->
+                <!--            </div>-->
             </div>
-        </div>
-    </nav>
-
+        </nav>
+        <transition name="fade" mode="out-in">
+            <div class="manage-list" v-show="manageDisplay" :style="{marginRight:this.marginRight+'px'}">
+                <div class="item-top">个人中心</div>
+                <div class="item-bottom">退出</div>
+            </div>
+        </transition>
+    </div>
 </template>
 
 <script>
     import {mapState} from 'vuex'
-    import Cookie from 'js-cookie'
+    import manageList from "../manage-list/manage-list";
 
     export default {
         name: "top-menu",
+        components: {
+            manageList: manageList
+        },
         computed: {
             ...mapState({
                 user: state => state.AuthUser
             }),
-
+        },
+        data() {
+            return {
+                manageDisplay: false,
+                marginRight: 0,
+            }
         },
         methods: {
             logout() {
                 this.$store.dispatch('logoutRequest').then(res => {
                     this.$router.push({name: 'home'})
                 })
+            },
+            showList() {
+                this.marginRight = document.body.clientWidth - this.$refs.menuUser.getBoundingClientRect().right;
+                this.manageDisplay = !this.manageDisplay;
+            },
+            manageUser() {
+                this.$router.push({name: 'home'})
             }
         }
     }
