@@ -29,6 +29,33 @@ const routes = [
         meta: {requiresGuest: true}
     },
     {
+        path: '/user-manage',
+        name: 'user-manage',
+        components: require('./components/user-manage/manage-wrapper.vue'),
+        children: [
+        ],
+        meta: {requiresAuth: true}
+    },
+    {
+        path: '/login',
+        // name: 'login',
+        components: require('./components/login/login.vue'),
+        children: [
+            {
+                path: '',
+                name: 'email-login',
+                components: require('./components/login/login-email-form')
+            },
+            {
+                path: '/login/phone',
+                name: 'phone-login',
+                components: require('./components/login/login-phone-form'),
+                // meta: {requiresAuth: true}
+            },
+        ],
+        meta: {requiresGuest: true}
+    },
+    {
         path: '/register',
         name: 'register',
         components: require('./components/login/register.vue'),

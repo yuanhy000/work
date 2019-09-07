@@ -23,8 +23,9 @@
             </div>
         </nav>
         <transition name="fade" mode="out-in">
-            <div class="manage-list" v-show="manageDisplay" :style="{marginRight:this.marginRight+'px'}">
-                <div class="item-top">个人中心</div>
+            <div class="manage-list" ref="menu" v-show="manageDisplay"
+                 :style="{marginRight:this.marginRight+'px'}">
+                <div class="item-top" @click="manageUser">个人中心</div>
                 <div class="item-bottom">退出</div>
             </div>
         </transition>
@@ -51,6 +52,12 @@
                 marginRight: 0,
             }
         },
+        mounted: function () {
+            document.addEventListener("click", this.clickEvent);
+        },
+        beforeDestroy() {
+            document.removeEventListener("click", this.clickEvent);
+        },
         methods: {
             logout() {
                 this.$store.dispatch('logoutRequest').then(res => {
@@ -62,7 +69,12 @@
                 this.manageDisplay = !this.manageDisplay;
             },
             manageUser() {
-                this.$router.push({name: 'home'})
+                this.$router.push({name:'user-manage'});
+            },
+            clickEvent(e) {
+                if (!this.$refs.menu.contains(e.target) && !this.$refs.menuUser.contains(e.target)) {
+                    this.manageDisplay = false;
+                }
             }
         }
     }

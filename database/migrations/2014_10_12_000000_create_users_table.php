@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique()->nullable();
             $table->string('phone', 11)->unique()->nullable();
             $table->string('openid')->unique()->nullable();
-            $table->string('avatar')->nullable();
+            $table->string('avatar')->default('https://chatting-storage.oss-cn-beijing.aliyuncs.com/default/default-user.svg');
             $table->integer('sex')->default(1);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
