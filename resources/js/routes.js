@@ -29,33 +29,6 @@ const routes = [
         meta: {requiresGuest: true}
     },
     {
-        path: '/user-manage',
-        name: 'user-manage',
-        components: require('./components/user-manage/manage-wrapper.vue'),
-        children: [
-        ],
-        meta: {requiresAuth: true}
-    },
-    {
-        path: '/login',
-        // name: 'login',
-        components: require('./components/login/login.vue'),
-        children: [
-            {
-                path: '',
-                name: 'email-login',
-                components: require('./components/login/login-email-form')
-            },
-            {
-                path: '/login/phone',
-                name: 'phone-login',
-                components: require('./components/login/login-phone-form'),
-                // meta: {requiresAuth: true}
-            },
-        ],
-        meta: {requiresGuest: true}
-    },
-    {
         path: '/register',
         name: 'register',
         components: require('./components/login/register.vue'),
@@ -66,13 +39,29 @@ const routes = [
         components: require('./components/auth-callback/auth-callback.vue'),
     },
     {
+        path: '/user-manage',
+        components: require('./components/user-manage/manage-wrapper.vue'),
+        children: [
+            {
+                path: '',
+                name: 'user-manage',
+                components: require('./components/user-info/user-info.vue'),
+            },
+            {
+                path: '/user-info',
+                name: 'user-info',
+                components: require('./components/user-info/user-info.vue'),
+            },
+        ],
+        meta: {requiresAuth: true}
+    },
+    {
         path: '/friend-list',
         components: require('./components/friend-list/friend-list.vue'),
         children: [
             {
                 path: '',
                 name: 'friend-list',
-                // components: require('./components/login/login-email-form')
             },
             {
                 path: '/addition',

@@ -1,0 +1,131 @@
+.user-info-container {
+    /*background-color: rebeccapurple;*/
+    background-color: #EDF1F8;
+    width: 80%;
+    position: absolute;
+    top: 70px;
+    bottom: 0;
+    right: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.user-head {
+    width: 60%;
+    /*background-color: #1d643b;*/
+    height: 16%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-items: center;
+}
+
+.user-avatar {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    margin: auto;
+    border-radius: 50%;
+    border: 3px solid #C5BAC8;
+    cursor: pointer;
+}
+
+.user-avatar:hover {
+    width: 105px;
+    height: 105px;
+    border-radius: 50%;
+    border: 3px solid #C5BAC8;
+    transition-duration: 0.2s;
+}
+
+.user-base-info {
+    width: 70%;
+    height: 25%;
+    background-color: #1b4b72;
+    display: flex;
+    margin: 0 auto;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.base-item {
+    width: 30%;
+    background-color: darkgray;
+    height: 40%;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.click-container {
+    background-color: darkolivegreen;
+    width: 70%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.sex-title-man {
+    background-image: -webkit-linear-gradient(bottom, rgb(29, 190, 240), rgb(80, 229, 210));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 1.3rem;
+    font-weight: bold;
+    letter-spacing: 4px;
+}
+
+.sex-title-woman {
+    background-image: -webkit-linear-gradient(bottom, #FE5992, #FFBA97);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 1.2rem;
+    font-weight: bold;
+    letter-spacing: 4px;
+}
+
+.user-sex {
+    width: 35px;
+    height: 35px;
+}
+
+.menu-icon {
+    width: 16px;
+    height: 16px;
+    display: flex;
+    margin-left: 20px;
+}
+
+.select-list {
+    position: absolute;
+    height: 100px;
+    background-image: linear-gradient(to top, #8EA7C7, #E4C6C9);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    float: right;
+    border-radius: 20px;
+}
+
+
+.fade-enter-active {
+    transition: all 0.3s;
+    /*transition-delay: 0.8s;*/
+}
+
+.fade-leave-active {
+    transition: all 0.3s;
+}
+
+.fade-enter, .fade-leave-active {
+    opacity: 0;
+}
+

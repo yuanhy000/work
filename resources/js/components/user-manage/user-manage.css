@@ -8,6 +8,11 @@
     box-shadow: none;
 }
 
+.out-container {
+    width: 100%;
+    background-color: black;
+}
+
 .friend-list-container {
     background-image: linear-gradient(to right bottom, #8EA7C7, #EECAC9);
     /*background-image: linear-gradient(to right bottom, #EECAC9, #8EA7C7);*/
@@ -65,3 +70,4 @@
     margin: 20px;
     color: #fff;
 }
+

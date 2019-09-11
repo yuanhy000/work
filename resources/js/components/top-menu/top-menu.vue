@@ -34,13 +34,9 @@
 
 <script>
     import {mapState} from 'vuex'
-    import manageList from "../manage-list/manage-list";
 
     export default {
         name: "top-menu",
-        components: {
-            manageList: manageList
-        },
         computed: {
             ...mapState({
                 user: state => state.AuthUser
@@ -69,7 +65,7 @@
                 this.manageDisplay = !this.manageDisplay;
             },
             manageUser() {
-                this.$router.push({name:'user-manage'});
+                this.$router.push({name: 'user-manage'});
             },
             clickEvent(e) {
                 if (!this.$refs.menu.contains(e.target) && !this.$refs.menuUser.contains(e.target)) {
