@@ -28,3 +28,18 @@
         }
     }
 </script>
+<style scoped>
+
+    .fade-enter-active {
+        transition: all 0.2s;
+        /*transition-delay: 0.8s;*/
+    }
+
+    .fade-leave-active {
+        transition: all 0.2s;
+    }
+
+    .fade-enter, .fade-leave-active {
+        opacity: 0;
+    }
+</style>

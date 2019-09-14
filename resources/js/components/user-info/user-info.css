@@ -51,7 +51,7 @@
 
 .base-item {
     width: 30%;
-    background-color: darkgray;
+    /*background-color: darkgray;*/
     height: 40%;
     margin: auto;
     display: flex;
@@ -61,8 +61,9 @@
 }
 
 .click-container {
-    background-color: white;
-    width: 70%;
+    /*background-color: #f3f3f3;*/
+
+    width: 72%;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -70,7 +71,7 @@
     padding: 5px 20px;
     cursor: pointer;
     border-radius: 5px;
-
+    border: 2px solid #C2BAC8;
 }
 
 .sex-title-man {
@@ -167,36 +168,6 @@
     letter-spacing: 4px;
 }
 
-.select-age {
-    position: absolute;
-    height: 250px;
-    background-image: linear-gradient(to top, #8EA7C7, #E4C6C9);
-    z-index: 9999;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    float: right;
-    border-radius: 10px;
-}
-
-.item-content {
-    height: 50px;
-    line-height: 50px;
-    width: 100%;
-    display: inline-block;
-    text-align: center;
-    padding: auto;
-    color: white;
-    cursor: pointer;
-    border-radius: 10px;
-}
-
-.item-content:hover {
-    background-color: rgba(0, 0, 0, 0.2);
-    transition-duration: 0.3s;
-}
-
 .zodiac-title {
     background-image: -webkit-linear-gradient(bottom, #FF943F, #FFD468);
     -webkit-background-clip: text;
@@ -215,6 +186,14 @@
 
 .birth-title {
     background-image: -webkit-linear-gradient(bottom, #F65179, #FFB092);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 1.3rem;
+    letter-spacing: 4px;
+}
+
+.blood-title {
+    background-image: -webkit-linear-gradient(bottom, #FE7762, #FFC58B);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     font-size: 1.3rem;
@@ -249,49 +228,14 @@
 }
 
 
-.select-before {
-    position: absolute;
-    height: 50px;
-    background-image: linear-gradient(to top, #D2BFC8, #E4C6C9);
-    /*background-color: #E4C6C9;*/
-    z-index: 9999;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
-    float: right;
-    border-radius: 10px;
-}
 
-.year {
-    margin: auto;
-    height: 50px;
-    width: 33.3%;
-    display: inline-block;
-    text-align: center;
-    padding: auto;
-    line-height: 50px;
-    cursor: pointer;
-    color: white;
-    border-radius: 10px;
-}
-
-.year:hover {
-    background-color: rgba(0, 0, 0, 0.2);
-    transition-duration: 0.3s;
+.user-blood {
+    background-image: -webkit-linear-gradient(bottom, #FE7762, #FFC58B);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 1.3rem;
+    letter-spacing: 4px;
 }
 
 
-.fade-enter-active {
-    transition: all 0.3s;
-    /*transition-delay: 0.8s;*/
-}
-
-.fade-leave-active {
-    transition: all 0.3s;
-}
-
-.fade-enter, .fade-leave-active {
-    opacity: 0;
-}
 

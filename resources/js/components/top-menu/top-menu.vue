@@ -26,7 +26,7 @@
             <div class="manage-list" ref="menu" v-show="manageDisplay"
                  :style="{marginRight:this.marginRight+'px'}">
                 <div class="item-top" @click="manageUser">个人中心</div>
-                <div class="item-bottom">退出</div>
+                <div class="item-bottom"  @click="logout">退出</div>
             </div>
         </transition>
     </div>

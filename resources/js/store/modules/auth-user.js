@@ -58,6 +58,6 @@ export default {
             }).catch(error => {
                 dispatch('logoutRequest');
             })
-        }
+        },
     }
 }

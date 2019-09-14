@@ -20,5 +20,8 @@ Route::post('/users/search', 'SearchController@user');
 
 Route::get('/users/info/{id}', 'UserController@getInfo');
 
+Route::get('/users/zodiac', 'UserController@getZodiac');
+Route::get('/users/constellation', 'UserController@getConstellation');
+
 
 

@@ -1,0 +1,74 @@
+.select-menu {
+    position: absolute;
+    height: 250px;
+    background-image: linear-gradient(to top, #8EA7C7, #E4C6C9);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    float: right;
+    border-radius: 10px;
+}
+
+.row-menu {
+    position: absolute;
+    height: 50px;
+    background-image: linear-gradient(to top, #D2BFC8, #E4C6C9);
+    /*background-color: #E4C6C9;*/
+    z-index: 9999;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    float: right;
+    border-radius: 10px;
+}
+
+.item-content {
+    height: 50px;
+    line-height: 50px;
+    width: 100%;
+    display: inline-block;
+    text-align: center;
+    padding: auto;
+    color: white;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.item-content:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+    transition-duration: 0.3s;
+}
+
+.row-item {
+    margin: auto;
+    height: 50px;
+    width: 33.3%;
+    display: inline-block;
+    text-align: center;
+    padding: auto;
+    line-height: 50px;
+    cursor: pointer;
+    color: white;
+    border-radius: 10px;
+}
+
+.row-item:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+    transition-duration: 0.3s;
+}
+
+.fade-enter-active {
+    transition: all 0.3s;
+    /*transition-delay: 0.8s;*/
+}
+
+.fade-leave-active {
+    transition: all 0.3s;
+}
+
+.fade-enter, .fade-leave-active {
+    opacity: 0;
+}

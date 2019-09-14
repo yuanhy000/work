@@ -38,6 +38,7 @@ Vue.component('loading', require('./components/loading/loading.vue').default);
 Vue.component('github-callback', require('./components/auth-callback/auth-callback.vue').default);
 Vue.component('friend-list', require('./components/friend-list/friend-list.vue').default);
 Vue.component('avatar', require('./components/user-info/avatar.vue').default);
+Vue.component('menu-list', require('./components/menu-list/menu-list.vue').default);
 Vue.component('div-scroll', HappyScroll);
 
 new Vue({
