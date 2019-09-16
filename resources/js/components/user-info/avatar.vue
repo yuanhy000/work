@@ -58,12 +58,9 @@
                 }
                 this.getRight();
                 this.client.put(storeAs, file).then(function (result) {
-                    console.log(result)//至此就拿到了返回的路径
-
-                    self.data.url = result.res.requestUrls[0].split('?')[0];
-
+                    let url = result.res.requestUrls[0].split('?')[0];
+                    self.$emit('url', url);
                 }).catch(function (err) {
-
                     console.log(err);
                 });
 

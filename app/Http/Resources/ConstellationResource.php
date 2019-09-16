@@ -15,6 +15,7 @@ class ConstellationResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'constellation_id' => $this->id,
             'constellation_name' => $this->name,
             'constellation_icon' => $this->icon
         ];

@@ -28,7 +28,23 @@
         }
     }
 </script>
-<style scoped>
+<style>
+    .btn:focus,
+    .btn:active:focus,
+    .btn.active:focus,
+    .btn.focus,
+    .btn:active.focus,
+    .btn.active.focus {
+        outline: none;
+        box-shadow: none;
+    }
+
+    .distpicker-address-wrapper select {
+
+        border: 2px solid #DBE2EC;
+        outline: none;
+
+    }
 
     .fade-enter-active {
         transition: all 0.2s;

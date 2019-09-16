@@ -9,8 +9,10 @@ import jwtToken from './helpers/jwt'
 import zh_CN from './locale/zh_CN.js';
 import VeeValidate, {Validator} from 'vee-validate';
 
-import { HappyScroll } from 'vue-happy-scroll'
+import {HappyScroll} from 'vue-happy-scroll'
 import 'vue-happy-scroll/docs/happy-scroll.css'
+import VDistpicker from 'v-distpicker'
+
 
 Vue.use(VeeValidate);
 Validator.localize('zh_CN', zh_CN);
@@ -27,7 +29,6 @@ axios.interceptors.request.use(function (config) {
 });
 
 
-
 Vue.component('app', require('./components/App.vue').default);
 Vue.component('top-menu', require('./components/top-menu/top-menu.vue').default);
 Vue.component('login', require('./components/login/login.vue').default);
@@ -40,6 +41,7 @@ Vue.component('friend-list', require('./components/friend-list/friend-list.vue')
 Vue.component('avatar', require('./components/user-info/avatar.vue').default);
 Vue.component('menu-list', require('./components/menu-list/menu-list.vue').default);
 Vue.component('div-scroll', HappyScroll);
+Vue.component('v-distpicker', VDistpicker);
 
 new Vue({
     el: '#app',

@@ -1,6 +1,8 @@
 <template>
     <div class="user-info-container">
-        <avatar :userAvatar="this.userInfo.user_avatar" typeArr="image/png,image/jpg,image/gif,image/jpeg"></avatar>
+        <notification class="notification" v-show="notification"></notification>
+        <avatar :userAvatar="this.userInfo.user_avatar" @url="changeAvatar"
+                typeArr="image/png,image/jpg,image/gif,image/jpeg"></avatar>
         <div class="user-base-info">
             <div class="base-item">
                 <div class="click-container" ref="userSex" @click="chooseMenu('userSex')">
@@ -52,6 +54,39 @@
             </div>
         </div>
 
+        <div class="user-other-info">
+            <div class="other-item">
+                <div class="item-title">昵称</div>
+                <input class="item-container" @input="changeInput('name')" ref="inputName"
+                       :value="this.userInfo.user_name">
+            </div>
+            <div class="other-item">
+                <div class="item-title">地区</div>
+                <v-distpicker class="item-distpicker" @selected="chooseAddress" :province="userAddress.province"
+                              :city="userAddress.city" :area="userAddress.area">
+                </v-distpicker>
+            </div>
+            <div class="other-item">
+                <div class="item-title">故乡</div>
+                <v-distpicker class="item-distpicker" @selected="chooseHometown" :province="userHometown.province"
+                              :city="userHometown.city" :area="userHometown.area"></v-distpicker>
+            </div>
+            <div class="other-item">
+                <div class="item-title">学校</div>
+                <input class="item-container" @input="changeInput('school')" ref="inputSchool"
+                       :value="this.userInfo.user_school">
+            </div>
+            <div class="other-item">
+                <div class="item-title">个性签名</div>
+                <input class="item-container" @input="changeInput('signature')" ref="inputSignature"
+                       :value="this.userInfo.user_signature">
+            </div>
+        </div>
+
+        <div class="user-bottom">
+            <button class="btn submit-button" @click="commit">保存</button>
+        </div>
+
         <menu-list :display="this.displaySex" :top="this.selectTop" :right="this.selectRight"
                    :width="this.selectWidth" :data="sex" ref="sexMenu" :height=100 @index="changeSex">
         </menu-list>
@@ -95,11 +130,15 @@
 <script>
     import {mapState} from 'vuex'
     import avatar from "./avatar";
+    import loading from './../loading/loading';
+    import notification from "../notification/notification";
 
     export default {
         name: "user-info",
         components: {
-            upLoad: avatar
+            upLoad: avatar,
+            loading: loading,
+            notification: notification
         },
         data() {
             return {
@@ -125,8 +164,10 @@
                 userMonth: 1,
                 userDay: 1,
                 userBlood: '',
+                userName: '',
                 zodiacLibrary: {},
-                constellationLibrary: {}
+                constellationLibrary: {},
+                notification: false
             }
         },
         beforeCreate() {
@@ -136,7 +177,7 @@
             }, 80);
             axios.get('/api/users/zodiac').then(res => {
                 this.zodiacLibrary = res.data.data;
-            })
+            });
             axios.get('/api/users/constellation').then(res => {
                 this.constellationLibrary = res.data.data;
             })
@@ -154,14 +195,26 @@
                 let currentYear = new Date().getFullYear();
                 return currentYear - birthYear;
             },
-            // userBlood: {
-            //     get: function () {
-            //         return this.userInfo.user_blood_type
-            //     },
-            //     set: function (newVal) {
-            //         this.userInfo.user_blood_type = newVal;
-            //     }
-            // }
+            userAddress: function () {
+                let result = {};
+                if (this.userInfo.user_address) {
+                    let temp = this.userInfo.user_address.split("-");
+                    result.province = temp[0];
+                    result.city = temp[1];
+                    result.area = temp[2];
+                }
+                return result;
+            },
+            userHometown: function () {
+                let result = {};
+                if (this.userInfo.user_hometown) {
+                    let temp = this.userInfo.user_hometown.split("-");
+                    result.province = temp[0];
+                    result.city = temp[1];
+                    result.area = temp[2];
+                }
+                return result;
+            }
         },
         watch: {},
         mounted: function () {
@@ -171,10 +224,52 @@
             document.removeEventListener("click", this.clickSelect);
         },
         methods: {
+            commit() {
+                this.$store.dispatch('updateUser', this.userInfo).then(res => {
+                    console.log('okkkk')
+                    this.$store.dispatch('showNotification', {level: 'success', msg: '更新成功'});
+                    this.notification = true;
+                }).catch(error => {
+                    this.$store.dispatch('showNotification', {level: 'danger', msg: '网络不稳定，请稍后再试'});
+                    this.notification = true;
+                })
+
+            },
             initData() {
                 this.userMonth = new Date(this.userInfo.user_birth).getUTCMonth() + 1;
                 this.userDay = new Date(this.userInfo.user_birth).getDate();
                 this.userBlood = this.userInfo.user_blood_type;
+            },
+            chooseAddress(res) {
+                let province = res.province.value;
+                let city = res.city.value;
+                let area = res.area.value;
+                this.userInfo.user_address = province + '-' + city + '-' + area;
+                console.log('address: ' + this.userInfo.user_address);
+            },
+            chooseHometown(res) {
+                let province = res.province.value;
+                let city = res.city.value;
+                let area = res.area.value;
+                this.userInfo.user_hometown = province + '-' + city + '-' + area;
+                console.log('hometown: ' + this.userInfo.user_hometown);
+            },
+            changeAvatar(url) {
+                console.log(url);
+                this.userInfo.user_avatar = url;
+            },
+            changeInput(type) {
+                switch (type) {
+                    case 'name':
+                        this.userInfo.user_name = this.$refs['inputName'].value;
+                        break;
+                    case 'school':
+                        this.userInfo.user_school = this.$refs['inputSchool'].value;
+                        break;
+                    case 'signature':
+                        this.userInfo.user_signature = this.$refs['inputSignature'].value;
+                        break;
+                }
             },
             changeSex(index) {
                 this.userInfo.user_sex = index;
@@ -197,6 +292,7 @@
             },
             changeBlood(index) {
                 this.userBlood = this.blood[index];
+                this.displayBlood = false;
                 // this.userBlood.set(index);
             },
             changeYear(index) {
@@ -221,7 +317,6 @@
                 this.userDay = index + 1;
             },
             chooseItem(index) {
-
                 switch (index) {
                     case 0:
                         this.displayYear = !this.displayYear;

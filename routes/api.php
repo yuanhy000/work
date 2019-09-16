@@ -19,6 +19,7 @@ Route::post('/token/refresh', 'Auth\LoginController@refresh');
 Route::post('/users/search', 'SearchController@user');
 
 Route::get('/users/info/{id}', 'UserController@getInfo');
+Route::post('/users/update', 'UserController@updateUser');
 
 Route::get('/users/zodiac', 'UserController@getZodiac');
 Route::get('/users/constellation', 'UserController@getConstellation');

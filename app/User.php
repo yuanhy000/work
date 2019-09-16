@@ -6,6 +6,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Passport\HasApiTokens;
 use Laravel\Scout\Searchable;
@@ -67,6 +68,33 @@ class User extends Authenticatable
             'status' => false,
             'message' => '验证码不匹配，请重试'
         ], 404);
+    }
+
+    public static function updateUser($user, $userInfo)
+    {
+        DB::beginTransaction();
+        try {
+            $user->name = $userInfo['user_name'];
+            $user->email = $userInfo['user_email'];
+            $user->phone = $userInfo['user_phone'];
+            $user->avatar = $userInfo['user_avatar'];
+            $user->sex = $userInfo['user_sex'];
+            $user->signature = $userInfo['user_signature'];
+            $user->birth = $userInfo['user_birth'];
+            $user->blood_type = $userInfo['user_blood_type'];
+            $user->address = $userInfo['user_address'];
+            $user->hometown = $userInfo['user_hometown'];
+            $user->school = $userInfo['user_school'];
+            $user->age = $userInfo['user_age'];
+            $user->zodiac_id = $userInfo['user_zodiac']['zodiac_id'];
+            $user->constellation_id = $userInfo['user_constellation']['constellation_id'];
+            $user->save();
+            DB::commit();
+            return $user;
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            return false;
+        }
     }
 
     public static function generateUserID()

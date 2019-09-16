@@ -15,6 +15,7 @@ class ZodiacResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'zodiac_id' => $this->id,
             'zodiac_name' => $this->name,
             'zodiac_icon' => $this->icon
         ];

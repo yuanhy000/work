@@ -1,6 +1,10 @@
+
+
+
 .user-info-container {
     /*background-color: rebeccapurple;*/
     background-color: #EDF1F8;
+    /*background-color: #EDF1F8;*/
     width: 80%;
     position: absolute;
     top: 70px;
@@ -40,20 +44,22 @@
 }
 
 .user-base-info {
-    width: 70%;
-    height: 24%;
+    width: 60%;
+    height: 25%;
     /*background-color: #1b4b72;*/
     display: flex;
-    margin: 0 auto;
+    margin: -10px auto 0 auto;
     flex-direction: row;
     flex-wrap: wrap;
+    align-content: center;
+
 }
 
 .base-item {
-    width: 30%;
+    width: 33%;
     /*background-color: darkgray;*/
     height: 40%;
-    margin: auto;
+    margin: 0 auto;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -61,24 +67,23 @@
 }
 
 .click-container {
-    /*background-color: #f3f3f3;*/
-
-    width: 72%;
+    background-color: #FEFFFF;
+    width: 85%;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
     padding: 5px 20px;
     cursor: pointer;
-    border-radius: 5px;
-    border: 2px solid #C2BAC8;
+    border-radius: 30px;
+    border: 2px solid #DBE2EC;
 }
 
 .sex-title-man {
     background-image: -webkit-linear-gradient(bottom, rgb(29, 190, 240), rgb(80, 229, 210));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     /*font-weight: bold;*/
     letter-spacing: 4px;
 }
@@ -87,7 +92,7 @@
     background-image: -webkit-linear-gradient(bottom, #FE5992, #FFBA97);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     /*font-weight: bold;*/
     letter-spacing: 4px;
 }
@@ -156,7 +161,9 @@
     background-image: -webkit-linear-gradient(bottom, #3889F5, #3AE4FF);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    font-size: 1.3rem;
+    height: 35px;
+    line-height: 35px;
+    font-size: 1.1rem;
     letter-spacing: 4px;
 }
 
@@ -164,6 +171,9 @@
     background-image: -webkit-linear-gradient(bottom, #3889F5, #3AE4FF);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    /*width: 35px;*/
+    height: 35px;
+    line-height: 35px;
     font-size: 1.3rem;
     letter-spacing: 4px;
 }
@@ -172,7 +182,7 @@
     background-image: -webkit-linear-gradient(bottom, #FF943F, #FFD468);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     letter-spacing: 4px;
 }
 
@@ -180,7 +190,7 @@
     background-image: -webkit-linear-gradient(bottom, #8EA7C7, #E4C6C9);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     letter-spacing: 4px;
 }
 
@@ -188,7 +198,7 @@
     background-image: -webkit-linear-gradient(bottom, #F65179, #FFB092);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     letter-spacing: 4px;
 }
 
@@ -196,7 +206,7 @@
     background-image: -webkit-linear-gradient(bottom, #FE7762, #FFC58B);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     letter-spacing: 4px;
 }
 
@@ -227,8 +237,6 @@
     line-height: 0.9rem
 }
 
-
-
 .user-blood {
     background-image: -webkit-linear-gradient(bottom, #FE7762, #FFC58B);
     -webkit-background-clip: text;
@@ -237,5 +245,76 @@
     letter-spacing: 4px;
 }
 
+.user-other-info {
+    width: 60%;
+    height: 40%;
+    /*background-color: #1b4b72;*/
+    display: flex;
+    margin: 0 auto;
+    flex-direction: column;
+    /*flex-wrap: wrap;*/
+}
+
+.other-item {
+    width: 80%;
+    /*background-color: #1d643b;*/
+    height: 14%;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.item-title {
+    width: 15%;
+    margin: auto;
+    text-align: center;
+    font-size: 1.1rem;
+    color: #8E8F93;
+    /*color: #737275;*/
+}
+
+.item-container {
+    margin: auto;
+    display: flex;
+    align-items: center;
+    border: 2px solid #DBE2EC;
+    border-radius: 0.5rem;
+    width: 60%;
+    min-width: 160px;
+    height: 100%;
+    background-color: #FEFFFF;
+    padding: 0 10px;
+    outline: none;
+    text-indent: 8px;
+    font-size: 14px;
+    color: #777;
+}
+
+.item-distpicker {
+    margin: auto;
+    display: flex;
+    align-items: center;
+    width: 60%;
+}
+
+.user-bottom {
+    width: 80%;
+    display: flex;
+    margin: auto;
+    justify-content: center;
+}
 
 
+.submit-button {
+    background: #8EA7C7;
+    color: #fff;
+    width: 30%;
+    margin: 0 auto;
+}
+
+.submit-button:hover {
+    background: #7192c3;
+    transition-duration: 0.3s;
+}
