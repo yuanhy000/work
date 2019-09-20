@@ -4,7 +4,12 @@
             <div-scroll color="rgba(0,0,0,0.5)" size="5">
                 <div class="friend-add-container">
                     <router-link class="btn friend-add-button" to="/user-info">
-                        添加好友
+                        基本信息
+                    </router-link>
+                </div>
+                <div class="friend-add-container">
+                    <router-link class="btn friend-add-button" to="/user-account">
+                        账户信息
                     </router-link>
                 </div>
 <!--                <div class="friend-add-container">-->

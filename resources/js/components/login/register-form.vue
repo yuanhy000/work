@@ -88,7 +88,7 @@
     Validator.extend('phone', {
         getMessage: field => field + '格式错误',
         validate: value => {
-            return value.length == 11 && /^((13|14|15|17|18|19)[0-9]{1}\d{8})$/.test(value)
+            return value.length === 11 && /^((13|14|15|17|18|19)[0-9]{1}\d{8})$/.test(value)
         }
     });
 
@@ -136,7 +136,6 @@
                     phone: this.phone,
                     code: this.code
                 };
-                console.log(registerInfo);
                 this.$store.dispatch('registerRequest', registerInfo).then(res => {
                     this.loading = false;
                     this.$router.push({name: 'home'});

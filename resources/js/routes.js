@@ -42,15 +42,20 @@ const routes = [
         path: '/user-manage',
         components: require('./components/user-manage/manage-wrapper.vue'),
         children: [
-            {
-                path: '',
-                name: 'user-manage',
-                components: require('./components/user-info/user-info.vue'),
-            },
+            // {
+            //     path: '',
+            //     name: 'user-info',
+            //     components: require('./components/user-info/user-info.vue'),
+            // },
             {
                 path: '/user-info',
                 name: 'user-info',
                 components: require('./components/user-info/user-info.vue'),
+            },
+            {
+                path: '/user-account',
+                name: '/user-account',
+                components: require('./components/user-account/user-account.vue'),
             },
         ],
         meta: {requiresAuth: true}

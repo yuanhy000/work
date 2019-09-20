@@ -1,6 +1,4 @@
 
-
-
 .user-info-container {
     /*background-color: rebeccapurple;*/
     background-color: #EDF1F8;
@@ -31,7 +29,7 @@
     display: flex;
     margin: auto;
     border-radius: 50%;
-    border: 3px solid #C5BAC8;
+    border: 3px solid #DBE2EC;
     cursor: pointer;
 }
 
@@ -39,7 +37,7 @@
     width: 105px;
     height: 105px;
     border-radius: 50%;
-    border: 3px solid #C5BAC8;
+    border: 3px solid #DBE2EC;
     transition-duration: 0.2s;
 }
 
@@ -77,6 +75,13 @@
     cursor: pointer;
     border-radius: 30px;
     border: 2px solid #DBE2EC;
+}
+
+.click-container:hover {
+    background-color: #FEFFFF;
+    width: 88%;
+    padding: 8px 20px;
+    transition-duration: 0.3s;
 }
 
 .sex-title-man {
@@ -290,6 +295,15 @@
     text-indent: 8px;
     font-size: 14px;
     color: #777;
+}
+
+.item-container:focus {
+    /*border: 2px solid rgba(207, 190, 201, .7);*/
+    /*-webkit-box-shadow: inset 0 1px 1px rgba(236, 202, 201, .075), 0 0 4px rgba(236, 202, 201, .9);*/
+    /*box-shadow: inset 0 1px 1px rgba(236, 202, 201, .075), 0 0 4px rgba(236, 202, 201, .9)*/
+
+    -webkit-box-shadow: inset 0 1px 1px rgba(142, 167, 199, .075), 0 0 4px rgba(142, 167, 199, .9);
+    box-shadow: inset 0 1px 1px rgba(142, 167, 199, .075), 0 0 4px rgba(142, 167, 199, .9);
 }
 
 .item-distpicker {

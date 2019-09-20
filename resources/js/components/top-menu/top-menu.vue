@@ -65,7 +65,7 @@
                 this.manageDisplay = !this.manageDisplay;
             },
             manageUser() {
-                this.$router.push({name: 'user-manage'});
+                this.$router.push({name: 'user-info'});
             },
             clickEvent(e) {
                 if (!this.$refs.menu.contains(e.target) && !this.$refs.menuUser.contains(e.target)) {

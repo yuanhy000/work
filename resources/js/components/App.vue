@@ -46,6 +46,40 @@
 
     }
 
+    .verify-move-block {
+        background-color: #8EA7C7 !important;
+        border-radius: 4px !important;
+        /*color: rgba(255, 219, 217, 0.42);*/
+    }
+
+    .icon-right:before {
+        background-image: url("./../../image/right.svg");
+        width: 25px;
+        height: 25px;
+    }
+
+    .icon-check:before {
+
+        background-image: url("./../../image/correct.svg");
+        width: 25px;
+        height: 25px;
+    }
+    .icon-close:before {
+
+        background-image: url("./../../image/false.svg");
+        width: 25px;
+        height: 25px;
+    }
+
+    .verify-left-bar {
+        border-radius: 4px !important;
+        border-color: #8EA7C7 !important;
+    }
+
+    .verify-msg {
+        color: #777;
+    }
+
     .fade-enter-active {
         transition: all 0.2s;
         /*transition-delay: 0.8s;*/

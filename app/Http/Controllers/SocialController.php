@@ -26,6 +26,15 @@ class SocialController extends Controller
         return $this->sendPhoneCode($phone, $code);
     }
 
+    public function sendBindPhoneCode(Request $request)
+    {
+        $phone = \request()->phone;
+        $code = random_int(100000, 999999);
+
+        Cache::put('bind.code.' . $phone, $code, 36000);
+        return $this->sendPhoneCode($phone, $code);
+    }
+
     private function sendPhoneCode($phone, $code)
     {
         $easySms = new EasySms(config('sms'));

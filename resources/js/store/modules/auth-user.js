@@ -25,6 +25,7 @@ export default {
                 state[item] = payload.user.data[item];
             }
             state.authentication = true;
+            console.log('setAuth over')
         },
 
         INIT_AUTH_USER(state) {
@@ -48,9 +49,16 @@ export default {
         },
 
         updateUser({commit, dispatch}, userInfo) {
-            console.log(userInfo);
             return axios.post('/api/users/update', userInfo).then(res => {
-                console.log(res.data);
+                commit({
+                    type: 'SET_AUTH_USER',
+                    user: res.data
+                })
+            })
+        },
+
+        bindPhone({commit,dispatch}, bindInfo) {
+            return axios.post('/api/bind/phone', bindInfo).then(res => {
                 commit({
                     type: 'SET_AUTH_USER',
                     user: res.data

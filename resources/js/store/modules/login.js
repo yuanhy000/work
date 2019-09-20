@@ -14,6 +14,7 @@ export default {
             })
         },
 
+
         loginSuccess({dispatch}, tokenResponse) {
             jwtToken.setToken(tokenResponse.access_token);
             jwtToken.setAuthID(tokenResponse.auth_id);

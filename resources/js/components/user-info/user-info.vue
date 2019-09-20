@@ -1,5 +1,6 @@
 <template>
     <div class="user-info-container">
+        <loading v-show="loading" style="z-index:999;"></loading>
         <notification class="notification" v-show="notification"></notification>
         <avatar :userAvatar="this.userInfo.user_avatar" @url="changeAvatar"
                 typeArr="image/png,image/jpg,image/gif,image/jpeg"></avatar>
@@ -167,7 +168,9 @@
                 userName: '',
                 zodiacLibrary: {},
                 constellationLibrary: {},
-                notification: false
+                notification: false,
+                loading: false,
+                updateSuccess: false
             }
         },
         beforeCreate() {
@@ -216,7 +219,6 @@
                 return result;
             }
         },
-        watch: {},
         mounted: function () {
             document.addEventListener("click", this.clickSelect);
         },
@@ -225,15 +227,31 @@
         },
         methods: {
             commit() {
+                this.loading = true;
+                this.updateSuccess = false;
                 this.$store.dispatch('updateUser', this.userInfo).then(res => {
-                    console.log('okkkk')
-                    this.$store.dispatch('showNotification', {level: 'success', msg: '更新成功'});
-                    this.notification = true;
+                    this.Success();
                 }).catch(error => {
-                    this.$store.dispatch('showNotification', {level: 'danger', msg: '网络不稳定，请稍后再试'});
-                    this.notification = true;
-                })
-
+                    if (error.response.status === 408 && this.updateSuccess === false) {
+                        this.$store.dispatch('updateUser', this.userInfo).then(res => {
+                            this.updateSuccess();
+                        }).catch(error => {
+                            this.updateFailed();
+                        })
+                    }
+                });
+            },
+            Success() {
+                this.$store.dispatch('showNotification', {level: 'success', msg: '更新成功'});
+                this.notification = true;
+                this.loading = false;
+                this.updateSuccess = true;
+            },
+            updateFailed() {
+                this.$store.dispatch('showNotification', {level: 'danger', msg: '网络不稳定，请稍后再试'});
+                this.notification = true;
+                this.loading = false;
+                this.updateSuccess = false;
             },
             initData() {
                 this.userMonth = new Date(this.userInfo.user_birth).getUTCMonth() + 1;
@@ -282,18 +300,15 @@
             },
             changeZodiac(index) {
                 this.userInfo.user_zodiac = this.zodiacLibrary[index];
-                console.log(this.userInfo.user_zodiac);
                 this.displayZodiac = false;
             },
             changeConstellation(index) {
                 this.userInfo.user_constellation = this.constellationLibrary[index];
-                console.log(this.userInfo.user_constellation);
                 this.displayConstellation = false;
             },
             changeBlood(index) {
                 this.userBlood = this.blood[index];
                 this.displayBlood = false;
-                // this.userBlood.set(index);
             },
             changeYear(index) {
                 let year = this.year[index];
@@ -377,15 +392,6 @@
                     this.displayMonth = false;
                     this.displayDay = false;
                 }
-            },
-            selectYear() {
-                this.displayYear = !this.displayYear;
-            },
-            selectMonth() {
-                this.displayMonth = !this.displayMonth;
-            },
-            selectDay() {
-                this.displayDay = !this.displayDay;
             },
             getPosition(userDom) {
                 this.selectWidth = userDom.width;
