@@ -56,6 +56,7 @@
         },
         methods: {
             logout() {
+                this.manageDisplay = false;
                 this.$store.dispatch('logoutRequest').then(res => {
                     this.$router.push({name: 'home'})
                 })
@@ -65,6 +66,7 @@
                 this.manageDisplay = !this.manageDisplay;
             },
             manageUser() {
+                this.manageDisplay = false;
                 this.$router.push({name: 'user-info'});
             },
             clickEvent(e) {

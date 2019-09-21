@@ -242,13 +242,19 @@
                 });
             },
             Success() {
-                this.$store.dispatch('showNotification', {level: 'success', msg: '更新成功'});
+                this.$message({
+                    message: '信息更新成功',
+                    type: 'success'
+                });
                 this.notification = true;
                 this.loading = false;
                 this.updateSuccess = true;
             },
             updateFailed() {
-                this.$store.dispatch('showNotification', {level: 'danger', msg: '网络不稳定，请稍后再试'});
+                this.$message({
+                    message: '网络不稳定，请稍后再试',
+                    type: 'error'
+                });
                 this.notification = true;
                 this.loading = false;
                 this.updateSuccess = false;

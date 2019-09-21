@@ -2,35 +2,48 @@
     <div class="out-container">
         <div class="friend-list-container">
             <div-scroll color="rgba(0,0,0,0.5)" size="5">
-                <div class="friend-add-container">
-                    <router-link class="btn friend-add-button" to="/user-info">
-                        基本信息
-                    </router-link>
-                </div>
-                <div class="friend-add-container">
-                    <router-link class="btn friend-add-button" to="/user-account">
-                        账户信息
-                    </router-link>
-                </div>
-<!--                <div class="friend-add-container">-->
-<!--                    <router-link class="btn friend-add-button" to="/search-user">-->
-<!--                        添加好友-->
-<!--                    </router-link>-->
-<!--                </div>-->
-<!--                <div class="friend-add-container">-->
-<!--                    <router-link class="btn friend-add-button" to="/search-user">-->
-<!--                        添加好友-->
-<!--                    </router-link>-->
-<!--                </div>-->
+                <router-link class="friend-add-container" to="/user-info" @click.native="selectTab(0)"
+                             :class="selectIndex === 0 ? 'select': ''">
+                    基本信息
+                </router-link>
+                <router-link class="friend-add-container" to="/user-account" @click.native="selectTab(1)"
+                             :class="selectIndex === 1 ? 'select': ''">
+                    账户信息
+                </router-link>
+
             </div-scroll>
         </div>
-        <router-view></router-view>
+        <transition name="fade" mode="out-in">
+            <router-view></router-view>
+        </transition>
     </div>
 </template>
 
 <script>
     export default {
-        name: "manage-wrapper"
+        name: "manage-wrapper",
+        data() {
+            return {
+                selectIndex: 0,
+            }
+        },
+        mounted() {
+            let router = this.$route.path;
+            switch (router) {
+                case '/user-info':
+                    this.selectIndex = 0;
+                    break;
+                case '/user-account':
+                    this.selectIndex = 1;
+                    break;
+            }
+        },
+        methods: {
+            selectTab(index) {
+                console.log(this.$route.path);
+                this.selectIndex = index;
+            }
+        }
     }
 </script>
 

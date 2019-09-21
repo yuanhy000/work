@@ -13,6 +13,8 @@ import {HappyScroll} from 'vue-happy-scroll'
 import 'vue-happy-scroll/docs/happy-scroll.css'
 import VDistpicker from 'v-distpicker'
 
+import Message from 'vue-multiple-message'
+Vue.prototype.$message = Message;
 
 Vue.use(VeeValidate);
 Validator.localize('zh_CN', zh_CN);

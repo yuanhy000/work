@@ -49,7 +49,10 @@
     .verify-move-block {
         background-color: #8EA7C7 !important;
         border-radius: 4px !important;
-        /*color: rgba(255, 219, 217, 0.42);*/
+    }
+    .verify-move-block:hover {
+        background-color: #788FAF !important;
+        transition-duration: 0.3s;
     }
 
     .icon-right:before {

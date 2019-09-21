@@ -1,5 +1,6 @@
 <template>
     <div class="user-info-container">
+        <loading v-show="loading"></loading>
         <div class="account-container">
             <div class="account-title">
                 <img src="./../../../../public/icons/info.svg" alt="" class="title-image">
@@ -93,8 +94,10 @@
                 </div>
                 <verify @success="verifySuccess('password')" @error="verifyFailed('password')" :type="3"
                         :showButton="false" class="verify" :barSize="{width:'60%',height:'40px'}"></verify>
-                <div class="error-info-container" v-show="errorBag.has('verifyPassword')">
+                <div v-show="errorBag.has('verifyPassword') ||errorBag.has('otherError')"
+                     class="error-info-container">
                     <span class="form-text-left">{{errorBag.first('verifyPassword')}}</span>
+                    <span class="form-text-left">{{errorBag.first('otherError')}}</span>
                 </div>
                 <button class="btn send-button" @click="submitPassword" type="button">应用修改</button>
             </div>
@@ -133,12 +136,19 @@
                 buttonContent: '发送验证码',
                 verifyPassword: false,
                 verifyPhone: false,
+                loading: false,
                 errorBag: new ErrorBag(),
             }
         },
         watch: {
             'phone': function () {
                 this.errorBag.remove('hasPhone');
+            },
+            'code': function () {
+                this.errorBag.remove('code');
+            },
+            'password': function () {
+                this.errorBag.remove('otherError');
             },
         },
         components: {
@@ -152,8 +162,23 @@
                             phone: this.phone,
                             code: this.code
                         };
+                        this.loading = true;
                         this.$store.dispatch('bindPhone', bindInfo).then(res => {
-
+                            this.$message({
+                                message: '绑定手机成功',
+                                type: 'success'
+                            });
+                            this.loading = false;
+                        }).catch(error => {
+                            this.errorBag.add({
+                                field: 'code',
+                                msg: '验证码不匹配',
+                            });
+                            this.$message({
+                                message: '绑定手机失败，请重试',
+                                type: 'error'
+                            });
+                            this.loading = false;
                         })
                     }
                 })
@@ -168,9 +193,23 @@
                             });
                             return
                         }
-                        console.log('post');
+                        this.loading = true;
                         axios.post('api/users/password', this.password).then(res => {
-                            console.log(res);
+                            this.$message({
+                                message: '修改密码成功',
+                                type: 'success'
+                            });
+                            this.loading = false;
+                        }).catch(error => {
+                            this.errorBag.add({
+                                field: 'otherError',
+                                msg: '修改密码失败，请稍后再试',
+                            });
+                            this.$message({
+                                message: '修改密码失败，请稍后再试',
+                                type: 'error'
+                            });
+                            this.loading = false;
                         })
                     }
                 })
@@ -194,22 +233,28 @@
                     this.verifyPhone = false;
                 }
             },
-            getCode() {
+            sendCodeCheck() {
                 if (this.phone === '') {
                     this.errorBag.add({
                         field: 'hasPhone',
                         msg: '请先输入手机号码',
                     });
-                    return
+                    return false;
                 } else if (!this.verifyPhone) {
                     this.errorBag.add({
                         field: 'verifyPhone',
                         msg: '请先滑动认证',
                     });
-                    return
+                    return false;
                 }
                 if (!this.canClick) {
-                    return;
+                    return false;
+                }
+            },
+            getCode() {
+                let result = this.sendCodeCheck();
+                if (!result) {
+                    return
                 }
                 this.canClick = false;
                 this.buttonContent = this.countDownTime + 's 后重新发送';
@@ -223,13 +268,19 @@
                         this.canClick = true;
                     }
                 }, 1000);
-
                 let phone = {
                     phone: this.phone
                 };
-
-                return axios.post('/api/bind/phone/code', phone).then(res => {
-                    console.log(res);
+                axios.post('/api/bind/phone/code', phone).then(res => {
+                    this.$message({
+                        message: '验证码发送成功',
+                        type: 'success'
+                    });
+                }).catch(error => {
+                    this.$message({
+                        message: '验证码发送失败，请稍后再试',
+                        type: 'error'
+                    });
                 })
             }
         }
