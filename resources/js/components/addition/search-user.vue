@@ -148,7 +148,7 @@
                 this.page_index++;
                 this.load_page++;
                 this.users.push.apply(this.users, res.data.data.users);
-                this.setSearchInfo(res)
+                this.setSearchInfo(res);
             },
             navigateUser(userId) {
                 let user = this.users.find(
@@ -156,7 +156,7 @@
                         return item.user_id === userId
                     }
                 );
-                this.$router.push({name: 'friend-info', params: {userId: userId}});
+                this.$router.push({name: 'friend-info', params: {user: user}});
             }
         }
     }

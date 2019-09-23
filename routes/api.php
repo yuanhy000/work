@@ -11,6 +11,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('/register/phone/code', 'SocialController@sendRegisterPhoneCode');
 Route::post('/login/phone/code', 'SocialController@sendLoginPhoneCode');
 Route::post('/bind/phone/code', 'SocialController@sendBindPhoneCode');
+Route::post('/bind/phone', 'UserController@bindPhone');
 
 Route::post('/register', 'Auth\RegisterController@register');
 Route::post('/login', 'Auth\LoginController@login');
@@ -22,7 +23,7 @@ Route::post('/users/search', 'SearchController@user');
 Route::get('/users/info/{id}', 'UserController@getInfo');
 Route::post('/users/update', 'UserController@updateUser');
 Route::post('/users/password', 'UserController@updatePassword');
-Route::post('/bind/phone', 'UserController@bindPhone');
+Route::post('/users/is_friend', 'UserController@isFriend');
 
 Route::get('/users/zodiac', 'UserController@getZodiac');
 Route::get('/users/constellation', 'UserController@getConstellation');

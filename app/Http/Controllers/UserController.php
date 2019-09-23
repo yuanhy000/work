@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Chinese_zodiac;
 use App\Constellation;
+use App\Friend;
 use App\Http\Resources\ConstellationResource;
 use App\Http\Resources\UserResource;
 use App\Http\Resources\ZodiacResource;
@@ -12,14 +13,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use function AlibabaCloud\Client\json;
 
 class UserController extends Controller
 {
-    public function getInfo(Request $request)
-    {
-
-    }
-
     public function getZodiac(Request $request)
     {
         $zodiac = Chinese_zodiac::all();
@@ -82,5 +79,21 @@ class UserController extends Controller
             'status' => false,
             'message' => '验证码不匹配，请重试'
         ], 404);
+    }
+
+    public function isFriend(Request $request)
+    {
+        $friend_id = (int)$request->getContent('user_id');
+        $user_id = auth()->guard('api')->user()->id;
+
+        $friend = Friend::where([['user_id', '=', $user_id], ['friend_id', '=', $friend_id]])->first();
+        if ($friend_id == $user_id || $friend) {
+            return response()->json([
+                'isFriend' => true
+            ], 200);
+        }
+        return response()->json([
+            'isFriend' => false
+        ], 200);
     }
 }
