@@ -28,5 +28,7 @@ Route::post('/users/is_friend', 'UserController@isFriend');
 Route::get('/users/zodiac', 'UserController@getZodiac');
 Route::get('/users/constellation', 'UserController@getConstellation');
 
+Route::post('/friends/add', 'FriendController@addFriend');
+
 
 

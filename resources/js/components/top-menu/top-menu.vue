@@ -26,7 +26,7 @@
             <div class="manage-list" ref="menu" v-show="manageDisplay"
                  :style="{marginRight:this.marginRight+'px'}">
                 <div class="item-top" @click="manageUser">个人中心</div>
-                <div class="item-bottom"  @click="logout">退出</div>
+                <div class="item-bottom" @click="logout">退出</div>
             </div>
         </transition>
     </div>
@@ -50,6 +50,18 @@
         },
         mounted: function () {
             document.addEventListener("click", this.clickEvent);
+            setTimeout(res => {
+                console.log(this.user);
+                console.log('Friend.accept.' + this.user.user_id);
+                window.Echo.private('Friend.accept.' + this.user.user_id)
+                    .listen('AddFriend', (e) => {
+                        console.log(e);
+                        console.log('private channel call');
+                        // this.chats.push(e);
+                        // console.log(this.chats);
+                    });
+            }, 2000)
+
         },
         beforeDestroy() {
             document.removeEventListener("click", this.clickEvent);

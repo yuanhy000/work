@@ -1,6 +1,7 @@
 export default {
     state: {
         authentication: false,
+        user_id: null,
         user_name: null,
         user_number: null,
         user_email: null,

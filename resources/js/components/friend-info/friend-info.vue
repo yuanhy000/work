@@ -73,8 +73,8 @@
             </div>
         </div>
         <div class="user-bottom">
-            <button class="btn submit-button" v-if="isFriend">发送消息</button>
-            <button class="btn submit-button" v-else>添加好友</button>
+            <button class="btn submit-button" v-if="isFriend" @click="addFriend">发送消息</button>
+            <button class="btn submit-button" v-if="!isFriend" @click="addFriend">添加好友</button>
         </div>
     </div>
 </template>
@@ -86,6 +86,19 @@
         name: "friend-info",
         components: {
             loading: loading
+        },
+        mounted() {
+            console.log('Friend.accept.' + this.userInfo.user_id);
+            window.Echo.private('Friend.accept.' + this.userInfo.user_id)
+                .listen('AddFriend', (e) => {
+                    console.log(e);
+                    console.log('private channel call');
+                    // this.chats.push(e);
+                    // console.log(this.chats);
+                });
+            //
+            // console.log(this.group.chats);
+            // this.chats = this.group.chats;
         },
         data() {
             return {
@@ -99,7 +112,6 @@
         },
         created() {
             this.userInfo = this.$route.params.user;
-            console.log(this.$route.params.user);
             this.initData();
             axios.post('api/users/is_friend', this.userInfo.user_id).then(res => {
                 this.isFriend = res.data.isFriend;
@@ -107,6 +119,13 @@
             })
         },
         methods: {
+            addFriend() {
+                console.log('123')
+                axios.post('api/friends/add', this.userInfo.user_id).then(res => {
+                    // this.isFriend = res.data.isFriend;
+                    console.log(res);
+                })
+            },
             initData() {
                 this.userMonth = new Date(this.userInfo.user_birth).getUTCMonth() + 1;
                 this.userDay = new Date(this.userInfo.user_birth).getDate();
