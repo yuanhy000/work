@@ -1,7 +1,6 @@
 <template>
     <div class="user-info-container">
         <loading v-show="loading" style="z-index:999;"></loading>
-        <notification class="notification" v-show="notification"></notification>
         <avatar :userAvatar="this.userInfo.user_avatar" @url="changeAvatar"
                 typeArr="image/png,image/jpg,image/gif,image/jpeg"></avatar>
         <div class="user-base-info">
@@ -132,14 +131,12 @@
     import {mapState} from 'vuex'
     import avatar from "./avatar";
     import loading from './../loading/loading';
-    import notification from "../notification/notification";
 
     export default {
         name: "user-info",
         components: {
             upLoad: avatar,
             loading: loading,
-            notification: notification
         },
         data() {
             return {

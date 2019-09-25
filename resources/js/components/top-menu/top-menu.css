@@ -1,12 +1,3 @@
-.btn:focus,
-.btn:active:focus,
-.btn.active:focus,
-.btn.focus,
-.btn:active.focus,
-.btn.active.focus {
-    outline: none;
-    box-shadow: none;
-}
 
 .menu-container {
     display: flex;
@@ -134,6 +125,7 @@
     background-color: rgba(0, 0, 0, 0.2);
     transition-duration: 0.3s;
 }
+
 .item-bottom {
     height: 50px;
     line-height: 50px;
@@ -151,15 +143,23 @@
     transition-duration: 0.3s;
 }
 
-.fade-enter-active{
-    transition: all 0.3s;
-    /*transition-delay: 0.8s;*/
+.notification-container {
+    display: flex;
+    flex-direction: row;
+    padding: 0 10px;
+    cursor: pointer;
+    align-items: center;
+    justify-content: space-between;
+    margin-right: 10px;
 }
 
-.fade-leave-active{
-    transition: all 0.3s;
+.notification-img {
+    display: flex;
+    margin-right: 5px;
 }
 
-.fade-enter, .fade-leave-active{
-    opacity: 0;
+.notification-number {
+    color: #fff;
+    font-size: 1.3rem;
+    /*margin: auto;*/
 }

@@ -31,7 +31,7 @@ class AddFriend implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('Friend.accept.' . $this->accept_user->id);
-//        return new PrivateChannel('Friend.accept.' . $this->accept_user->id);
+//        return new Channel('Friend.accept.' . $this->accept_user->id);
+        return new PrivateChannel('Friend.accept.' . $this->accept_user->id);
     }
 }

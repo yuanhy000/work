@@ -12,6 +12,7 @@
                 <!--            <router-link class="menu-login" to="" v-if="user.authentication">-->
                 <!--                <button class="btn menu-button">管理</button>-->
                 <!--            </router-link>-->
+                <notification :user-info="user"></notification>
                 <div class="menu-manage" v-if="user.authentication" @click="showList" ref="menuUser">
                     <img :src="user.user_avatar" alt="" class="menu-avatar">
                     <div class="menu-name">{{user.user_name}}</div>
@@ -34,9 +35,13 @@
 
 <script>
     import {mapState} from 'vuex'
+    import notification from "./notification";
 
     export default {
         name: "top-menu",
+        components: {
+            notification
+        },
         computed: {
             ...mapState({
                 user: state => state.AuthUser
@@ -50,18 +55,6 @@
         },
         mounted: function () {
             document.addEventListener("click", this.clickEvent);
-            setTimeout(res => {
-                console.log(this.user);
-                console.log('Friend.accept.' + this.user.user_id);
-                window.Echo.private('Friend.accept.' + this.user.user_id)
-                    .listen('AddFriend', (e) => {
-                        console.log(e);
-                        console.log('private channel call');
-                        // this.chats.push(e);
-                        // console.log(this.chats);
-                    });
-            }, 2000)
-
         },
         beforeDestroy() {
             document.removeEventListener("click", this.clickEvent);

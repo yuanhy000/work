@@ -1,7 +1,6 @@
 <template>
     <div>
         <top-menu></top-menu>
-        <notification></notification>
         <transition name="fade" mode="out-in">
             <router-view></router-view>
         </transition>
@@ -17,7 +16,6 @@
     export default {
         components: {
             TopMenu,
-            Notification
         },
         mounted() {
             if (jwt.getToken()) {

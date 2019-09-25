@@ -23,6 +23,8 @@ Route::get('/', function () {
 Route::get('/github/login', 'Auth\LoginController@githubLogin');
 Route::get('/github/callback', 'Auth\LoginController@githubCallback');
 
+//Route::post('/broadcast/auth', 'Auth\LoginController@broadcastAuth');
+
 Route::get('/cache', function () {
     $user = \App\User::find(1);
     return new \App\Http\Resources\UserResource($user);

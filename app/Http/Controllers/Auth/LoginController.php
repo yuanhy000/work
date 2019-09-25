@@ -67,4 +67,5 @@ class LoginController extends Controller
     {
         return $this->proxy->refresh();
     }
+
 }

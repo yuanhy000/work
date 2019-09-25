@@ -1,7 +1,6 @@
 <template>
     <div class="search-user-container">
         <loading v-show="loading" style="z-index:999;"></loading>
-        <notification class="notification" v-show="notification"></notification>
         <div class="search-container">
             <input type="text" class="search-input" v-model="inputContent"
                    placeholder="昵称 / 邮箱 / 手机号码" @keyup.enter="searchUser">
@@ -48,8 +47,7 @@
     export default {
         name: "search-user",
         components: {
-            loading: loading,
-            notification: notification
+            loading: loading
         },
         data() {
             return {
@@ -138,7 +136,10 @@
                 }, 500);
             },
             searchFailed() {
-                this.$store.dispatch('showNotification', {level: 'danger', msg: '网络不稳定，请稍后再试'});
+                this.$message({
+                    message: '网络不稳定，请稍后再试',
+                    type: 'error'
+                });
                 this.notification = true;
                 this.searchResult = false;
                 this.show_content = true;

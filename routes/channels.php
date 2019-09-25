@@ -8,6 +8,6 @@ Broadcast::channel('App.User.{id}', function ($user, $id) {
 
 Broadcast::channel('Friend.accept.{accept_id}', function ($user, $accept_id) {
 //    return true;
-    return (int)$user->id === $accept_id;
+    return (int)$user->id === (int)$accept_id;
 });
 

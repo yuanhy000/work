@@ -88,14 +88,14 @@
             loading: loading
         },
         mounted() {
-            console.log('Friend.accept.' + this.userInfo.user_id);
-            window.Echo.private('Friend.accept.' + this.userInfo.user_id)
-                .listen('AddFriend', (e) => {
-                    console.log(e);
-                    console.log('private channel call');
-                    // this.chats.push(e);
-                    // console.log(this.chats);
-                });
+            // console.log('Friend.accept.' + this.userInfo.user_id);
+            // window.Echo.private('Friend.accept.' + this.userInfo.user_id)
+            //     .listen('AddFriend', (e) => {
+            //         console.log(e);
+            //         console.log('private channel call');
+            //         // this.chats.push(e);
+            //         // console.log(this.chats);
+            //     });
             //
             // console.log(this.group.chats);
             // this.chats = this.group.chats;
@@ -115,12 +115,10 @@
             this.initData();
             axios.post('api/users/is_friend', this.userInfo.user_id).then(res => {
                 this.isFriend = res.data.isFriend;
-                console.log(res.data.isFriend);
             })
         },
         methods: {
             addFriend() {
-                console.log('123')
                 axios.post('api/friends/add', this.userInfo.user_id).then(res => {
                     // this.isFriend = res.data.isFriend;
                     console.log(res);
