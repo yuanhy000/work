@@ -10,6 +10,10 @@
                              :class="selectIndex === 1 ? 'select': ''">
                     账户信息
                 </router-link>
+                <router-link class="friend-add-container" to="/user-notification" @click.native="selectTab(2)"
+                             :class="selectIndex === 2 ? 'select': ''">
+                    消息通知
+                </router-link>
 
             </div-scroll>
         </div>
@@ -35,6 +39,9 @@
                     break;
                 case '/user-account':
                     this.selectIndex = 1;
+                    break;
+                case '/user-notification':
+                    this.selectIndex = 2;
                     break;
             }
         },

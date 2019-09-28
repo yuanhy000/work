@@ -18,10 +18,10 @@ class AddFriend implements ShouldBroadcast
     public $request_user;
     public $accept_user;
 
-    public function __construct($user_id, $friend_id)
+    public function __construct($request_id, $accept_id)
     {
-        $this->request_user = User::find($user_id);
-        $this->accept_user = User::find($friend_id);
+        $this->request_user = User::find($request_id);
+        $this->accept_user = User::find($accept_id);
     }
 
     /**

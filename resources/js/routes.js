@@ -54,8 +54,13 @@ const routes = [
             },
             {
                 path: '/user-account',
-                name: '/user-account',
+                name: 'user-account',
                 components: require('./components/user-account/user-account.vue'),
+            },
+            {
+                path: '/user-notification',
+                name: 'user-notification',
+                components: require('./components/user-notification/user-notification.vue'),
             },
         ],
         meta: {requiresAuth: true}

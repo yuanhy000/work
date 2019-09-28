@@ -12,7 +12,7 @@
                 <!--            <router-link class="menu-login" to="" v-if="user.authentication">-->
                 <!--                <button class="btn menu-button">管理</button>-->
                 <!--            </router-link>-->
-                <notification :user-info="user"></notification>
+                <notification :user-info="user" v-if="user.authentication"></notification>
                 <div class="menu-manage" v-if="user.authentication" @click="showList" ref="menuUser">
                     <img :src="user.user_avatar" alt="" class="menu-avatar">
                     <div class="menu-name">{{user.user_name}}</div>

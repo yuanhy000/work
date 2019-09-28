@@ -1,5 +1,6 @@
 <template>
-    <div class="notification-container">
+    <div class="notification-container" :class="this.hasNotification||this.number ? 'glint' : ''"
+         @click="navigateNotification">
         <img src="./../../../image/notification.svg" alt="" class="notification-img">
         <div class="notification-number">{{number}}</div>
     </div>
@@ -13,20 +14,29 @@
         },
         data() {
             return {
-                number: 0
+                number: 0,
+                hasNotification: false
             }
         },
         mounted() {
+            axios.post('api/notifications/unread').then(res => {
+                let notifications = res.data.data;
+                this.number = notifications.unread_number;
+            });
             setTimeout(res => {
-                console.log(this.userInfo)
                 console.log('Friend.accept.' + this.userInfo.user_id);
                 window.Echo.private('Friend.accept.' + this.userInfo.user_id)
                     .listen('AddFriend', (e) => {
+                        this.hasNotification = true;
                         console.log(e);
-                        console.log('private channel call');
                         this.number++;
                     });
-            }, 500)
+            }, 1000)
+        },
+        methods: {
+            navigateNotification() {
+                this.$router.push({name:'user-notification'})
+            }
         }
     }
 </script>

@@ -1,0 +1,143 @@
+.notification-container {
+    /*background-color: rebeccapurple;*/
+    background-color: #f9f9f9;
+    /*background-color: #fff;*/
+    width: 80%;
+    position: absolute;
+    top: 70px;
+    bottom: 0;
+    right: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.inside-container {
+    width: 96%;
+    height: 96%;
+    background-color: #EDF1F8;
+    /*background-color: #fff;*/
+    display: flex;
+    margin: 2% auto 2% auto;
+    flex-direction: row;
+    border-radius: 20px;
+    /*margin: 1%;*/
+    padding: 0 2% 20px 2%;
+    border: 2px solid #DBE2EC;
+    /*flex-wrap: wrap;*/
+}
+
+.notification-content {
+    width: 85%;
+    height: 100%;
+    margin: auto;
+    flex-direction: column;
+}
+
+.item-out-container {
+    width: 100%;
+    height: 20%;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    /*background-color: rebeccapurple;*/
+}
+
+.item-time {
+    margin: 10px auto 0 auto;
+    height: 25px;
+    line-height: 25px;
+    font-size: 0.8rem;
+    color: #777;
+    /*background-color: rebeccapurple;*/
+}
+
+.item-container {
+    width: 90%;
+    height: 65%;
+    display: flex;
+    flex-direction: row;
+    background-color: #fff;
+    margin: 1% auto 0 auto;
+    justify-content: space-between;
+    border-radius: 20px;
+    /*background-color:red;*/
+}
+
+.item-info {
+    display: flex;
+    flex-direction: row;
+    width: 80%;
+    align-items: center;
+}
+
+.item-operation {
+    display: flex;
+    flex-direction: row;
+}
+
+.item-avatar {
+    width: 70px;
+    height: 70px;
+    display: flex;
+    margin: auto 20px auto 30px;
+    border-radius: 50%;
+    border: 3px solid #DBE2EC;
+    cursor: pointer;
+}
+
+.content-container {
+    width: 90%;
+    height: 100%;
+    /*background-color: rebeccapurple;*/
+    display: flex;
+    cursor: pointer;
+}
+
+.item-content {
+    margin: auto 20px;
+    font-size: 0.9rem;
+    color: #777;
+    letter-spacing: 0.1rem;
+}
+
+.item-read-img {
+    margin: auto 0;
+    width: 50px;
+    height: 50px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.item-delete-img {
+    margin: auto 30px auto 0;
+    width: 50px;
+    height: 50px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.pre-img-container {
+    width: 60px;
+    height: 60px;
+    margin: auto;
+    background-color: #EECAC9;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0.2;
+    cursor: pointer;
+}
+
+.pre-img-container:hover {
+    opacity: 1;
+    transition-duration: 0.5s;
+}
+
+.perch-div {
+
+    width: 60px;
+    height: 60px;
+    margin: auto;
+}
