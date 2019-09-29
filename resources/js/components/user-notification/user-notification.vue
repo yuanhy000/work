@@ -1,6 +1,8 @@
 <template>
     <div class="notification-container">
         <loading v-show="loading" style="z-index:999;"></loading>
+        <toast v-show="show_delete" style="z-index:999;" @option="deleteAction"
+               :title="toast_title" :content="toast_content"></toast>
         <div class="inside-container">
             <div class="pre-img-container" @click="prePage" v-if="this.page_index>1 && show_content">
                 <img src="./../../../image/pre.svg" alt="" class="pre-image">
@@ -10,7 +12,7 @@
             <transition name="fade">
                 <div class="notification-content" v-if="show_content">
                     <div class="item-out-container"
-                         v-for="notification in notifications.slice((this.page_index - 1) * 5,this.page_index * 5)">
+                         v-for="(notification,index) in notifications.slice((this.page_index - 1) * 5,this.page_index * 5)">
                         <div class="item-time">{{notification.request_time}}</div>
                         <div class="item-container">
                             <div class="item-info">
@@ -25,7 +27,8 @@
                                      v-show="notification.status">
                                 <img src="./../../../image/unread.svg" alt="" class="item-read-img"
                                      v-show="!notification.status">
-                                <img src="./../../../image/delete.svg" alt="" class="item-delete-img">
+                                <img src="./../../../image/delete.svg" alt="" class="item-delete-img"
+                                     @click="deleteNotification(notification.notification_id,index)">
                             </div>
                         </div>
                     </div>
@@ -43,11 +46,13 @@
 <script>
 
     import loading from './../loading/loading';
+    import toast from "../toast/toast";
 
     export default {
         name: "user-notification",
         components: {
-            loading: loading
+            loading,
+            toast
         },
         data() {
             return {
@@ -58,6 +63,11 @@
                 links: {},
                 show_content: true,
                 loading: false,
+                show_delete: false,
+                delete_notification: {},
+                toast_title: '',
+                toast_content: '',
+                delete_index: 0
             }
         },
         mounted() {
@@ -67,6 +77,29 @@
             })
         },
         methods: {
+            deleteNotification(notification_id, index) {
+                this.delete_notification = this.notifications.find(
+                    (item) => {
+                        return item.notification_id === notification_id
+                    }
+                );
+                this.delete_index = index;
+                this.toast_title = '确认删除';
+                this.toast_content = '确认删除用户: ' + this.delete_notification.request_user.user_name +
+                    ' 发送给您的消息通知吗?';
+                this.show_delete = true;
+            },
+            deleteAction(option) {
+                this.show_delete = false;
+                if (option) {
+                    axios.post('api/notifications/delete', this.delete_notification).then(res => {
+                        console.log(res);
+                        this.notifications.splice(this.delete_index, 1);
+                        console.log(this.notifications)
+                    });
+                    console.log('notification ' + this.delete_notification.notification_id + ' will be deleted');
+                }
+            },
             setNotifications(res) {
                 this.notifications = res.data.data.notifications;
                 this.last_page = res.data.meta.last_page;
@@ -115,7 +148,7 @@
             setLoading() {
                 setTimeout(() => {
                     this.show_content = true;
-                }, 500);
+                }, 400);
             },
             operationBeforeRequest() {
                 this.show_content = false;

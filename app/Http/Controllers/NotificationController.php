@@ -12,7 +12,7 @@ class NotificationController extends Controller
     {
         $user_id = auth()->guard('api')->user()->id;
 
-        $notification = Notification::where('to_user_id', '=', $user_id)->paginate(5);
+        $notification = Notification::where('to_user_id', '=', $user_id)->paginate(6);
         return new NotificationCollection($notification);
     }
 
@@ -25,5 +25,14 @@ class NotificationController extends Controller
             ['status', '=', 0]
         ])->get();
         return new NotificationCollection($notification);
+    }
+
+    public function deleteNotification(Request $request)
+    {
+        $user_id = auth()->guard('api')->user()->id;
+        $delete_id = json_decode($request->getContent('delete_notification'), true)
+        ['notification_id'];
+
+        return Notification::deleteNotification($delete_id);
     }
 }

@@ -32,8 +32,16 @@ class Notification extends Model
         ], 201);
     }
 
-    public static function getNotification($user_id)
+    public static function deleteNotification($delete_id)
     {
-
+        $result = Notification::find($delete_id)->delete();
+        if ($result) {
+            return response()->json([
+                'msg' => '消息删除成功'
+            ], 200);
+        }
+        return response()->json([
+            'msg' => '消息删除失败'
+        ], 404);
     }
 }

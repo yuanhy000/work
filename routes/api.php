@@ -32,6 +32,7 @@ Route::post('/friends/add', 'FriendController@addFriend');
 
 Route::post('/notifications/unread', 'NotificationController@getUnread');
 Route::post('/notifications/all', 'NotificationController@getNotification');
+Route::post('/notifications/delete', 'NotificationController@deleteNotification');
 
 
 
