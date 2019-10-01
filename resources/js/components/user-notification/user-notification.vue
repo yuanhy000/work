@@ -92,12 +92,20 @@
             deleteAction(option) {
                 this.show_delete = false;
                 if (option) {
-                    axios.post('api/notifications/delete', this.delete_notification).then(res => {
-                        console.log(res);
-                        this.notifications.splice(this.delete_index, 1);
-                        console.log(this.notifications)
+                    let data = {
+                        current_page: this.page_index,
+                        delete_notification: this.delete_notification
+                    };
+                    axios.post('api/notifications/delete', data).then(res => {
+                        this.load_page = this.page_index;
+                        this.notifications.splice((this.page_index - 1) * 5, this.notifications.length);
+                        this.notifications.push.apply(this.notifications, res.data.data.notifications);
+                        //重新拼接请求下一页的链接
+                        this.links.next = this.links.last.substr(0, this.links.last.length - 1) + (this.page_index + 1)
+                        if (this.delete_notification.notification_status === 0) {
+                            this.$store.dispatch('decrementNumber')
+                        }
                     });
-                    console.log('notification ' + this.delete_notification.notification_id + ' will be deleted');
                 }
             },
             setNotifications(res) {
@@ -129,14 +137,10 @@
                     console.log(res);
                     this.setNextInfo(res);
                 }).catch(error => {
-                    // if (error.response.status === 500 && this.$store.state.SearchStatus.searchSuccess) {
-                    //     this.$store.dispatch('searchFailed');
-                    //     this.$store.dispatch('searchNextPage', this.links.next, this.searchData).then(res => {
-                    //         this.setNextInfo(res);
-                    //     }).catch(error => {
-                    //         this.searchFailed();
-                    //     })
-                    // }
+                    this.$message({
+                        message: '网络不稳定，请稍后再试',
+                        type: 'error'
+                    });
                 })
             },
             setNextInfo(res) {

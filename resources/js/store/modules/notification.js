@@ -1,28 +1,52 @@
 export default {
     state: {
-        level: 'success',
-        msg: null
+        number: 0,
+        hasNotification: false
     },
     mutations: {
-        SHOW_NOTIFICATION(state, payload) {
-            state.level = payload.notification.level;
-            state.msg = payload.notification.msg;
+        SET_NUMBER(state, payload) {
+            state.number = payload.number;
         },
-        HIDE_NOTIFICATION(state, payload) {
-            state.level = 'success';
-            state.msg = null;
+        SET_STATUS(state, payload) {
+            state.hasNotification = payload.status;
+        },
+        INCREMENT_NUMBER(state) {
+            state.number += 1;
+        },
+        DECREMENT_NUMBER(state) {
+            state.number -= 1;
+        },
+        INIT_NOTIFICATION(state) {
+            state.level = 0;
+            state.msg = false;
         }
     },
     actions: {
-        showNotification({commit}, notification) {
+        setNumber({commit}, number) {
             commit({
-                type: 'SHOW_NOTIFICATION',
-                notification: notification
+                type: 'SET_NUMBER',
+                number: number
             })
         },
-        hideNotification({commit}) {
+        setStatus({commit}, status) {
             commit({
-                type: 'HIDE_NOTIFICATION'
+                type: 'SET_STATUS',
+                status: status
+            })
+        },
+        incrementNumber({commit}) {
+            commit({
+                type: 'INCREMENT_NUMBER'
+            })
+        },
+        decrementNumber({commit}) {
+            commit({
+                type: 'DECREMENT_NUMBER'
+            })
+        },
+        initNotification({commit}) {
+            commit({
+                type: 'INIT_NOTIFICATION'
             })
         },
 

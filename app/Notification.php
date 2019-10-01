@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Http\Resources\NotificationCollection;
 use Illuminate\Database\Eloquent\Model;
 
 class Notification extends Model
@@ -32,13 +33,13 @@ class Notification extends Model
         ], 201);
     }
 
-    public static function deleteNotification($delete_id)
+    public static function deleteNotification($delete_id, $user_id, $current_page)
     {
         $result = Notification::find($delete_id)->delete();
         if ($result) {
-            return response()->json([
-                'msg' => '消息删除成功'
-            ], 200);
+            $notification = Notification::where('to_user_id', '=', $user_id)
+                ->paginate(5, '*', 'page', $current_page);
+            return new NotificationCollection($notification);
         }
         return response()->json([
             'msg' => '消息删除失败'

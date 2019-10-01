@@ -1,41 +1,51 @@
 <template>
-    <div class="notification-container" :class="this.hasNotification||this.number ? 'glint' : ''"
-         @click="navigateNotification">
+    <div :class="notifications.hasNotification || notifications.number ? 'glint' : ''"
+         class="notification-container" @click="navigateNotification">
         <img src="./../../../image/notification.svg" alt="" class="notification-img">
-        <div class="notification-number">{{number}}</div>
+        <div class="notification-number">{{notifications.number}}</div>
     </div>
 </template>
 
 <script>
+    import {mapState} from 'vuex';
+
     export default {
         name: "notification",
         props: {
             userInfo: {}
         },
+        computed: {
+            ...mapState({
+                notifications: state => state.Notification
+            }),
+        },
         data() {
             return {
-                number: 0,
-                hasNotification: false
+                //     number: 0,
+                //     hasNotification: false
             }
         },
         mounted() {
             axios.post('api/notifications/unread').then(res => {
                 let notifications = res.data.data;
-                this.number = notifications.unread_number;
+                this.$store.dispatch('setNumber', notifications.unread_number);
+                // this.number = notifications.unread_number;
             });
             setTimeout(res => {
                 console.log('Friend.accept.' + this.userInfo.user_id);
                 window.Echo.private('Friend.accept.' + this.userInfo.user_id)
                     .listen('AddFriend', (e) => {
-                        this.hasNotification = true;
+                        this.$store.dispatch('setStatus', true);
+                        this.$store.dispatch('incrementNumber');
+                        // this.hasNotification = true;
                         console.log(e);
-                        this.number++;
+                        // this.number++;
                     });
             }, 1000)
         },
         methods: {
             navigateNotification() {
-                this.$router.push({name:'user-notification'})
+                this.$router.push({name: 'user-notification'})
             }
         }
     }
