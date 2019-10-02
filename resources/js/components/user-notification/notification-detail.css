@@ -1,0 +1,137 @@
+.notification-container {
+    /*background-color: rebeccapurple;*/
+    background-color: #f9f9f9;
+    /*background-color: #fff;*/
+    width: 80%;
+    position: absolute;
+    top: 70px;
+    bottom: 0;
+    right: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.inside-container {
+    width: 96%;
+    height: 96%;
+    background-color: #EDF1F8;
+    display: flex;
+    margin: 2% auto 2% auto;
+    flex-direction: column;
+    border-radius: 20px;
+    padding: 0 2%;
+    border: 2px solid #DBE2EC;
+    align-items: center;
+    justify-content: center;
+}
+
+.title-container {
+    height: 10%;
+    display: flex;
+    /*align-self: center;*/
+    color: #444;
+    font-size: 1.2rem;
+    /*margin: 20px 0;*/
+    letter-spacing: 2px;
+    font-weight: 400;
+}
+
+.content-container {
+    width: 80%;
+    height: 50%;
+    /*background-color: #F3E7E9;*/
+    background-image: linear-gradient(to right, #CCD7E6, #F3E7E9);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-radius: 30px;
+}
+
+.user-container {
+    width: 20%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.user-avatar {
+    width: 120px;
+    height: 120px;
+    display: flex;
+    /*margin: auto;*/
+    /*margin: auto 20px auto 30px;*/
+    border-radius: 50%;
+    border: 3px solid #DBE2EC;
+    cursor: pointer;
+}
+
+.user-name {
+    color: #777;
+    font-size: 0.9rem;
+    margin: 20px 0;
+    letter-spacing: 2px;
+}
+
+.inside-content {
+    width: 75%;
+    height: 80%;
+    padding: 0 4%;
+    background-color: #fff;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.content-text {
+    width: 100%;
+    margin: 20px 0;
+    font-size: 0.9rem;
+    color: #777;
+    letter-spacing: 2px;
+
+}
+
+.content-time {
+    display: flex;
+    align-self: flex-end;
+    position: relative;
+    bottom: 20px;
+    font-size: 0.9rem;
+    color: #777;
+    letter-spacing: 2px;
+}
+
+.operation-container {
+    width: 100%;
+    height: 20%;
+    display: flex;
+    flex-direction: row;
+    /*align-items: center;*/
+    justify-content: center;
+}
+
+.operation-button {
+    width: 20%;
+    height: 40px;
+    background-color: #A0B3D0;
+    color: #fff;
+    margin: auto 80px;
+}
+
+.operation-button:hover {
+    background-color: #8EA7C7;
+    transition-duration: 0.3s;
+}
+
+
+.disabled-button {
+    pointer-events: none;
+    cursor: not-allowed;
+    /*background: black;*/
+    background: #a0a0a0;
+}

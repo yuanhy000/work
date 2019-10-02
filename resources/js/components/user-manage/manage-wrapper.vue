@@ -47,7 +47,6 @@
         },
         methods: {
             selectTab(index) {
-                console.log(this.$route.path);
                 this.selectIndex = index;
             }
         }

@@ -29,10 +29,12 @@ Route::get('/users/zodiac', 'UserController@getZodiac');
 Route::get('/users/constellation', 'UserController@getConstellation');
 
 Route::post('/friends/add', 'FriendController@addFriend');
+Route::post('/friends/add/callback', 'FriendController@addFriendCallback');
 
 Route::post('/notifications/unread', 'NotificationController@getUnread');
 Route::post('/notifications/all', 'NotificationController@getNotification');
 Route::post('/notifications/delete', 'NotificationController@deleteNotification');
+Route::post('/notifications/read', 'NotificationController@readNotification');
 
 
 

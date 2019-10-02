@@ -20,6 +20,7 @@ class CreateNotificationsTable extends Migration
             $table->text('content')->nullable();
             $table->boolean('status')->default(false);
             $table->string('type');
+            $table->boolean('operation')->nullable();
             $table->timestamps();
         });
     }

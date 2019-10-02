@@ -18,15 +18,17 @@
                             <div class="item-info">
                                 <img v-if="notification.request_user" alt="" class="item-avatar"
                                      :src="notification.request_user.user_avatar">
-                                <div class="content-container">
+                                <div class="content-container"
+                                     @click="navigateDetail(notification.notification_id)">
                                     <div class="item-content">{{notification.notification_content}}</div>
                                 </div>
                             </div>
                             <div class="item-operation">
+                                <p>{{notification.status}}</p>
                                 <img src="./../../../image/read.svg" alt="" class="item-read-img"
-                                     v-show="notification.status">
+                                     v-if="notification.notification_status">
                                 <img src="./../../../image/unread.svg" alt="" class="item-read-img"
-                                     v-show="!notification.status">
+                                     v-else>
                                 <img src="./../../../image/delete.svg" alt="" class="item-delete-img"
                                      @click="deleteNotification(notification.notification_id,index)">
                             </div>
@@ -72,11 +74,23 @@
         },
         mounted() {
             axios.post('api/notifications/all').then(res => {
-                console.log(res.data.data.notifications);
                 this.setNotifications(res);
             })
         },
         methods: {
+            navigateDetail(notification_id) {
+                let notification = this.notifications.find(
+                    (item) => {
+                        return item.notification_id === notification_id
+                    }
+                );
+                if (notification.notification_status === 0) {
+                    axios.post('/api/notifications/read', notification_id).then(res=>{
+                        this.$store.dispatch('decrementNumber');
+                    });
+                }
+                this.$router.push({name: 'notification-detail', params: {notification: notification}});
+            },
             deleteNotification(notification_id, index) {
                 this.delete_notification = this.notifications.find(
                     (item) => {

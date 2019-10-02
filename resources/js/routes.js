@@ -62,6 +62,11 @@ const routes = [
                 name: 'user-notification',
                 components: require('./components/user-notification/user-notification.vue'),
             },
+            {
+                path: '/notification-detail',
+                name: 'notification-detail',
+                components: require('./components/user-notification/notification-detail.vue'),
+            },
         ],
         meta: {requiresAuth: true}
     },
