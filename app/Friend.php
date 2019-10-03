@@ -2,12 +2,27 @@
 
 namespace App;
 
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
 class Friend extends Model
 {
     protected $guarded = [];
+
+
+    public static function friendCallback($accept_user, $request_user, $operation)
+    {
+        if ($operation == true) {
+            $result = Friend::createFriend($accept_user, $request_user);
+            if (!$result) {
+                throw new Exception('创建好友失败，请稍后再试', 408);
+            }
+            return '用户: ' . $accept_user->name . ' 同意了你的好友申请';
+        } else {
+            return '用户: ' . $accept_user->name . ' 拒绝了你的好友申请';
+        }
+    }
 
     public static function createFriend($accept_user, $request_user)
     {
@@ -32,7 +47,7 @@ class Friend extends Model
             ]);
             DB::commit();
             return true;
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             DB::rollBack();
             return false;
         }

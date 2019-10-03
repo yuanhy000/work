@@ -19,17 +19,23 @@
                 </div>
             </div>
             <div class="operation-container">
-                <button class="btn operation-button" @click="consentOperation"
-                        v-show="!notification.notification_operation">同意添加
+                <button class="btn operation-button" @click="friendCallback('consent')"
+                        v-show="showOperationButton">同意添加
                 </button>
-                <button class="btn operation-button" @click="refuseOperation"
-                        v-show="!notification.notification_operation">拒绝添加
+                <button class="btn operation-button" @click="friendCallback('refuse')"
+                        v-show="showOperationButton">拒绝添加
+                </button>
+                <button class="btn operation-button" @click="addFriendAgain"
+                        v-show="addAgainButton">再次申请
+                </button>
+                <button class="btn operation-button"
+                        v-show="sendMessageButton">发送消息
                 </button>
                 <button class="btn operation-button disabled-button"
-                        v-show="notification.notification_operation === 1">已添加
+                        v-show="successAddButton">已添加
                 </button>
                 <button class="btn operation-button disabled-button"
-                        v-show="notification.notification_operation === 0">已拒绝
+                        v-show="refuseAddButton">已拒绝
                 </button>
             </div>
         </div>
@@ -42,24 +48,59 @@
         data() {
             return {
                 notification: {},
+                isFriend: false
             }
+        },
+        computed: {
+            showOperationButton: function () {
+                return this.notification.notification_type === 'add-friend'
+                    && this.notification.notification_operation === null;
+            },
+            addAgainButton: function () {
+                return this.notification.notification_type === 'friend-callback'
+                    && this.notification.notification_operation === 0 && !this.isFriend;
+            },
+            sendMessageButton: function () {
+                // return this.notification.notification_type === 'friend-callback'
+                //     && this.notification.notification_operation === 1;
+                return this.isFriend;
+            },
+            successAddButton: function () {
+                return this.notification.notification_type === 'add-friend'
+                    && this.notification.notification_operation === 1;
+            },
+            refuseAddButton: function () {
+                return this.notification.notification_type === 'add-friend'
+                    && this.notification.notification_operation === 0;
+            },
         },
         created() {
             this.notification = this.$route.params.notification;
+            axios.post('api/users/is_friend', this.notification.request_user.user_id).then(res => {
+                this.isFriend = res.data.isFriend;
+            })
         },
         methods: {
-            consentOperation() {
+            friendCallback(type) {
                 let data = {
-                    operation: 1,
                     notification_id: this.notification.notification_id,
                     request_user: this.notification.request_user
                 };
+                if (type === 'consent') {
+                    data.operation = 1;
+                } else {
+                    data.operation = 0;
+                }
                 axios.post('/api/friends/add/callback', data).then(res => {
+                    this.notification.notification_operation = 1;
                     console.log(res);
                 })
             },
-            refuseOperation() {
-
+            addFriendAgain() {
+                axios.post('api/friends/add', this.notification.request_user.user_id).then(res => {
+                    // this.isFriend = res.data.isFriend;
+                    console.log(res);
+                })
             }
         }
     }

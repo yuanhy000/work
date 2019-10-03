@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Http\Resources\NotificationCollection;
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 
 class Notification extends Model
@@ -18,18 +19,45 @@ class Notification extends Model
             'status' => false,
             'type' => 'add-friend'
         ]);
-        return (new self())->checkNotification($notification, '好友申请');
+        return (new self())->checkNotification($notification, '好友申请发送');
+    }
+
+    public static function friendCallbackNotification($request_id, $accept_id, $message, $operation)
+    {
+        $notification = Notification::create([
+            'content' => $message,
+            'from_user_id' => $request_id,
+            'to_user_id' => $accept_id,
+            'status' => false,
+            'type' => 'friend-callback',
+            'operation' => $operation
+        ]);
+
+        return (new self())->checkNotification($notification, '用户操作');
+    }
+
+    public static function operateNotification($user_id, $notification_id, $operation)
+    {
+        $notification = Notification::where([
+            ['id', '=', $notification_id],
+            ['to_user_id', '=', $user_id]
+        ])->first();
+        $notification->operation = $operation;
+        $result = $notification->save();
+        if (!$result) {
+            throw new Exception('创建好友失败，请稍后再试', 408);
+        }
     }
 
     private function checkNotification($notification, $type)
     {
         if ($notification) {
             return response()->json([
-                'msg' => $type . '发送成功！'
+                'msg' => $type . '成功！'
             ], 201);
         }
         return response()->json([
-            'msg' => $type . '发送失败！'
+            'msg' => $type . '失败！'
         ], 201);
     }
 
@@ -61,13 +89,4 @@ class Notification extends Model
         ], 408);
     }
 
-    public static function operateNotification($user_id, $notification_id, $operation)
-    {
-        $notification = Notification::where([
-            ['id', '=', $notification_id],
-            ['to_user_id', '=', $user_id]
-        ])->first();
-        $notification->operation = $operation;
-        $notification->save();
-    }
 }

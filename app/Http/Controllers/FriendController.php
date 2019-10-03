@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\AddFriend;
+use App\Events\FriendCallback;
 use App\Friend;
 use App\Notification;
 use App\User;
@@ -30,12 +31,12 @@ class FriendController extends Controller
         $notification_id = (int)$requestInfo['notification_id'];
         $operation = (boolean)$requestInfo['operation'];
 
-        if ($operation == true) {
+        //修改用户所操作的消息的状态
+        Notification::operateNotification($accept_user->id, $notification_id, $operation);
+        $message = Friend::friendCallback($accept_user, $request_user, $operation);
+        broadcast(new FriendCallback($request_user['user_id'], $accept_user->id, $message))->toOthers();
 
-            $result = Friend::createFriend($accept_user, $request_user);
-            Notification::operateNotification($accept_user->id, $notification_id, $operation);
-
-        }
-
+        return Notification::friendCallbackNotification($accept_user->id, $request_user['user_id'],
+            $message, $operation);
     }
 }

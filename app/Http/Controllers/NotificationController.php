@@ -12,7 +12,8 @@ class NotificationController extends Controller
     {
         $user_id = auth()->guard('api')->user()->id;
 
-        $notification = Notification::where('to_user_id', '=', $user_id)->paginate(5);
+        $notification = Notification::where('to_user_id', '=', $user_id)
+            ->orderBy('created_at', 'desc')->paginate(5);
         return new NotificationCollection($notification);
     }
 
