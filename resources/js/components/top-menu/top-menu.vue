@@ -2,6 +2,14 @@
     <div>
         <nav class="menu-container">
             <router-link class="menu-title" to="/">Project</router-link>
+            <div class="navigation-container">
+                <img src="./../../../image/chat-on.svg" alt="" class="navigation-img" v-if="selectIndex === 0"
+                     @click="navigateChat">
+                <img src="./../../../image/chat.svg" alt="" class="navigation-img" v-else @click="navigateChat">
+                <img src="./../../../image/user-on.svg" alt="" class="navigation-img" v-if="selectIndex === 1"
+                     @click="navigateFriend">
+                <img src="./../../../image/user.svg" alt="" class="navigation-img" v-else @click="navigateFriend">
+            </div>
             <div class="menu-operation">
                 <router-link class="menu-login" to="/login" v-if="!user.authentication">
                     <button class="btn menu-button">登陆</button>
@@ -12,7 +20,9 @@
                 <!--            <router-link class="menu-login" to="" v-if="user.authentication">-->
                 <!--                <button class="btn menu-button">管理</button>-->
                 <!--            </router-link>-->
-                <notification :user-info="user" v-if="user.authentication"></notification>
+
+                <notification :user-info="user" v-if="user.authentication" @leave="navigateNotification">
+                </notification>
                 <div class="menu-manage" v-if="user.authentication" @click="showList" ref="menuUser">
                     <img :src="user.user_avatar" alt="" class="menu-avatar">
                     <div class="menu-name">{{user.user_name}}</div>
@@ -37,6 +47,7 @@
     import {mapState} from 'vuex'
     import notification from "./notification";
 
+
     export default {
         name: "top-menu",
         components: {
@@ -51,15 +62,39 @@
             return {
                 manageDisplay: false,
                 marginRight: 0,
+                selectIndex: 0
             }
         },
         mounted: function () {
             document.addEventListener("click", this.clickEvent);
+            let router = this.$route.path;
+            switch (router) {
+                case '/':
+                    this.selectIndex = 0;
+                    break;
+                case '/friend-list/':
+                    this.selectIndex = 1;
+                    break;
+                case '/search-user':
+                    this.selectIndex = 1;
+                    break;
+            }
         },
         beforeDestroy() {
             document.removeEventListener("click", this.clickEvent);
         },
         methods: {
+            navigateChat() {
+                this.selectIndex = 0;
+                this.$router.push({name: 'home'});
+            },
+            navigateFriend() {
+                this.selectIndex = 1;
+                this.$router.push({name: 'friend-list'});
+            },
+            navigateNotification() {
+                this.selectIndex = 2;
+            },
             logout() {
                 this.manageDisplay = false;
                 this.$store.dispatch('logoutRequest').then(res => {
@@ -72,6 +107,7 @@
             },
             manageUser() {
                 this.manageDisplay = false;
+                this.selectIndex = 3;
                 this.$router.push({name: 'user-info'});
             },
             clickEvent(e) {

@@ -93,13 +93,14 @@
                 }
                 axios.post('/api/friends/add/callback', data).then(res => {
                     this.notification.notification_operation = 1;
-                    console.log(res);
                 })
             },
             addFriendAgain() {
                 axios.post('api/friends/add', this.notification.request_user.user_id).then(res => {
-                    // this.isFriend = res.data.isFriend;
-                    console.log(res);
+                    this.$message({
+                        message: '好友申请已发送',
+                        type: 'success'
+                    });
                 })
             }
         }

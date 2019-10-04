@@ -9,6 +9,24 @@
     align-items: center;
 }
 
+.navigation-container {
+    /*margin: auto;*/
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    width: 12%;
+    left: 44%;
+    /*right: 40%;*/
+    /*background-color: rebeccapurple;*/
+    justify-content: space-around;
+}
+
+.navigation-img {
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+}
+
 .menu-title {
     display: flex;
     font-size: 1.5rem;
@@ -165,29 +183,31 @@
 }
 
 
-
-.glint{
+.glint {
     -webkit-animation: twinkling 1s infinite ease-in-out
 }
-.animated{
+
+.animated {
     -webkit-animation-duration: 1s;
     animation-duration: 1s;
     -webkit-animation-fill-mode: both;
     animation-fill-mode: both
 }
-@-webkit-keyframes twinkling{
-    0%{
+
+@-webkit-keyframes twinkling {
+    0% {
         opacity: 0;
     }
-    100%{
+    100% {
         opacity: 1;
     }
 }
-@keyframes twinkling{
-    0%{
+
+@keyframes twinkling {
+    0% {
         opacity: 0;
     }
-    100%{
+    100% {
         opacity: 1;
     }
 }

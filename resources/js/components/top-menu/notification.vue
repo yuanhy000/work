@@ -19,17 +19,10 @@
                 notifications: state => state.Notification
             }),
         },
-        data() {
-            return {
-                //     number: 0,
-                //     hasNotification: false
-            }
-        },
         mounted() {
             axios.post('api/notifications/unread').then(res => {
                 let notifications = res.data.data;
                 this.$store.dispatch('setNumber', notifications.unread_number);
-                // this.number = notifications.unread_number;
             });
             setTimeout(res => {
                 console.log('Friend.accept.' + this.userInfo.user_id);
@@ -38,9 +31,6 @@
                     .listen('AddFriend', (e) => {
                         this.$store.dispatch('setStatus', true);
                         this.$store.dispatch('incrementNumber');
-                        // this.hasNotification = true;
-                        console.log(e);
-                        // this.number++;
                     });
 
                 console.log('Friend.callback.' + this.userInfo.user_id);
@@ -48,14 +38,12 @@
                     .listen('FriendCallback', (e) => {
                         this.$store.dispatch('setStatus', true);
                         this.$store.dispatch('incrementNumber');
-                        // this.hasNotification = true;
-                        console.log(e);
-                        // this.number++;
                     });
             }, 1000)
         },
         methods: {
             navigateNotification() {
+                this.$emit('leave', 'true');
                 this.$router.push({name: 'user-notification'})
             }
         }

@@ -89,4 +89,15 @@ class Notification extends Model
         ], 408);
     }
 
+    public static function NotificationIsExist($request_id, $accept_id, $type)
+    {
+        $notification = Notification::where([
+            ['from_user_id', '=', $request_id],
+            ['to_user_id', '=', $accept_id],
+            ['type', '=', $type],
+            ['operation', '=', null]
+        ])->first();
+
+        return $notification;
+    }
 }

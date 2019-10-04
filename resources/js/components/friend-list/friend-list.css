@@ -1,12 +1,3 @@
-.btn:focus,
-.btn:active:focus,
-.btn.active:focus,
-.btn.focus,
-.btn:active.focus,
-.btn.active.focus {
-    outline: none;
-    box-shadow: none;
-}
 
 .friend-list-container {
     background-image: linear-gradient(to right bottom, #8EA7C7, #EECAC9);
@@ -64,4 +55,31 @@
     /*width: 100%;*/
     margin: 20px;
     color: #fff;
+}
+
+.group-title {
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+}
+
+.friend-group-container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    height: 50px;
+    /*background-color: rebeccapurple;*/
+    /*justify-content: center;*/
+    align-items: center;
+}
+
+.group-select-img {
+    width: 16px;
+    height: 16px;
+    margin: 0 10px 0 0;
+}
+
+.group-name {
+    color: #fff;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
 }

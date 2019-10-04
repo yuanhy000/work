@@ -11,7 +11,11 @@
                     <div class="group-title">群聊</div>
                 </div>
                 <div class="group-container">
-                    <div class="friend-title">好友</div>
+                    <div class="group-title">好友</div>
+                    <div class="friend-group-container">
+                        <img src="./../../../image/select-right.svg" alt="" class="group-select-img">
+                        <div class="group-name">我的好友</div>
+                    </div>
                 </div>
             </div-scroll>
         </div>
@@ -21,7 +25,12 @@
 
 <script>
     export default {
-        name: "friend-list"
+        name: "friend-list",
+        data() {
+            return {
+
+            }
+        }
     }
 </script>
 

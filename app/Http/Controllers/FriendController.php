@@ -17,6 +17,12 @@ class FriendController extends Controller
         $request_user = auth()->guard('api')->user();
         $accept_id = (int)$request->getContent('user_id');
 
+        $isExist = Notification::NotificationIsExist($request_user->id, $accept_id, 'add-friend');
+        if ($isExist) {
+            return response()->json([
+                'msg' => '好友申请已发送，正在等待回复'
+            ], 200);
+        }
         broadcast(new AddFriend($request_user->id, $accept_id))->toOthers();
         return Notification::addFriendNotification($request_user, $accept_id);
     }

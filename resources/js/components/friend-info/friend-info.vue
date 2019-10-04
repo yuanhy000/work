@@ -120,8 +120,10 @@
         methods: {
             addFriend() {
                 axios.post('api/friends/add', this.userInfo.user_id).then(res => {
-                    // this.isFriend = res.data.isFriend;
-                    console.log(res);
+                    this.$message({
+                        message: '好友申请已发送',
+                        type: 'success'
+                    });
                 })
             },
             initData() {
