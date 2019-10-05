@@ -26,26 +26,33 @@ class Handler extends ExceptionHandler
         'password_confirmation',
     ];
 
-    /**
-     * Report or log an exception.
-     *
-     * @param  \Exception  $exception
-     * @return void
-     */
+
     public function report(Exception $exception)
     {
         parent::report($exception);
     }
 
-    /**
-     * Render an exception into an HTTP response.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Exception  $exception
-     * @return \Illuminate\Http\Response
-     */
+    private $code;
+    private $msg;
+
     public function render($request, Exception $exception)
     {
-        return parent::render($request, $exception);
+        if ($exception instanceof BaseException) {
+            $this->code = $exception->code;
+            $this->msg = $exception->msg;
+        } else {
+            if (config('app.debug')) {
+                return parent::render($request, $exception);
+            } else {
+                $this->code = 500;
+                $this->msg = '服务器内部错误，不想告诉你';
+            }
+        }
+        $result = [
+            'code' => $this->code,
+            'msg' => $this->msg,
+            'request_url' => $request->url()
+        ];
+        return response()->json($result, $this->code);
     }
 }

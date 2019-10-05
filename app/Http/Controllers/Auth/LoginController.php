@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Events\UserLogin;
+use App\Events\UserRegister;
 use App\Http\Controllers\Controller;
 use App\Http\Proxy\TokenProxy;
 use App\User;
@@ -19,7 +21,6 @@ class LoginController extends Controller
     public function __construct(TokenProxy $proxy)
     {
         $this->proxy = $proxy;
-//        $this->middleware('guest')->except('logout');
     }
 
     public function githubLogin()
@@ -31,21 +32,10 @@ class LoginController extends Controller
     {
         $user = Socialite::driver('github')->user();
 
-        $account = User::firstOrCreate([
-            'email' => $user->email,
-        ], [
-            'email' => $user->email,
-            'name' => $user->nickname,
-            'avatar' => $user->avatar,
-            'number' => User::generateUserID()
-        ]);
-//        Auth::guard()->login($account);
+        $account = $this->checkUserExist($user);
         $result = $this->proxy->githubLogin($account->email);
-        $access_token = $result['access_token'];
-        $auth_id = $result['auth_id'];
-        $redirect_url = '/#/auth-callback?' . 'access_token=' . $access_token . '&auth_id=' . $auth_id;
-        return redirect($redirect_url)
-            ->cookie('refreshToken', $result['refresh_token'], 14400, null, null, false, true);
+
+        return $this->redirectWithToken($result);
     }
 
     public function login()
@@ -68,4 +58,27 @@ class LoginController extends Controller
         return $this->proxy->refresh();
     }
 
+    public function checkUserExist($user)
+    {
+        $account = User::where('email', '=', $user->email)->first();
+        if (!$account) {
+            event(new UserRegister($user = User::create([
+                'email' => $user->email,
+                'name' => $user->nickname,
+                'avatar' => $user->avatar,
+                'number' => User::generateUserID()
+            ])));
+            return $user;
+        }
+        return $account;
+    }
+
+    public function redirectWithToken($result)
+    {
+        $access_token = $result['access_token'];
+        $auth_id = $result['auth_id'];
+        $redirect_url = '/#/auth-callback?' . 'access_token=' . $access_token . '&auth_id=' . $auth_id;
+        return redirect($redirect_url)
+            ->cookie('refreshToken', $result['refresh_token'], 14400, null, null, false, true);
+    }
 }

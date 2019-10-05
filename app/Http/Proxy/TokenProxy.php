@@ -4,13 +4,13 @@
 namespace App\Http\Proxy;
 
 
+use App\Events\UserLogin;
+use App\Events\UserLogout;
 use App\User;
 use GuzzleHttp\Client;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 
 class TokenProxy
 {
@@ -32,8 +32,7 @@ class TokenProxy
 
     public function githubLogin($email)
     {
-        $user = User::where('email', '=', $email)->first();
-
+        event(new UserLogin($user = User::where('email', '=', $email)->first()));
         return $this->proxy('password', [
             'username' => $email,
             'password' => $user->password,
@@ -44,6 +43,7 @@ class TokenProxy
     public function emailLogin($email, $password)
     {
         if (auth()->attempt(['email' => $email, 'password' => $password])) {
+            event(new UserLogin(User::where('email', '=', $email)->first()));
             return $this->proxy('password', [
                 'username' => $email,
                 'password' => $password,
@@ -63,6 +63,8 @@ class TokenProxy
         if ($user instanceof JsonResponse) {
             return $user;
         }
+        event(new UserLogin($user));
+
         return $this->proxy('password', [
             'username' => $user->email,
             'password' => $user->password,
@@ -86,7 +88,7 @@ class TokenProxy
             'client_secret' => env('client_secret'),
             'grant_type' => $grantType,
         ]);
-        $response = $this->http->post('http://work.test/oauth/token', [
+        $response = $this->http->post(env('APP_URL') . '/oauth/token', [
             'form_params' => $data,
         ]);
 
@@ -108,7 +110,8 @@ class TokenProxy
 
     public function logout()
     {
-        $user = auth()->guard('api')->user();
+        event(new UserLogout($user = auth()->guard('api')->user()));
+
         if (is_null($user)) {
             Cookie::queue(Cookie::forget('refreshToken'));
             return response()->json([

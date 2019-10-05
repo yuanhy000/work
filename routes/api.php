@@ -3,10 +3,9 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Resources\UserResource;
+use App\Events\UserLogin;
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return new UserResource($request->user());
-});
+Route::middleware('auth:api')->get('/user', 'UserController@getUser');
 
 Route::post('/register/phone/code', 'SocialController@sendRegisterPhoneCode');
 Route::post('/login/phone/code', 'SocialController@sendLoginPhoneCode');

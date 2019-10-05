@@ -25,8 +25,10 @@ Route::get('/github/callback', 'Auth\LoginController@githubCallback');
 
 //Route::post('/broadcast/auth', 'Auth\LoginController@broadcastAuth');
 
-Route::get('/cache', function () {
-    $user = \App\User::find(1);
-    return new \App\Http\Resources\UserResource($user);
+Route::get('/new', function () {
+//    event(new \App\Events\UserRegister(\App\User::find(1)));
+    throw new \App\Exceptions\BaseException([
+        'msg' => 'error !!!'
+    ], 404);
 });
 

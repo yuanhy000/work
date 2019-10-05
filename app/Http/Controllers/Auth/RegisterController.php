@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Events\UserRegister;
 use App\Http\Proxy\TokenProxy;
 use App\User;
 use App\Http\Controllers\Controller;
@@ -27,17 +28,11 @@ class RegisterController extends Controller
 
     public function register(Request $request)
     {
-        $userInfo = $request->all();
-        $result = $this->validator($userInfo)->validate();
+        $this->validator($request->all())->validate();
 
-        if (is_object($result)) {
-            return response()->json('error!');
-        }
-
-        $user = $this->create($request->all());
-        Auth::guard()->login($user);
-
-        return $this->proxy->getRegisterToken($userInfo['email'], $userInfo['password']);
+        event(new UserRegister($user = $this->create($request->all())));
+//        Auth::guard()->login($user);
+        return $this->proxy->getRegisterToken($user->email, $user->email);
     }
 
     protected function validator(array $userInfo)

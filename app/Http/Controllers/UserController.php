@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Chinese_zodiac;
 use App\Constellation;
+use App\Events\UserLogin;
 use App\Friend;
 use App\Http\Resources\ConstellationResource;
 use App\Http\Resources\UserResource;
@@ -17,6 +18,12 @@ use function AlibabaCloud\Client\json;
 
 class UserController extends Controller
 {
+    public function getUser(Request $request)
+    {
+        event(new UserLogin($user = $request->user()));
+        return new UserResource($user);
+    }
+
     public function getZodiac(Request $request)
     {
         $zodiac = Chinese_zodiac::all();

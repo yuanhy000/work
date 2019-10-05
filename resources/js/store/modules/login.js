@@ -19,7 +19,6 @@ export default {
             jwtToken.setToken(tokenResponse.access_token);
             jwtToken.setAuthID(tokenResponse.auth_id);
             dispatch('setAuthUser');
-            // dispatch('showNotification',{level:'success',msg:'登陆成功'});
         },
 
         logoutRequest({dispatch}) {
