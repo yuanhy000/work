@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Notification;
 use App\User;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
@@ -18,13 +19,15 @@ class FriendCallback implements ShouldBroadcast
 
     public $request_user;
     public $accept_user;
-    public $message;
+    public $notification;
+    public $operation;
 
-    public function __construct($request_id, $accept_id, $message)
+    public function __construct($request_user, $accept_user, $notification_id, $operation)
     {
-        $this->request_user = User::find($request_id);
-        $this->accept_user = User::find($accept_id);
-        $this->message = $message;
+        $this->request_user = User::find($request_user['user_id']);
+        $this->accept_user = $accept_user;
+        $this->notification = Notification::find($notification_id);
+        $this->operation = (boolean)$operation;
     }
 
 

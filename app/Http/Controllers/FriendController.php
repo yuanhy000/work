@@ -18,13 +18,12 @@ class FriendController extends Controller
         $accept_id = (int)$request->getContent('user_id');
 
         $isExist = Notification::NotificationIsExist($request_user->id, $accept_id, 'add-friend');
-        if ($isExist) {
-            return response()->json([
-                'msg' => '好友申请已发送，正在等待回复'
-            ], 200);
+        if (!$isExist) {
+            event(new AddFriend($request_user->id, $accept_id));
         }
-        broadcast(new AddFriend($request_user->id, $accept_id))->toOthers();
-        return Notification::addFriendNotification($request_user, $accept_id);
+        return response()->json([
+            'msg' => '好友申请已发送，正在等待回复'
+        ], 200);
     }
 
 
@@ -37,12 +36,17 @@ class FriendController extends Controller
         $notification_id = (int)$requestInfo['notification_id'];
         $operation = (boolean)$requestInfo['operation'];
 
-        //修改用户所操作的消息的状态
-        Notification::operateNotification($accept_user->id, $notification_id, $operation);
-        $message = Friend::friendCallback($accept_user, $request_user, $operation);
-        broadcast(new FriendCallback($request_user['user_id'], $accept_user->id, $message))->toOthers();
+        event(new FriendCallback($request_user, $accept_user, $notification_id, $operation));
 
-        return Notification::friendCallbackNotification($accept_user->id, $request_user['user_id'],
-            $message, $operation);
+        return response()->json([
+            'msg' => '通知操作成功'
+        ], 200);
+        //修改用户所操作的消息的状态
+//        Notification::operateNotification($accept_user->id, $notification_id, $operation);
+//        $message = Friend::friendCallback($accept_user, $request_user, $operation);
+//        broadcast(new FriendCallback($request_user['user_id'], $accept_user->id, $message))->toOthers();
+
+//        return Notification::friendCallbackNotification($accept_user->id, $request_user['user_id'],
+//            $message, $operation);
     }
 }

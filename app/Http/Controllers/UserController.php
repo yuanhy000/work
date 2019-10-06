@@ -6,7 +6,9 @@ use App\Chinese_zodiac;
 use App\Constellation;
 use App\Events\UserLogin;
 use App\Friend;
+use App\FriendGroup;
 use App\Http\Resources\ConstellationResource;
+use App\Http\Resources\FriendGroupCollection;
 use App\Http\Resources\UserResource;
 use App\Http\Resources\ZodiacResource;
 use App\User;
@@ -34,6 +36,13 @@ class UserController extends Controller
     {
         $zodiac = Constellation::all();
         return ConstellationResource::collection($zodiac);
+    }
+
+    public function getFriendGroup()
+    {
+        $user_id = auth()->guard('api')->user()->id;
+        $friendGroup = FriendGroup::where('user_id', '=', $user_id)->with('friends')->get();
+        return new FriendGroupCollection($friendGroup);
     }
 
     public function updateUser(Request $request)

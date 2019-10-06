@@ -1,5 +1,5 @@
 <template>
-    <div :class="notifications.hasNotification && notifications.number ? 'glint' : ''"
+    <div :class="notifications.number ? 'glint' : ''"
          class="notification-container" @click="navigateNotification">
         <img src="./../../../image/notification.svg" alt="" class="notification-img">
         <div class="notification-number">{{notifications.number}}</div>

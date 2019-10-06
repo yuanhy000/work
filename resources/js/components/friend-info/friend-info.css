@@ -328,3 +328,10 @@
     background: #7192c3;
     transition-duration: 0.3s;
 }
+
+.disabled-button {
+    pointer-events: none;
+    cursor: not-allowed;
+    /*background: black;*/
+    background: #a0a0a0;
+}

@@ -74,7 +74,10 @@
         </div>
         <div class="user-bottom">
             <button class="btn submit-button" v-if="isFriend" @click="addFriend">发送消息</button>
-            <button class="btn submit-button" v-if="!isFriend" @click="addFriend">添加好友</button>
+            <button class="btn submit-button" v-if="!isFriend && !isApply" @click="addFriend">添加好友</button>
+            <button class="btn submit-button disabled-button" v-if="!isFriend && isApply"
+                    @click="addFriend">已申请
+            </button>
         </div>
     </div>
 </template>
@@ -87,19 +90,6 @@
         components: {
             loading: loading
         },
-        mounted() {
-            // console.log('Friend.accept.' + this.userInfo.user_id);
-            // window.Echo.private('Friend.accept.' + this.userInfo.user_id)
-            //     .listen('AddFriend', (e) => {
-            //         console.log(e);
-            //         console.log('private channel call');
-            //         // this.chats.push(e);
-            //         // console.log(this.chats);
-            //     });
-            //
-            // console.log(this.group.chats);
-            // this.chats = this.group.chats;
-        },
         data() {
             return {
                 userInfo: {},
@@ -107,7 +97,8 @@
                 userMonth: 1,
                 userDay: 1,
                 userBlood: '',
-                isFriend: false
+                isFriend: false,
+                isApply: false
             }
         },
         created() {
@@ -115,6 +106,9 @@
             this.initData();
             axios.post('api/users/is_friend', this.userInfo.user_id).then(res => {
                 this.isFriend = res.data.isFriend;
+            })
+            axios.post('api/notifications/is_apply', this.userInfo.user_id).then(res => {
+                this.isApply = res.data.isApply;
             })
         },
         methods: {
@@ -124,6 +118,7 @@
                         message: '好友申请已发送',
                         type: 'success'
                     });
+                    this.isApply = true;
                 })
             },
             initData() {

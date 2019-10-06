@@ -53,7 +53,8 @@
     flex-direction: column;
     align-items: flex-start;
     /*width: 100%;*/
-    margin: 20px;
+    /*margin: 20px;*/
+    /*padding: 20px;*/
     color: #fff;
 }
 
@@ -65,16 +66,26 @@
 .friend-group-container {
     width: 100%;
     display: flex;
+    flex-direction: column;
+    /*margin: auto 20px;*/
+    /*height: 50px;*/
+    /*!*background-color: rebeccapurple;*!*/
+    /*!*justify-content: center;*!*/
+    /*align-items: center;*/
+}
+
+.group-title {
+    width: 100%;
+    display: flex;
     flex-direction: row;
     height: 50px;
-    /*background-color: rebeccapurple;*/
-    /*justify-content: center;*/
     align-items: center;
+    padding: 0 20px;
 }
 
 .group-select-img {
-    width: 16px;
-    height: 16px;
+    width: 14px;
+    height: 14px;
     margin: 0 10px 0 0;
 }
 
@@ -82,4 +93,64 @@
     color: #fff;
     font-size: 0.9rem;
     letter-spacing: 2px;
+}
+
+.friend-item-container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    height: 70px;
+    padding: 0 20px;
+    /*justify-content: center;*/
+    align-items: center;
+    cursor: pointer;
+    /*background-color: rebeccapurple;*/
+}
+
+.friend-item-container:hover {
+    background-color: rgba(0, 0, 0, 0.08);
+    transition-duration: 0.3s;
+}
+
+.friend-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.friend-info {
+    display: flex;
+    flex-direction: column;
+    margin: auto 15px;
+}
+
+.friend-name {
+    font-size: 1rem;
+    color: #fff;
+    letter-spacing: 2px;
+}
+
+.friend-signature {
+    font-size: 0.8rem;
+    color: #EDF1F8;
+    letter-spacing: 1px;
+}
+
+.online {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #62AA63;
+    position: absolute;
+    right: 20px;
+    /*display: flex;*/
+    /*align-self: flex-end;*/
+    /*justify-self: flex-end;*/
+}
+
+.offline {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #EF6763;
 }

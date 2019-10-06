@@ -6,7 +6,8 @@
             </div>
             <div class="content-container">
                 <div class="user-container">
-                    <img :src="notification.request_user.user_avatar" alt="" class="user-avatar">
+                    <img :src="notification.request_user.user_avatar" alt="" class="user-avatar"
+                         @click="navigateUser">
                     <div class="user-name">{{notification.request_user.user_name}}</div>
                 </div>
                 <div class="inside-content">
@@ -28,9 +29,9 @@
                 <button class="btn operation-button" @click="addFriendAgain"
                         v-show="addAgainButton">再次申请
                 </button>
-                <button class="btn operation-button"
-                        v-show="sendMessageButton">发送消息
-                </button>
+                <!--                <button class="btn operation-button"-->
+                <!--                        v-show="sendMessageButton">发送消息-->
+                <!--                </button>-->
                 <button class="btn operation-button disabled-button"
                         v-show="successAddButton">已添加
                 </button>
@@ -81,6 +82,9 @@
             })
         },
         methods: {
+            navigateUser() {
+                this.$router.push({name: 'friend-info', params: {user: this.notification.request_user}});
+            },
             friendCallback(type) {
                 let data = {
                     notification_id: this.notification.notification_id,
@@ -92,7 +96,16 @@
                     data.operation = 0;
                 }
                 axios.post('/api/friends/add/callback', data).then(res => {
-                    this.notification.notification_operation = 1;
+                    if (type === 'consent') {
+                        this.$message({
+                            message: '好友添加成功',
+                            type: 'success'
+                        });
+                        this.isFriend = true;
+                        this.notification.notification_operation = 1;
+                    } else {
+                        this.notification.notification_operation = 0;
+                    }
                 })
             },
             addFriendAgain() {

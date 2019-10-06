@@ -46,4 +46,21 @@ class NotificationController extends Controller
 
         return Notification::readNotification($user_id, $read_id);
     }
+
+    public function isApplyFriend(Request $request)
+    {
+        $request_user = auth()->guard('api')->user();
+        $accept_id = (int)$request->getContent('user_id');
+
+        $notification = Notification::NotificationIsExist($request_user->id, $accept_id, 'add-friend');
+
+        if ($notification) {
+            return response()->json([
+                'isApply' => true
+            ], 200);
+        }
+        return response()->json([
+            'isApply' => false
+        ], 200);
+    }
 }

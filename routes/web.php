@@ -27,8 +27,9 @@ Route::get('/github/callback', 'Auth\LoginController@githubCallback');
 
 Route::get('/new', function () {
 //    event(new \App\Events\UserRegister(\App\User::find(1)));
-    throw new \App\Exceptions\BaseException([
-        'msg' => 'error !!!'
-    ], 404);
+//    throw new \App\Exceptions\BaseException([
+//        'msg' => 'error !!!'
+//    ], 404);
+    event(new \App\Events\AddFriend(1, 2));
 });
 
