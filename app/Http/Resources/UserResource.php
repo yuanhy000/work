@@ -23,6 +23,7 @@ class UserResource extends JsonResource
             'user_avatar' => $this->avatar,
             'user_sex' => $this->sex,
             'user_age' => $this->age,
+            'user_status' => $this->status,
             'user_created' => $this->created_at,
             'user_signature' => $this->signature,
             'user_birth' => $this->birth,

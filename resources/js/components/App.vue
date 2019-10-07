@@ -23,6 +23,24 @@
             } else if (Cookie.get('auth_id')) {
                 this.$store.dispatch('refreshToken')
             }
+            window.addEventListener('beforeunload', e => this.beforeunloadHandler(e))
+            window.addEventListener('unload', e => this.unloadHandler(e))
+        },
+        destroyed() {
+            window.removeEventListener('beforeunload', e => this.beforeunloadHandler(e))
+            window.removeEventListener('unload', e => this.unloadHandler(e))
+        },
+        methods: {
+            beforeunloadHandler() {
+                this._beforeUnload_time = new Date().getTime();
+            },
+            unloadHandler(e) {
+                this._gap_time = new Date().getTime() - this._beforeUnload_time;
+            debugger
+                if (this._gap_time <= 5) {
+                    axios.post('api/users/offline');
+                }
+            },
         }
     }
 </script>
@@ -48,6 +66,7 @@
         background-color: #8EA7C7 !important;
         border-radius: 4px !important;
     }
+
     .verify-move-block:hover {
         background-color: #788FAF !important;
         transition-duration: 0.3s;
@@ -65,6 +84,7 @@
         width: 25px;
         height: 25px;
     }
+
     .icon-close:before {
 
         background-image: url("./../../image/false.svg");

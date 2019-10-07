@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Chinese_zodiac;
 use App\Constellation;
 use App\Events\UserLogin;
+use App\Events\UserLogout;
 use App\Friend;
 use App\FriendGroup;
 use App\Http\Resources\ConstellationResource;
@@ -16,6 +17,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use function AlibabaCloud\Client\json;
 
 class UserController extends Controller
@@ -111,5 +113,11 @@ class UserController extends Controller
         return response()->json([
             'isFriend' => false
         ], 200);
+    }
+
+    public function userOffline(Request $request)
+    {
+        $user = auth()->guard('api')->user();
+        event(new UserLogout($user));
     }
 }

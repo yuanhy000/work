@@ -24,6 +24,7 @@ Route::post('/users/update', 'UserController@updateUser');
 Route::post('/users/password', 'UserController@updatePassword');
 Route::post('/users/is_friend', 'UserController@isFriend');
 Route::post('/users/friend_group', 'UserController@getFriendGroup');
+Route::post('/users/offline', 'UserController@userOffline');
 
 Route::get('/users/zodiac', 'UserController@getZodiac');
 Route::get('/users/constellation', 'UserController@getConstellation');

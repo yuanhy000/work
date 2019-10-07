@@ -30,6 +30,13 @@ Route::get('/new', function () {
 //    throw new \App\Exceptions\BaseException([
 //        'msg' => 'error !!!'
 //    ], 404);
-    event(new \App\Events\AddFriend(1, 2));
+//    event(new \App\Events\AddFriend(1, 2));
+    echo date('h:i:s') . "<br />";
+
+//暂停 10 秒
+    sleep(5);
+
+//重新开始
+    echo date('h:i:s');
 });
 

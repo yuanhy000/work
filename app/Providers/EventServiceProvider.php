@@ -13,6 +13,7 @@ use App\Listeners\FriendCallback\BroadcastFriendCallback;
 use App\Listeners\FriendCallback\ChangeAddFriendNotificationStatus;
 use App\Listeners\FriendCallback\CreateFriend;
 use App\Listeners\FriendCallback\CreateFriendCallbackNotification;
+use App\Listeners\UserLogin\DelayOffline;
 use App\Listeners\UserLogin\OnlineUser;
 use App\Listeners\UserLogout\OfflineUser;
 use App\Listeners\UserRegister\InitUserFriendGroup;
@@ -36,7 +37,7 @@ class EventServiceProvider extends ServiceProvider
             InitUserFriendGroup::class
         ],
         UserLogin::class => [
-            OnlineUser::class
+            OnlineUser::class,
         ],
         UserLogout::class => [
             OfflineUser::class
