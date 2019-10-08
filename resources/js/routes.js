@@ -77,6 +77,7 @@ const routes = [
             {
                 path: '',
                 name: 'friend-list',
+                components: require('./components/friend-list/default-background'),
             },
             {
                 path: '/addition',

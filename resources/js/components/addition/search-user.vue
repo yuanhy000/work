@@ -22,10 +22,10 @@
                          @click="navigateUser(user.user_id)">
                         <img :src="user.user_avatar" alt="" class="item-avatar">
                         <div class="item-info">
-                            <div class="item-name-container">
+<!--                            <div class="item-name-container">-->
                                 <div class="item-name">{{user.user_name}}</div>
-                                <div class="item-name">({{user.user_number}})</div>
-                            </div>
+                                <div class="item-email">({{user.user_number}})</div>
+<!--                            </div>-->
                             <div class="item-email">{{user.user_email}}</div>
                         </div>
                     </div>

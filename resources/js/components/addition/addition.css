@@ -153,6 +153,7 @@
 .search-item {
     /*background: #C0B9C8;*/
     background-image: linear-gradient(to right bottom, #a2bad9, #F2D5D4);
+    /*background-image: linear-gradient(to right, #CCD7E6, #F3E7E9);*/
     margin: 0.5%;
     width: 24%;
     height: 23%;
@@ -202,7 +203,8 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     color: #555;
-    font-size: 0.9rem;
+    font-size: 1rem;
+    letter-spacing: 0.1rem;
 }
 
 .item-email {
@@ -213,6 +215,7 @@
     white-space: nowrap;
     color: #737275;
     font-size: 0.8rem;
+    letter-spacing: 0.05rem;
 }
 
 .pre-img-container {

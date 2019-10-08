@@ -16,6 +16,12 @@ import VDistpicker from 'v-distpicker'
 import Message from 'vue-multiple-message'
 Vue.prototype.$message = Message;
 
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+// import App from './App.vue';
+
+
+Vue.use(ElementUI);
 Vue.use(VeeValidate);
 Validator.localize('zh_CN', zh_CN);
 
