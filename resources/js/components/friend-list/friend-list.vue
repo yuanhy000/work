@@ -28,7 +28,8 @@
                             </transition>
                             <transition name="fade">
                                 <img src="./../../../image/select-menu.svg" alt="" class="select-menu"
-                                     v-if="friendGroup.displayMenu === true" v-on:mouseout="mouseOutSelect(index)">
+                                     v-if="friendGroup.displayMenu === true" :id="'menu'+index"
+                                     v-on:mouseout="mouseOutSelect(index)" @click.stop="selectMenu(index)">
                             </transition>
                         </div>
                         <el-collapse-transition>
@@ -53,17 +54,34 @@
                 </div>
             </div-scroll>
         </div>
-        <router-view></router-view>
+        <router-view>
+        </router-view>
+        <selectMenu v-show="displayMenu" :top="marginTop" id="groupMenu" :canDelete="canDelete"
+                    @addGroup="addFriendGroup">
+        </selectMenu>
+        <AddFriendGroup v-show="displayAddGroup"></AddFriendGroup>
     </div>
 </template>
 
 <script>
+    import selectMenu from './select-menu';
+    import AddFriendGroup from './../add-friendGroup/add-friendGroup';
+
     export default {
         name: "friend-list",
+        components: {
+            selectMenu,
+            AddFriendGroup
+        },
         data() {
             return {
                 friendGroups: [],
                 displayMenu: false,
+                marginTop: 0,
+                selectMenuIndex: 0,
+                selectDom: {},
+                canDelete: true,
+                displayAddGroup: false,
             }
         },
         created() {
@@ -75,14 +93,34 @@
                 }
             })
         },
+        beforeDestroy() {
+            document.removeEventListener("click", this.clickEvent2);
+        },
         methods: {
+            addFriendGroup() {
+                this.displayAddGroup = true;
+                this.displayMenu = false;
+            },
+            selectMenu(index) {
+                if (index === 0) {
+                    this.canDelete = false;
+                } else {
+                    this.canDelete = true;
+                }
+                document.addEventListener("click", this.clickEvent2);
+                let selectDom = document.getElementById('menu' + index).getBoundingClientRect();
+                this.marginTop = selectDom.top - 70;
+                this.displayMenu = !this.displayMenu;
+                if (index !== this.selectMenuIndex) {
+                    this.displayMenu = true;
+                }
+                this.selectMenuIndex = index;
+                this.selectDom = document.getElementById('menu' + index);
+            },
             selectFriendGroup(index) {
                 let obj = this.friendGroups[index];
                 obj.display = !obj.display;
                 this.$set(this.friendGroups, index, obj);
-                // this.friendGroups[index].display = !this.friendGroups[index].display;
-                // this.$set(this.friendGroups[index].display, index, this.friendGroups);
-                // this.display = !this.display;
             },
             navigateUser(user) {
                 this.$router.push({name: 'friend-info', params: {user: user}});
@@ -96,6 +134,12 @@
                 let obj = this.friendGroups[index];
                 obj.displayMenu = false;
                 this.$set(this.friendGroups, index, obj);
+            },
+            clickEvent2(e) {
+                let selectMenu = document.getElementById('groupMenu');
+                if (!selectMenu.contains(e.target) && !this.selectDom.contains(e.target)) {
+                    this.displayMenu = false;
+                }
             }
         }
     }

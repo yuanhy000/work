@@ -170,3 +170,78 @@
     height: 20px;
     cursor: pointer;
 }
+
+.manage-list {
+    width: 200px;
+    height: 220px;
+    /*background-image: linear-gradient(to top left, #8EA7C7, #E4C6C9);*/
+    background-image: linear-gradient(to right bottom, #ABB2C7, #CDBDC9);
+    z-index: 99999;
+    position: relative;
+    /*right: -200px;*/
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /*float: right;*/
+    border-radius: 0 20px 20px 0;
+    margin-left: 20%;
+    margin-top: 180px;
+}
+
+.item-top {
+    height: 25%;
+    line-height: 50px;
+    width: 100%;
+    display: inline-block;
+    text-align: center;
+    padding: auto;
+    color: white;
+    cursor: pointer;
+    border-radius: 0 20px 0 0;
+}
+
+.item-top:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+    transition-duration: 0.3s;
+}
+
+.item-center {
+    height: 25%;
+    line-height: 50px;
+    width: 100%;
+    display: inline-block;
+    text-align: center;
+    padding: auto;
+    color: white;
+    cursor: pointer;
+}
+
+.item-center:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+    transition-duration: 0.3s;
+}
+
+.item-bottom {
+    height: 25%;
+    line-height: 50px;
+    width: 100%;
+    display: inline-block;
+    text-align: center;
+    padding: auto;
+    color: white;
+    cursor: pointer;
+    border-radius: 0 0 20px 0;
+    border-top: 1px solid #eee;
+}
+
+.item-bottom:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+    transition-duration: 0.3s;
+}
+
+.disableDelete {
+    pointer-events: none;
+    cursor: not-allowed;
+    color: #ddd;
+}

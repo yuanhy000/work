@@ -28,17 +28,16 @@
                     <div class="menu-name">{{user.user_name}}</div>
                     <img src="./../../../image/more.svg" alt="" class="menu-icon">
                 </div>
-                <!--            <div class="menu-login" v-if="user.authentication">-->
-                <!--                <button class="btn menu-button" @click="logout">退出</button>-->
-                <!--            </div>-->
             </div>
         </nav>
         <transition name="fade" mode="out-in">
+            <!--        <el-collapse-transition>-->
             <div class="manage-list" ref="menu" v-show="manageDisplay"
                  :style="{marginRight:this.marginRight+'px'}">
                 <div class="item-top" @click="manageUser">个人中心</div>
                 <div class="item-bottom" @click="logout">退出</div>
             </div>
+            <!--        </el-collapse-transition>-->
         </transition>
     </div>
 </template>

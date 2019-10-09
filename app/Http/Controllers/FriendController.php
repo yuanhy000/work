@@ -41,12 +41,11 @@ class FriendController extends Controller
         return response()->json([
             'msg' => '通知操作成功'
         ], 200);
-        //修改用户所操作的消息的状态
-//        Notification::operateNotification($accept_user->id, $notification_id, $operation);
-//        $message = Friend::friendCallback($accept_user, $request_user, $operation);
-//        broadcast(new FriendCallback($request_user['user_id'], $accept_user->id, $message))->toOthers();
+    }
 
-//        return Notification::friendCallbackNotification($accept_user->id, $request_user['user_id'],
-//            $message, $operation);
+    public function addFriendGroup(Request $request)
+    {
+        $user = auth()->guard('api')->user();
+        $name = $request->getContent('name');
     }
 }
