@@ -59,8 +59,17 @@
 }
 
 .group-title {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.group-name-container {
     font-size: 0.9rem;
     letter-spacing: 2px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
 .friend-group-container {
@@ -86,19 +95,28 @@
 .group-select-img {
     width: 14px;
     height: 14px;
-    margin: 0 10px 0 0;
+    margin: 0 10px 3px 0;
 }
 
 .group-select-img-down {
     width: 12px;
     height: 14px;
-    margin: 0 12px 0 0;
+    margin: 0 12px 3px 0;
 }
 
 .group-name {
     color: #fff;
     font-size: 0.9rem;
     letter-spacing: 2px;
+}
+
+.online-user {
+    font-size: 0.8rem;
+    display: flex;
+    justify-self: flex-end;
+    margin-right: -15px;
+    width: 50px;
+    color: #fff;
 }
 
 .friend-item-container {
@@ -155,17 +173,11 @@
 }
 
 
-.online-user {
-    font-size: 0.8rem;
-    position: absolute;
-    width: 50px;
-    right: 15px;
-    color: #fff;
-}
-
 .select-menu {
-    position: absolute;
-    right: 20px;
+    /*position: relative;*/
+    display: flex;
+    justify-self: flex-end;
+    margin-right: -5px;
     width: 50px;
     height: 20px;
     cursor: pointer;
@@ -226,18 +238,28 @@
     height: 25%;
     line-height: 50px;
     width: 100%;
-    display: inline-block;
+    /*display: inline-block;*/
     text-align: center;
     padding: auto;
     color: white;
     cursor: pointer;
     border-radius: 0 0 20px 0;
     border-top: 1px solid #eee;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
 
 .item-bottom:hover {
     background-color: rgba(0, 0, 0, 0.2);
     transition-duration: 0.3s;
+}
+
+.item-online-img {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
 }
 
 .disableDelete {

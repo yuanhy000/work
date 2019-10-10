@@ -18,6 +18,7 @@ class FriendGroupResource extends JsonResource
     {
         return [
             'friend_group_name' => $this->name,
+            'friend_group_id' => $this->id,
             'owner_user' => new UserResource(User::find($this->user_id)),
             'friends' => FriendResource::collection($this->friends),
             'total_count' => $this->friends->count(),

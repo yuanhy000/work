@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class FriendGroup extends Model
 {
     protected $table = 'friendGroups';
+    protected $guarded = [];
 
     public function friends()
     {

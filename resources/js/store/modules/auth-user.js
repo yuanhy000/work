@@ -26,7 +26,6 @@ export default {
                 state[item] = payload.user.data[item];
             }
             state.authentication = true;
-            console.log('setAuth over')
         },
 
         INIT_AUTH_USER(state) {

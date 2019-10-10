@@ -39,5 +39,7 @@ Route::post('/notifications/read', 'NotificationController@readNotification');
 Route::post('/notifications/is_apply', 'NotificationController@isApplyFriend');
 
 Route::post('/friend_groups/add', 'FriendController@addFriendGroup');
+Route::post('/friend_groups/rename', 'FriendController@renameFriendGroup');
+Route::post('/friend_groups/delete', 'FriendController@deleteFriendGroup');
 
 

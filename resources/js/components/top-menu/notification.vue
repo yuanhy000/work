@@ -25,15 +25,11 @@
                 this.$store.dispatch('setNumber', notifications.unread_number);
             });
             setTimeout(res => {
-                console.log('Friend.accept.' + this.userInfo.user_id);
-                console.log('123123');
                 window.Echo.private('Friend.accept.' + this.userInfo.user_id)
                     .listen('AddFriend', (e) => {
                         this.$store.dispatch('setStatus', true);
                         this.$store.dispatch('incrementNumber');
                     });
-
-                console.log('Friend.callback.' + this.userInfo.user_id);
                 window.Echo.private('Friend.callback.' + this.userInfo.user_id)
                     .listen('FriendCallback', (e) => {
                         this.$store.dispatch('setStatus', true);

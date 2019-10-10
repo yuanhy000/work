@@ -9,20 +9,12 @@
 
 <script>
     import TopMenu from './top-menu/top-menu'
-    import Notification from './notification/notification'
-    import jwt from './../helpers/jwt'
-    import Cookie from 'js-cookie'
 
     export default {
         components: {
             TopMenu,
         },
         mounted() {
-            if (jwt.getToken()) {
-                this.$store.dispatch('setAuthUser');
-            } else if (Cookie.get('auth_id')) {
-                this.$store.dispatch('refreshToken')
-            }
             window.addEventListener('beforeunload', e => this.beforeunloadHandler(e))
             window.addEventListener('unload', e => this.unloadHandler(e))
         },

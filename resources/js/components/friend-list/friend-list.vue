@@ -14,28 +14,30 @@
                     <div class="group-title">好友</div>
                     <div class="friend-group-container" v-for="(friendGroup,index) in friendGroups">
                         <div class="group-title" @click="selectFriendGroup(index)">
-                            <img src="./../../../image/select-down.svg" alt="" class="group-select-img-down"
-                                 v-if="friendGroup.display === true">
-                            <img src="./../../../image/select-right.svg" alt="" class="group-select-img"
-                                 v-else>
-                            <!--                            <div class="triangle"></div>-->
-                            <div class="group-name">{{friendGroup.friend_group_name}}</div>
-                            <transition name="fade">
-                                <div class="online-user" v-on:mouseover="mouseOnSelect(index)"
-                                     v-if="friendGroup.displayMenu === false">
-                                    ({{friendGroup.online_count}}/{{friendGroup.total_count}})
-                                </div>
-                            </transition>
-                            <transition name="fade">
-                                <img src="./../../../image/select-menu.svg" alt="" class="select-menu"
-                                     v-if="friendGroup.displayMenu === true" :id="'menu'+index"
-                                     v-on:mouseout="mouseOutSelect(index)" @click.stop="selectMenu(index)">
-                            </transition>
+                            <div class="group-name-container">
+                                <img src="./../../../image/select-down.svg" alt="" class="group-select-img-down"
+                                     v-if="friendGroup.display === true">
+                                <img src="./../../../image/select-right.svg" alt="" class="group-select-img"
+                                     v-else>
+                                <div class="group-name">{{friendGroup.friend_group_name}}</div>
+                            </div>
+                            <!--                            <transition name="fade">-->
+                            <div class="online-user" v-on:mouseover="mouseOnSelect(index)"
+                                 v-if="friendGroup.displayMenu === false">
+                                ({{friendGroup.online_count}}/{{friendGroup.total_count}})
+                            </div>
+                            <!--                            </transition>-->
+                            <!--                            <transition name="fade">-->
+                            <img src="./../../../image/select-menu.svg" alt="" class="select-menu"
+                                 v-if="friendGroup.displayMenu === true" :id="'menu'+index"
+                                 v-on:mouseout="mouseOutSelect(index)" @click.stop="selectMenu(index)">
+                            <!--                            </transition>-->
                         </div>
                         <el-collapse-transition>
                             <div class="friends" v-if="friendGroup.display === true">
                                 <div class="friend-item-container" v-for="friend in friendGroup.friends"
-                                     @click="navigateUser(friend.friend_info)">
+                                     @click="navigateUser(friend.friend_info)"
+                                     v-if="friend.friend_info.user_display">
                                     <img :src="friend.friend_info.user_avatar" alt="" class="friend-avatar">
                                     <div class="friend-info">
                                         <div class="friend-name">{{friend.friend_info.user_name}}</div>
@@ -57,59 +59,124 @@
         <router-view>
         </router-view>
         <selectMenu v-show="displayMenu" :top="marginTop" id="groupMenu" :canDelete="canDelete"
-                    @addGroup="addFriendGroup">
+                    @addGroup="addFriendGroup" @renameGroup="renameFriendGroup"
+                    @deleteGroup="deleteFriendGroup" @showOnline="showOnline" :online="onlyOnline">
         </selectMenu>
-        <AddFriendGroup v-show="displayAddGroup"></AddFriendGroup>
+        <ChangeFriendGroup v-show="displayChangeGroup" @option="changeAction" :title="optionTitle">
+        </ChangeFriendGroup>
+        <toast v-show="showDeleteToast" style="z-index:999;" @option="deleteAction"
+               :title="toastTitle" :content="toastContent"></toast>
     </div>
 </template>
 
 <script>
     import selectMenu from './select-menu';
-    import AddFriendGroup from './../add-friendGroup/add-friendGroup';
+    import ChangeFriendGroup from '../change-friendGroup/change-friendGroup';
+    import toast from "../toast/toast";
 
     export default {
         name: "friend-list",
         components: {
             selectMenu,
-            AddFriendGroup
+            ChangeFriendGroup,
+            toast
         },
         data() {
             return {
+                screenHeight: 0,
                 friendGroups: [],
                 displayMenu: false,
                 marginTop: 0,
                 selectMenuIndex: 0,
                 selectDom: {},
                 canDelete: true,
-                displayAddGroup: false,
+                displayChangeGroup: false,
+                optionTitle: '',
+                toastTitle: '',
+                showDeleteToast: false,
+                toastContent: '',
+                onlyOnline: false
             }
         },
         created() {
             axios.post('api/users/friend_group').then(res => {
-                this.friendGroups = res.data.data.friendGroups;
-                for (let item in this.friendGroups) {
-                    this.friendGroups[item].display = false;
-                    this.friendGroups[item].displayMenu = false;
-                }
-            })
+                this.setFriendGroupInfo(res);
+            });
+            this.screenHeight = window.innerHeight ||
+                document.documentElement.clientHeight || document.body.clientHeight;
         },
         beforeDestroy() {
-            document.removeEventListener("click", this.clickEvent2);
+            document.removeEventListener("click", this.clickEvent);
         },
         methods: {
-            addFriendGroup() {
-                this.displayAddGroup = true;
+            deleteFriendGroup() {
+                this.showDeleteToast = true;
                 this.displayMenu = false;
+                this.toastTitle = '确认删除';
+                this.toastContent = '确认删除该好友分组吗?';
+            },
+            deleteAction(option) {
+                this.showDeleteToast = false;
+                if (option) {
+                    let group_id = this.friendGroups[this.selectMenuIndex].friend_group_id;
+                    axios.post('api/friend_groups/delete', group_id).then(res => {
+                        this.friendGroups.splice(this.selectMenuIndex, 1);
+                    }).catch(error => {
+                        this.$message({
+                            message: error.response.data.msg,
+                            type: 'error'
+                        });
+                    })
+                }
+            },
+            renameFriendGroup() {
+                this.displayChangeGroup = true;
+                this.displayMenu = false;
+                this.optionTitle = '重命名该组';
+            },
+            addFriendGroup() {
+                this.displayChangeGroup = true;
+                this.displayMenu = false;
+                this.optionTitle = '添加分组';
+            },
+            changeAction(res) {
+                this.displayChangeGroup = false;
+                if (this.optionTitle === '添加分组') {
+                    if (res.option) {
+                        axios.post('api/friend_groups/add', res.input).then(res => {
+                            this.setFriendGroupInfo(res);
+                        }).catch(error => {
+                            this.$message({
+                                message: error.response.data.msg,
+                                type: 'error'
+                            });
+                        })
+                    }
+                } else if (this.optionTitle === '重命名该组') {
+                    if (res.option) {
+                        let data = {
+                            group_id: this.friendGroups[this.selectMenuIndex].friend_group_id,
+                            input: res.input
+                        };
+                        axios.post('api/friend_groups/rename', data).then(res => {
+                            this.friendGroups[this.selectMenuIndex].friend_group_name = data.input;
+                        }).catch(error => {
+                            this.$message({
+                                message: error.response.data.msg,
+                                type: 'error'
+                            });
+                        })
+                    }
+                }
             },
             selectMenu(index) {
-                if (index === 0) {
-                    this.canDelete = false;
-                } else {
-                    this.canDelete = true;
-                }
-                document.addEventListener("click", this.clickEvent2);
+                document.addEventListener("click", this.clickEvent);
+                this.canDelete = this.index !== 0 && this.friendGroups[index].total_count === 0;
                 let selectDom = document.getElementById('menu' + index).getBoundingClientRect();
                 this.marginTop = selectDom.top - 70;
+                if (this.marginTop > this.screenHeight - 220) {
+                    this.marginTop = this.screenHeight - 220 - 70;
+                }
                 this.displayMenu = !this.displayMenu;
                 if (index !== this.selectMenuIndex) {
                     this.displayMenu = true;
@@ -135,12 +202,34 @@
                 obj.displayMenu = false;
                 this.$set(this.friendGroups, index, obj);
             },
-            clickEvent2(e) {
+            clickEvent(e) {
                 let selectMenu = document.getElementById('groupMenu');
                 if (!selectMenu.contains(e.target) && !this.selectDom.contains(e.target)) {
                     this.displayMenu = false;
                 }
-            }
+            },
+            setFriendGroupInfo(res) {
+                this.friendGroups = res.data.data.friendGroups;
+                for (let item in this.friendGroups) {
+                    this.friendGroups[item].display = false;
+                    this.friendGroups[item].displayMenu = false;
+                }
+            },
+            showOnline() {
+                this.displayMenu = false;
+                this.onlyOnline = !this.onlyOnline;
+                for (let index in this.friendGroups) {
+                    for (let item in this.friendGroups[index].friends) {
+                        let obj = this.friendGroups[index].friends[item];
+                        if (this.onlyOnline === true) {
+                            obj.friend_info.user_display = obj.friend_info.user_status === 1;
+                        } else {
+                            obj.friend_info.user_display = true;
+                        }
+                        this.$set(this.friendGroups[index].friends, item, obj);
+                    }
+                }
+            },
         }
     }
 </script>

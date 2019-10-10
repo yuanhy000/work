@@ -45,7 +45,8 @@
 <script>
     import {mapState} from 'vuex'
     import notification from "./notification";
-
+    import jwt from './../../helpers/jwt'
+    import Cookie from 'js-cookie'
 
     export default {
         name: "top-menu",
@@ -65,7 +66,15 @@
             }
         },
         mounted: function () {
-            document.addEventListener("click", this.clickEvent);
+            if (jwt.getToken()) {
+                this.$store.dispatch('setAuthUser').then(res => {
+                    document.addEventListener("click", this.clickEvent);
+                });
+            } else if (Cookie.get('auth_id')) {
+                this.$store.dispatch('refreshToken').then(res => {
+                    document.addEventListener("click", this.clickEvent);
+                });
+            }
             let router = this.$route.path;
             switch (router) {
                 case '/':

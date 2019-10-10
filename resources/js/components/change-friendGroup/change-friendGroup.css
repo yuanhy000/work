@@ -1,0 +1,120 @@
+.shadow-container {
+    background-color: rgba(0, 0, 0, 0.75);
+    width: 80%;
+    position: absolute;
+    top: 70px;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+}
+
+.toast-container {
+    width: 36%;
+    height: 30%;
+    /*background-color: #EDF1F8;*/
+    background-color: #fff;
+    border-radius: 20px;
+    border: 2px solid #DBE2EC;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.title-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 25%;
+    /*border-bottom: 2px solid #DBE2EC;*/
+    justify-content: flex-end;
+}
+
+.toast-title {
+    display: flex;
+    align-self: center;
+    color: #777;
+    font-size: 1rem;
+    letter-spacing: 0.1rem;
+}
+
+.content-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 55%;
+    border-bottom: 2px solid #DBE2EC;
+    justify-content: center;
+}
+
+.toast-content {
+    width: 75%;
+    display: flex;
+    align-self: center;
+    color: #777;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+}
+
+.operation-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 20%;
+    justify-content: center;
+}
+
+.toast-button-left {
+    width: 50%;
+    border-right: 2px solid #DBE2EC;
+    color: #777;
+    font-size: 1rem;
+    letter-spacing: 5px;
+    border-radius: 0;
+    cursor: pointer;
+}
+
+.toast-button-left:hover {
+    background-color: #EDF1F8;
+    color: #666;
+    transition-duration: 0.3s;
+}
+
+.toast-button-right {
+    width: 50%;
+    color: #777;
+    font-size: 1rem;
+    letter-spacing: 5px;
+    border-radius: 0;
+    cursor: pointer;
+}
+
+.toast-button-right:hover {
+    background-color: #EDF1F8;
+    color: #666;
+    transition-duration: 0.3s;
+}
+
+.item-input {
+    margin: 0 0 20px 0;
+    display: flex;
+    align-self: center;
+    /*align-items: center;*/
+    border: 2px solid #DBE2EC;
+    border-radius: 0.5rem;
+    width: 80%;
+    min-width: 160px;
+    height: 40px;
+    background-color: #FEFFFF;
+    padding: 0 10px;
+    outline: none;
+    text-indent: 8px;
+    font-size: 14px;
+    color: #777;
+    letter-spacing: 0.1rem;
+}

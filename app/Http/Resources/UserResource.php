@@ -32,7 +32,8 @@ class UserResource extends JsonResource
             'user_hometown' => $this->hometown,
             'user_school' => $this->school,
             'user_constellation' => new ConstellationResource($this->constellation),
-            'user_zodiac' => new ZodiacResource($this->zodiac)
+            'user_zodiac' => new ZodiacResource($this->zodiac),
+            'user_display' => true
         ];
     }
 }
