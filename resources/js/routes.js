@@ -5,8 +5,19 @@ import Store from './store/index'
 const routes = [
     {
         path: '/',
-        name: 'home',
-        components: require('./components/home/home.vue'),
+        name: 'chat',
+        components: require('./components/chat-list/chat-list.vue'),children: [
+            // {
+            //     path: '',
+            //     name: 'user-info',
+            //     components: require('./components/user-info/user-info.vue'),
+            // },
+            {
+                path: '/chat-detail',
+                name: 'chat-detail',
+                components: require('./components/chat-detail/chat-detail.vue'),
+            },
+        ],
         meta: {requiresAuth: true}
     },
     {

@@ -71,7 +71,7 @@
                         };
                         this.$store.dispatch('loginRequest', loginInfo).then(res => {
                             this.loading = false;
-                            this.$router.push({name: 'home'});
+                            this.$router.push({name: 'chat'});
                         }).catch(error => {
                             this.loading = false;
                             if (error.response.status === 404) {

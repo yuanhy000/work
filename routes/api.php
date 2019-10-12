@@ -42,4 +42,6 @@ Route::post('/friend_groups/add', 'FriendController@addFriendGroup');
 Route::post('/friend_groups/rename', 'FriendController@renameFriendGroup');
 Route::post('/friend_groups/delete', 'FriendController@deleteFriendGroup');
 
+Route::post('/chats/friend', 'ChatController@getFriendChat');
+
 

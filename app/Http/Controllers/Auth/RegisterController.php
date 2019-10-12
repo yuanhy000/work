@@ -18,7 +18,7 @@ class RegisterController extends Controller
     use RegistersUsers;
 
     protected $proxy;
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/chat-list';
 
     public function __construct(TokenProxy $proxy)
     {

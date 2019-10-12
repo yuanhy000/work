@@ -1,0 +1,12 @@
+.chat-container{
+    background-image: linear-gradient(to right bottom, #8EA7C7, #EECAC9);
+    /*background-image: linear-gradient(to right bottom, #EECAC9, #8EA7C7);*/
+    width: 20%;
+    position: absolute;
+    top: 70px;
+    bottom: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}

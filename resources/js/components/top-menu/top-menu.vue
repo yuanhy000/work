@@ -94,7 +94,7 @@
         methods: {
             navigateChat() {
                 this.selectIndex = 0;
-                this.$router.push({name: 'home'});
+                this.$router.push({name: 'chat'});
             },
             navigateFriend() {
                 this.selectIndex = 1;

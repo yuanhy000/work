@@ -3,83 +3,28 @@
 namespace App\Http\Controllers;
 
 use App\Chat;
+use App\Friend;
+use App\Http\Resources\FriendResource;
+use App\Message_chat;
 use Illuminate\Http\Request;
 
 class ChatController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function getFriendChat(Request $request)
     {
-        //
-    }
+        $user_id = auth()->guard('api')->user()->id;
+        $friend_id = (int)$request->getContent();
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+        $chat = Chat::where([
+            ['from_user_id', '=', $user_id],
+            ['to_user_id', '=', $friend_id]
+        ])->first();
+//        if(!$chat){
+//
+//        }
+//            ->orderBy('created_at', 'desc')->paginate(5);
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Chat  $chat
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Chat $chat)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Chat  $chat
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Chat $chat)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Chat  $chat
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Chat $chat)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Chat  $chat
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Chat $chat)
-    {
-        //
+        return $chat;
+//        return new FriendResource($friend_info);
     }
 }

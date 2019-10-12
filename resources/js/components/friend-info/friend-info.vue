@@ -73,7 +73,7 @@
             </div>
         </div>
         <div class="user-bottom">
-            <button class="btn submit-button" v-if="isFriend" @click="addFriend">发送消息</button>
+            <button class="btn submit-button" v-if="isFriend" @click="chatWithFriend">发送消息</button>
             <button class="btn submit-button" v-if="!isFriend && !isApply" @click="addFriend">添加好友</button>
             <button class="btn submit-button disabled-button" v-if="!isFriend && isApply"
                     @click="addFriend">已申请
@@ -112,6 +112,9 @@
             })
         },
         methods: {
+            chatWithFriend() {
+                this.$router.push({name: 'chat-detail', params: {friend_id: this.userInfo.user_id}});
+            },
             addFriend() {
                 axios.post('api/friends/add', this.userInfo.user_id).then(res => {
                     this.$message({

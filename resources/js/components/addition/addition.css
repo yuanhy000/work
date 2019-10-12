@@ -1,12 +1,3 @@
-.btn:focus,
-.btn:active:focus,
-.btn.active:focus,
-.btn.focus,
-.btn:active.focus,
-.btn.active.focus {
-    outline: none;
-    box-shadow: none;
-}
 
 .addition-container {
     /*background-color: #DEEAFD;*/

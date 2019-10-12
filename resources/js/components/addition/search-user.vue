@@ -42,7 +42,7 @@
 
 <script>
     import loading from './../loading/loading';
-    import notification from "../notification/notification";
+    // import notification from "../notification/notification";
 
     export default {
         name: "search-user",
