@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Chat;
 use App\Friend;
+use App\Http\Resources\ChatResource;
 use App\Http\Resources\FriendResource;
 use App\Message_chat;
 use Illuminate\Http\Request;
@@ -18,13 +19,15 @@ class ChatController extends Controller
         $chat = Chat::where([
             ['from_user_id', '=', $user_id],
             ['to_user_id', '=', $friend_id]
+        ])->orWhere([
+            ['from_user_id', '=', $friend_id],
+            ['to_user_id', '=', $user_id]
         ])->first();
-//        if(!$chat){
-//
-//        }
-//            ->orderBy('created_at', 'desc')->paginate(5);
 
-        return $chat;
+//        $chat->friend_id = $friend_id;
+//        $chat->user_id = $user_id;
+
+        return new ChatResource($chat);
 //        return new FriendResource($friend_info);
     }
 }
