@@ -6,6 +6,7 @@ use App\Friend;
 use App\Message_chat;
 use App\User;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Log;
 
 class ChatResource extends JsonResource
 {
