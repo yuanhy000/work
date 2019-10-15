@@ -47,6 +47,10 @@
         box-shadow: none;
     }
 
+    .el-scrollbar__wrap {
+        overflow-x: hidden;
+    }
+
     .distpicker-address-wrapper select {
 
         border: 2px solid #DBE2EC;
