@@ -34,6 +34,7 @@ class ChatResource extends JsonResource
         ])->first();
 
         return [
+            'chat_id' => $this->id,
             'friend_name' => $this->friend->friend_name,
             'friend_info' => new UserResource(User::find($this->friend->friend_id)),
             'chat_info' => Message_chat::find($this->id)->orderBy('created_at', 'desc')

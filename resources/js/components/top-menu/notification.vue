@@ -24,7 +24,7 @@
                 let notifications = res.data.data;
                 this.$store.dispatch('setNumber', notifications.unread_number);
             });
-            setTimeout(res => {
+            setTimeout(() => {
                 window.Echo.private('Friend.accept.' + this.userInfo.user_id)
                     .listen('AddFriend', (e) => {
                         this.$store.dispatch('setStatus', true);

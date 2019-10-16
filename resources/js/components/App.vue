@@ -28,7 +28,7 @@
             },
             unloadHandler(e) {
                 this._gap_time = new Date().getTime() - this._beforeUnload_time;
-            debugger
+            // debugger
                 if (this._gap_time <= 5) {
                     axios.post('api/users/offline');
                 }

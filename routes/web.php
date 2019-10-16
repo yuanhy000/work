@@ -31,6 +31,7 @@ Route::get('/new', function () {
 //        'msg' => 'error !!!'
 //    ], 404);
 //    event(new \App\Events\AddFriend(1, 2));
-    dd(\App\Friend::where('id',9)->with('user')->first());
+    $time = \Carbon\Carbon::now()->toDateTimeString();
+    echo $time;
 });
 
