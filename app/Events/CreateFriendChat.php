@@ -17,19 +17,22 @@ class CreateFriendChat implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    public $chat_id;
     public $chat_content;
     public $accept_id;
+    public $request_id;
 
-    public function __construct($chat_input, $accept_id)
+    public function __construct($chat_input, $accept_id, $chat_id)
     {
+        $this->chat_id = $chat_id;
         $this->chat_content = $chat_input;
         $this->accept_id = $accept_id;
+        $this->request_id = auth()->guard('api')->user()->id;
     }
 
     public function broadcastOn()
     {
         return new PrivateChannel('Chat.accept.' . $this->accept_id);
-//        return new Channel('Chat.accept.' . $this->accept_id);
     }
 
     public function broadcastWith()

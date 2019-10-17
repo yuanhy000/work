@@ -7,11 +7,11 @@ const routes = [
         path: '/',
         name: 'chat',
         components: require('./components/chat-list/chat-list.vue'),children: [
-            // {
-            //     path: '',
-            //     name: 'user-info',
-            //     components: require('./components/user-info/user-info.vue'),
-            // },
+            {
+                path: '',
+                name: 'chat',
+                components: require('./components/friend-list/default-background'),
+            },
             {
                 path: '/chat-detail',
                 name: 'chat-detail',

@@ -4,10 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Chat;
 use App\Events\CreateFriendChat;
-use App\Friend;
+use App\Http\Resources\ChatCollection;
 use App\Http\Resources\ChatResource;
-use App\Http\Resources\FriendResource;
-use App\Message_chat;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -25,23 +23,25 @@ class ChatController extends Controller
 
     public function createFriendChat(Request $request)
     {
-        $user_id = auth()->guard('api')->user()->id;
+        auth()->guard('api')->user();
         $accept_id = json_decode($request->getContent(), true)['accept_id'];
         $chat_id = json_decode($request->getContent(), true)['chat_id'];
         $input_content = json_decode($request->getContent(), true)['inputContent'];
 
-        $result = Message_chat::create([
-            'chat_id' => $chat_id,
-            'content' => $input_content,
-            'from_user_id' => $user_id,
-            'to_user_id' => $accept_id,
-            'status' => 0
-        ]);
+        event(new CreateFriendChat($input_content, $accept_id, $chat_id));
 
-        broadcast(new CreateFriendChat($input_content, $accept_id))->toOthers();
         return response()->json([
-            'msg' => '发送成功',
+            'msg' => '消息发送成功',
             'created_at' => Carbon::now()->toDateTimeString()
-        ]);
+        ], 201);
+    }
+
+    public function getChatList(Request $request)
+    {
+        $user_id = auth()->guard('api')->user()->id;
+
+        $chat = Chat::getChatList($user_id);
+
+        return new ChatCollection($chat);
     }
 }

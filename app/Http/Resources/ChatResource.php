@@ -10,18 +10,8 @@ use Illuminate\Support\Facades\Log;
 
 class ChatResource extends JsonResource
 {
-    /**
-     * Transform the resource into an array.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return array
-     */
-    public $friend;
 
-//    public function __construct($request)
-//    {
-//
-//    }
+    public $friend;
 
     public function toArray($request)
     {
@@ -38,7 +28,7 @@ class ChatResource extends JsonResource
             'friend_name' => $this->friend->friend_name,
             'friend_info' => new UserResource(User::find($this->friend->friend_id)),
             'chat_info' => Message_chat::find($this->id)->orderBy('created_at', 'desc')
-                ->paginate(8)
+                ->paginate(30)
         ];
     }
 }

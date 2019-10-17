@@ -3,12 +3,15 @@
 namespace App\Providers;
 
 use App\Events\AddFriend;
+use App\Events\CreateFriendChat;
 use App\Events\FriendCallback;
 use App\Events\UserLogin;
 use App\Events\UserLogout;
 use App\Events\UserRegister;
 use App\Listeners\AddFriend\BroadcastAddFriend;
 use App\Listeners\AddFriend\CreateAddFriendNotification;
+use App\Listeners\CreateFriendChat\CreateMessage;
+use App\Listeners\CreateFriendChat\UpdateChatStatus;
 use App\Listeners\FriendCallback\BroadcastFriendCallback;
 use App\Listeners\FriendCallback\ChangeAddFriendNotificationStatus;
 use App\Listeners\FriendCallback\CreateFriend;
@@ -49,6 +52,10 @@ class EventServiceProvider extends ServiceProvider
             ChangeAddFriendNotificationStatus::class,
             CreateFriend::class,
             CreateFriendCallbackNotification::class,
+        ],
+        CreateFriendChat::class => [
+            CreateMessage::class,
+            UpdateChatStatus::class
         ]
     ];
 

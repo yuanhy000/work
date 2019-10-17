@@ -34,7 +34,8 @@
     margin: auto 20px auto 20px;
     border-radius: 50%;
     border: 3px solid #DBE2EC;
-    flex-shrink: 0
+    flex-shrink: 0;
+    cursor: pointer;
 }
 
 .friend-name {
@@ -53,8 +54,9 @@
 .item-time {
     display: flex;
     margin: 10px auto 20px auto;
-    color: #777;
+    color: #888;
     font-size: 0.7rem;
+    letter-spacing: 1px;
 }
 
 .item-body-left {

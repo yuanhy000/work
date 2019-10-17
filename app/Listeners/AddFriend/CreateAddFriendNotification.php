@@ -11,15 +11,6 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 
 class CreateAddFriendNotification
 {
-    /**
-     * Create the event listener.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        //
-    }
 
     public function handle(AddFriend $event)
     {
