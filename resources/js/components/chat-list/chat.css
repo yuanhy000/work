@@ -28,6 +28,11 @@
     transition-duration: 0.3s;
 }
 
+.selected {
+    background-color: rgba(0, 0, 0, 0.08);
+    transition-duration: 0.3s;
+}
+
 .friend-avatar {
     width: 45px;
     height: 45px;
@@ -40,13 +45,31 @@
     flex-direction: column;
     margin: auto 15px;
     justify-content: center;
+    width: 80%;
+    /*width: 70%;*/
+}
+
+.info-title {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
 }
 
 .friend-name {
     font-size: 1rem;
     color: #fff;
     letter-spacing: 2px;
-    margin: auto 0;
+    margin: auto 0 4px 0;
+}
+
+.last-time {
+    font-size: 6px;
+    color: #fff;
+    margin: auto 0 auto auto;
+    letter-spacing: 1px;
+    /*margin: auto 0 4px 0;*/
 }
 
 .friend-status {
@@ -55,13 +78,14 @@
 }
 
 .friend-signature {
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     color: #EDF1F8;
     letter-spacing: 1px;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
     display: inline-block;
-    width: 60%;
+    width: 90%;
+    /*max-width: 220px;*/
     margin: auto 0;
 }

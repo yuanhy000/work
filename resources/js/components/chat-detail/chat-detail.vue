@@ -222,9 +222,9 @@
                 if (differenceDay === 0) {
                     this.chatInfo.data[index].display_time = '今天 ' + time[1];
                 } else if (differenceDay === 1) {
-                    this.chatInfo.data[index].display_time = '昨天' + time[1];
+                    this.chatInfo.data[index].display_time = '昨天 ' + time[1];
                 } else if (differenceDay === 2) {
-                    this.chatInfo.data[index].display_time = '前天' + time[1];
+                    this.chatInfo.data[index].display_time = '前天 ' + time[1];
                 } else {
                     if (differenceWeekDay > 0) {
                         let targetWeekDay = new Date(this.chatInfo.data[index].created_at).getDay();

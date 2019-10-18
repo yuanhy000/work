@@ -5,6 +5,7 @@ import AuthUser from './modules/auth-user'
 import Login from './modules/login'
 import Notification from './modules/notification'
 import SearchStatus from './modules/search'
+import ChatINfo from './modules/chat-info'
 
 Vue.use(Vuex);
 
@@ -13,7 +14,8 @@ export default new Vuex.Store({
         AuthUser,
         Login,
         Notification,
-        SearchStatus
+        SearchStatus,
+        ChatINfo
     },
     strict: true
 })
