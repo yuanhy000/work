@@ -56,8 +56,9 @@
                 </div>
             </div-scroll>
         </div>
-        <router-view>
-        </router-view>
+        <transition name="fade" mode="out-in">
+            <router-view></router-view>
+        </transition>
         <selectMenu v-show="displayMenu" :top="marginTop" id="groupMenu" :canDelete="canDelete"
                     @addGroup="addFriendGroup" @renameGroup="renameFriendGroup"
                     @deleteGroup="deleteFriendGroup" @showOnline="showOnline" :online="onlyOnline">

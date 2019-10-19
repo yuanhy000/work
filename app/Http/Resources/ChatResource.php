@@ -28,7 +28,11 @@ class ChatResource extends JsonResource
             'friend_name' => $this->friend->friend_name,
             'friend_info' => new UserResource(User::find($this->friend->friend_id)),
             'chat_info' => Message_chat::find($this->id)->orderBy('created_at', 'desc')
-                ->paginate(30)
+                ->paginate(30),
+            'unread_number' => Message_chat::find($this->id)->where([
+                ['to_user_id', '=', auth()->guard('api')->user()->id],
+                ['status', '=', '0']
+            ])->count()
         ];
     }
 }

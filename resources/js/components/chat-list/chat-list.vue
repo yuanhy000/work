@@ -6,19 +6,27 @@
                      @click="navigateChatDetail(index)" :class="selectIndex === index ? 'selected' : ''">
                     <img :src="chatList.friend_info.user_avatar" alt="" class="friend-avatar">
                     <div class="friend-info">
-                        <div class="info-title">
+                        <div class="info-content">
                             <div class="friend-name">{{chatList.friend_name}}</div>
-                            <div class="last-time">{{chatList.chat_info.data[0].display_time}}</div>
-                        </div>
-                        <div class="friend-status">
+                            <!--                            <div class="friend-status">-->
                             <div class="friend-signature">{{chatList.chat_info.data[0].content}}</div>
+                            <!--                            </div>-->
+                        </div>
+                        <div class="info-other">
+                            <div class="last-time">{{chatList.chat_info.data[0].display_time}}</div>
+                            <div v-if="chatList.unread_number<=99 && chatList.unread_number>0"
+                                 class="unread-number">{{chatList.unread_number}}
+                            </div>
+                            <div class="unread-number" v-if="chatList.unread_number>99">99+</div>
+                            <div class="position" v-else></div>
                         </div>
                     </div>
                 </div>
             </el-scrollbar>
         </div>
-        <router-view>
-        </router-view>
+        <transition name="fade" mode="out-in">
+            <router-view></router-view>
+        </transition>
     </div>
 </template>
 
@@ -41,6 +49,7 @@
         methods: {
             navigateChatDetail(index) {
                 this.selectIndex = index;
+                this.chatLists[index].unread_number = 0;
                 this.$router.push({
                     name: 'chat-detail', params: {
                         friend_id: this.chatLists[index].friend_info.user_id

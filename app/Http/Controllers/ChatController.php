@@ -6,6 +6,7 @@ use App\Chat;
 use App\Events\CreateFriendChat;
 use App\Http\Resources\ChatCollection;
 use App\Http\Resources\ChatResource;
+use App\Message_chat;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -18,6 +19,17 @@ class ChatController extends Controller
 
         $chat = Chat::getChat($user_id, $friend_id);
 
+        $current_time = Carbon::now()->toDateTimeString();
+        $chat_id = $chat->id;
+
+        $last_time = Chat::getUserLastViewTime($chat_id, $user_id);
+        try {
+            $result = Message_chat::whereBetween('created_at', [$last_time, $current_time])
+                ->where('to_user_id', '=', $user_id)->update(['status' => 1]);
+            dd($result);
+        } catch (\Exception $exception) {
+            throw new $exception;
+        }
         return new ChatResource($chat);
     }
 
@@ -43,5 +55,21 @@ class ChatController extends Controller
         $chat = Chat::getChatList($user_id);
 
         return new ChatCollection($chat);
+    }
+
+    public function clearUnreadMessage(Request $request)
+    {
+        $user_id = auth()->guard('api')->user()->id;
+        $current_time = Carbon::now()->toDateTimeString();
+        $chat_id = $request->getContent('chat_id');
+
+        $last_time = Chat::getUserLastViewTime($chat_id, $user_id);
+        try {
+            Message_chat::whereBetween('created_at', [$last_time, $current_time])
+                ->where('to_user_id', '=', $user_id)->update(['status' => 1]);
+        } catch (\Exception $exception) {
+            throw new $exception;
+        }
+
     }
 }

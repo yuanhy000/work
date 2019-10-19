@@ -15,6 +15,18 @@ class Chat extends Model
         ])->orderBy('updated_at', 'desc')->get();
     }
 
+    public static function getUserLastViewTime($chat_id, $user_id)
+    {
+        $chat = Chat::find($chat_id);
+
+        if ($chat->from_user_id == $user_id) {
+            return $chat->from_user_view_at;
+        } else if ($chat->to_user_id == $user_id) {
+            return $chat->to_user_view_at;
+        }
+
+    }
+
     public static function getChat($user_id, $friend_id)
     {
         $chat = Chat::where([
