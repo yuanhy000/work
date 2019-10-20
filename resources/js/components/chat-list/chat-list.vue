@@ -60,6 +60,7 @@
                 for (let index in this.chatLists) {
                     let time = this.chatLists[index].chat_info.data[0].created_at.split(' ');
                     let detailTime = time[1].split(':');
+                    console.log(detailTime)
                     let currentTime = new Date().toLocaleDateString();
                     let differenceDay = Math.abs(Math.ceil((new Date(currentTime) - new Date(time[0])) / (1000 * 60 * 60 * 24)));
                     let differenceWeekDay = 7 - differenceDay;
@@ -71,28 +72,29 @@
                         this.chatLists[index].chat_info.data[0].display_time = '前天 ' + detailTime[0] + ':' + detailTime[1];
                     } else {
                         if (differenceWeekDay > 0) {
-                            let targetWeekDay = new Date(this.chatLists[index].chat_info.data[0].created_at).getDay();
+                            let targetWeekDay = new Date(this.chatLists[index].chat_info.data[0].created_at.replace(/-/g,"/")).getDay();
                             switch (targetWeekDay) {
                                 case 0:
-                                    this.chatLists[index].chat_info.data[0].display_time = '星期天 ' + detailTime[0] + ':' + detailTime[1];
+                                    this.chatLists[index].chat_info.data[0].display_time = '星期天 ';
                                     break;
                                 case 1:
-                                    this.chatLists[index].chat_info.data[0].display_time = '星期一 ' + detailTime[0] + ':' + detailTime[1];
+                                    this.chatLists[index].chat_info.data[0].display_time = '星期一 ';
                                     break;
                                 case 2:
-                                    this.chatLists[index].chat_info.data[0].display_time = '星期二 ' + detailTime[0] + ':' + detailTime[1];
+                                    this.chatLists[index].chat_info.data[0].display_time = '星期二 ';
                                     break;
                                 case 3:
-                                    this.chatLists[index].chat_info.data[0].display_time = '星期三 ' + detailTime[0] + ':' + detailTime[1];
+                                    this.chatLists[index].chat_info.data[0].display_time = '星期三 ';
                                     break;
                                 case 4:
-                                    this.chatLists[index].chat_info.data[0].display_time = '星期四 ' + detailTime[0] + ':' + detailTime[1];
+                                    this.chatLists[index].chat_info.data[0].display_time = '星期四 ';
+                                    console.log('123')
                                     break;
                                 case 5:
-                                    this.chatLists[index].chat_info.data[0].display_time = '星期五 ' + detailTime[0] + ':' + detailTime[1];
+                                    this.chatLists[index].chat_info.data[0].display_time = '星期五 ';
                                     break;
                                 case 6:
-                                    this.chatLists[index].chat_info.data[0].display_time = '星期六 ' + detailTime[0] + ':' + detailTime[1];
+                                    this.chatLists[index].chat_info.data[0].display_time = '星期六 ';
                                     break;
                             }
                         } else {

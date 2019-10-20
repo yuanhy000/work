@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Events\AddFriend;
 use App\Events\CreateFriendChat;
 use App\Events\FriendCallback;
+use App\Events\PrepareToChat;
 use App\Events\UserLogin;
 use App\Events\UserLogout;
 use App\Events\UserRegister;
@@ -16,6 +17,8 @@ use App\Listeners\FriendCallback\BroadcastFriendCallback;
 use App\Listeners\FriendCallback\ChangeAddFriendNotificationStatus;
 use App\Listeners\FriendCallback\CreateFriend;
 use App\Listeners\FriendCallback\CreateFriendCallbackNotification;
+use App\Listeners\PrepareToChat\ClearUnreadMessage;
+use App\Listeners\PrepareToChat\UpdateUserViewTime;
 use App\Listeners\UserLogin\DelayOffline;
 use App\Listeners\UserLogin\OnlineUser;
 use App\Listeners\UserLogout\OfflineUser;
@@ -56,6 +59,10 @@ class EventServiceProvider extends ServiceProvider
         CreateFriendChat::class => [
             CreateMessage::class,
             UpdateChatStatus::class
+        ],
+        PrepareToChat::class => [
+            ClearUnreadMessage::class,
+            UpdateUserViewTime::class
         ]
     ];
 
