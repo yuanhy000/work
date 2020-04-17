@@ -29,11 +29,11 @@
                 }
                 let OSS = require('ali-oss');
                 let client = new OSS({
-                    region: 'oss-cn-beijing',
+                    region: '',
                     // secure: true,
-                    accessKeyId: 'LTAIC5QjlnsVbLA4',
-                    accessKeySecret: 'wiRIdhRvXwC2ZEasZQOLgM88S3X7sn',
-                    bucket: 'chatting-storage'
+                    accessKeyId: '',
+                    accessKeySecret: '',
+                    bucket: ''
                 });
                 this.client = client;
             },
